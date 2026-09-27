@@ -578,8 +578,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
-  protagSuitSprite: {fileID: 0}
-  suitNorth: {fileID: 0}
+  suitRenderer: {fileID: 1107762898}
+  helmetRenderer: {fileID: 1678282632}
+  suitSprites:
+  - {fileID: 6274441309766540313, guid: 9f9b459829570c21eb7dfec3364cfd73, type: 3}
+  - {fileID: 7127817349715922498, guid: 9f9b459829570c21eb7dfec3364cfd73, type: 3}
+  - {fileID: 747741951588131678, guid: 9f9b459829570c21eb7dfec3364cfd73, type: 3}
+  - {fileID: -531087981833580546, guid: 9f9b459829570c21eb7dfec3364cfd73, type: 3}
+  helmetSprites:
+  - {fileID: -7415454093010467856, guid: 34ba1776ec9709c3c88420d6983db1e2, type: 3}
+  - {fileID: 1369693886227029631, guid: 34ba1776ec9709c3c88420d6983db1e2, type: 3}
+  - {fileID: -2044197676374728829, guid: 34ba1776ec9709c3c88420d6983db1e2, type: 3}
+  - {fileID: -6937532803098348152, guid: 34ba1776ec9709c3c88420d6983db1e2, type: 3}
 --- !u!4 &1718987723
 Transform:
   m_ObjectHideFlags: 0
