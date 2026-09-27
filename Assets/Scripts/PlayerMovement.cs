@@ -12,10 +12,10 @@ public class PlayerMovement : MonoBehaviour
     private int y;
     [SerializeField] private SpriteRenderer suitRenderer;                                                                                                                                          
     [SerializeField] private SpriteRenderer helmetRenderer; 
-    [SerializeField] private Sprite suitNorth;                                                                                                                                                     
-    [SerializeField] private Sprite helmetNorth;  
+    [SerializeField] private Sprite[] suitSprites;
+    [SerializeField] private Sprite[] helmetSprites;
     private Rigidbody2D protagBody;
-    private enum Facing { North, South, East, West };
+    private enum Facing { South, North, East, West };
     private Facing lockedFacing = Facing.South;
     void Start()
     {
@@ -36,14 +36,35 @@ public class PlayerMovement : MonoBehaviour
         transform.position += step.normalized * distanceThisFrame;
 
         // now for sprite facing
+        // TODO: compress this, low priority
         if (Keyboard.current.wKey.wasPressedThisFrame == true)
         { 
             lockedFacing = Facing.North;
-            suitRenderer.sprite = suitNorth;                                                                                                                                                               
-            helmetRenderer.sprite = helmetNorth;   
+            SetFacing(Facing.North);
+        }
+        if (Keyboard.current.dKey.wasPressedThisFrame == true)
+        { 
+            lockedFacing = Facing.East;
+            SetFacing(Facing.East);
+        }
+        if (Keyboard.current.sKey.wasPressedThisFrame == true)
+        { 
+            lockedFacing = Facing.South;
+            SetFacing(Facing.South);
+        }
+        if (Keyboard.current.aKey.wasPressedThisFrame == true)
+        { 
+            lockedFacing = Facing.West;
+            SetFacing(Facing.West);
         }
     }
 
+    void SetFacing(Facing face)
+    {
+        int index = (int)face;
+        suitRenderer.sprite = suitSprites[index];
+        helmetRenderer.sprite = helmetSprites[index];
+    }
     void FixedUpdate()
     {
     }
