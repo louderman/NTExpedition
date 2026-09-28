@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -31,11 +33,14 @@ public class UnarmedCombat : MonoBehaviour
         // x == false can be represented as !x
         if(Mouse.current.leftButton.wasPressedThisFrame == true && !attackDebounce)
         {
+            // punch isn't done yet, but not necessary for checkoff
             Punch();
         }
         if(Mouse.current.rightButton.wasPressedThisFrame == true && !attackDebounce)
         {
             Shove();
+            attackDebounce = true;
+            StartCoroutine(Cooldown());
         }
     }
 
@@ -60,6 +65,12 @@ public class UnarmedCombat : MonoBehaviour
         debugBoxAngle = angle;
         debugBoxSize = new Vector2(attackRange, 1);
         debugBoxUntil = Time.time + 1f;
+    }
+
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        attackDebounce = false;
     }
 
     void OnDrawGizmos()
