@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,13 +18,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Sprite[] helmetSprites;
     [SerializeField] private Rigidbody2D protagBody;
     private enum Facing { South, North, East, West };
-    private Facing lockedFacing = Facing.South;
+    private List<Facing> faceList = new();
+    public Boolean combatMode = false; 
     void Start()
     {
-
     }
 
-    // Update is called once per frame
+    // Update is called once per frameI'm 
     void Update()
     {  
         // conditional: if key is pressed ? 1 if true, 0 if false
@@ -33,35 +35,134 @@ public class PlayerMovement : MonoBehaviour
 
         // normalize resultant vector. does nothing if x 1 but y 0 or vice versa, but necessary
         // when x and y are both 1 as a diagonal vector of (1, 1) is 1.5x faster than a regular horizontal/vertical movement
-        // transform.position += step.normalized * distanceThisFrame;
+        
+        // now for combat mode toggles
+        if (Keyboard.current.digit1Key.wasPressedThisFrame == true)
+        {
+            if(combatMode == false)
+            {
+                combatMode = true;
+                Debug.Log($"Combat Mode: {combatMode}");
+            }
+            else
+            {
+                combatMode = false;
+                Debug.Log($"Combat Mode: {combatMode}");
+            }
+        }
 
         // now for sprite facing
-        // TODO: compress this, low priority
+        ProcessFacing();
+
+        // override if combat mode
+        if (combatMode == true)
+        {
+            CombatModeFacing();
+        }
+        else
+        {
+            DisplayFacing();
+        }
+
+    }
+
+    void ProcessFacing()
+    {
         if (Keyboard.current.wKey.wasPressedThisFrame == true)
         { 
-            lockedFacing = Facing.North;
             SetFacing(Facing.North);
         }
         if (Keyboard.current.dKey.wasPressedThisFrame == true)
         { 
-            lockedFacing = Facing.East;
             SetFacing(Facing.East);
         }
         if (Keyboard.current.sKey.wasPressedThisFrame == true)
         { 
-            lockedFacing = Facing.South;
             SetFacing(Facing.South);
         }
         if (Keyboard.current.aKey.wasPressedThisFrame == true)
         { 
-            lockedFacing = Facing.West;
             SetFacing(Facing.West);
+        }
+        if (Keyboard.current.wKey.wasReleasedThisFrame == true)
+        { 
+            RemoveFacing(Facing.North);
+        }
+        if (Keyboard.current.dKey.wasReleasedThisFrame == true)
+        { 
+            RemoveFacing(Facing.East);
+        }
+        if (Keyboard.current.sKey.wasReleasedThisFrame == true)
+        { 
+            RemoveFacing(Facing.South);
+        }
+        if (Keyboard.current.aKey.wasReleasedThisFrame == true)
+        { 
+            RemoveFacing(Facing.West);
         }
     }
 
+    // sprite facing handling when out of combat
+    // functional programming abstractions so I know generally what each function does
+
     void SetFacing(Facing face)
     {
-        int index = (int)face;
+        faceList.Add(face);
+    }
+
+    void RemoveFacing(Facing face)
+    {
+        faceList.Remove(face);
+    }
+
+    void DisplayFacing()
+    {
+        if (faceList.Count > 0)
+        {
+            int index = (int) faceList[^1];
+            suitRenderer.sprite = suitSprites[index];
+            helmetRenderer.sprite = helmetSprites[index];
+        }
+    }
+
+    // special method to deal with sprite facing when combat mode is active
+    // ideally if a player is shooting they shouldnt be shooting out their backsides
+    // likely this script will be used for mob attacks in a modified way so im getting
+    // this out of the way first
+
+    void CombatModeFacing()
+    {
+        Vector2 mouseScreen = Mouse.current.position.ReadValue(); // reads pixel perfect position of mouse
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
+        Vector2 toMouse = mouseWorld - transform.position; // constructs the vector from player to mouse
+        if (Mathf.Abs(toMouse.x) > Mathf.Abs(toMouse.y)) // check horizontal
+        {
+            if(toMouse.x >= 0)
+            {
+                CombatModeDisplayFacing(Facing.East);
+            }
+            else
+            {
+                CombatModeDisplayFacing(Facing.West);
+            }
+        }
+        else
+        {
+            if(toMouse.y >= 0)
+            {
+                CombatModeDisplayFacing(Facing.North);
+            }
+            else
+            {
+                CombatModeDisplayFacing(Facing.South);
+            }
+        }
+
+    }
+
+    void CombatModeDisplayFacing(Facing face)
+    {
+        int index = (int) face;
         suitRenderer.sprite = suitSprites[index];
         helmetRenderer.sprite = helmetSprites[index];
     }
