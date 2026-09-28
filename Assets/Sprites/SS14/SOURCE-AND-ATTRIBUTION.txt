@@ -2,7 +2,7 @@ SS14/Frontier texture subset for NTExpedition
 Source repository: /home/dan/Documents/SS1/frontier-station-14
 Repository revision: 93da5661d3f39d00dbd34ede80332ef757a566a4
 
-The original per-RSI license and copyright statements are in each source-meta.json. Tile license and copyright are in Hull/source-attributions.yml (entry for hull and hull_reinforced.png). Every selected file is CC-BY-SA-3.0 according to those source records. Source sheets copied without modification; Unity import/slicing does not change the source PNG.
+The original per-RSI license and copyright statements are in each source-meta.json (including SolidWalls/source-meta.json). Tile license and copyright are in Hull/source-attributions.yml (entries for hull.png, hull_reinforced.png, and steel.png). Every selected file is CC-BY-SA-3.0 according to those source records. Source sheets copied without modification; Unity import/slicing does not change the source PNG.
 
 MiningHardsuit/Suit/equipped-OUTERCLOTHING.png
   Resources/Textures/Clothing/OuterClothing/Hardsuits/salvage.rsi/equipped-OUTERCLOTHING.png
@@ -14,6 +14,10 @@ FleshGolem/golem.png and golem2.png
   Resources/Textures/_NF/Mobs/Aliens/flesh.rsi/golem.png and golem2.png
 Hull/hull.png and hull_reinforced.png
   Resources/Textures/Tiles/
+Hull/steel.png
+  Resources/Textures/Tiles/steel.png (128x32 sheet, four 32x32 cells; Unity slicing not yet applied)
+SolidWalls/full.png and solid0.png through solid7.png
+  Resources/Textures/_NF/Structures/Walls/solid.rsi/ (32x32 full tile; solid0..7 are 64x64 sheets of four directional 32x32 sprites each; Unity slicing and colliders not yet applied)
 
 RSI format reference: https://docs.spacestation14.com/en/specifications/robust-station-image.html
 For these chosen sheets, meta.json specifies 32x32 source frames; four-direction states are ordered South, North, East, West, laid out top-left to bottom-right. Animated states (such as golem) also have multiple frames per direction; consult source-meta.json rather than assuming one tile per facing.
