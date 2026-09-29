@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Reflection.Metadata.Ecma335;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,9 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] float attackDamage;
     [SerializeField] float attackCooldown;
     [SerializeField] float shoveDistance;
+    [SerializeField] float shoveDuration;
+    private Rigidbody2D protagBody;
+    private PlayerMovement playerMovement;
 
     // AI-generated debug visualization only; mirrors the shove query.
     private Vector2 debugBoxCenter;
@@ -21,7 +25,8 @@ public class UnarmedCombat : MonoBehaviour
 
     void Start()
     {
-        
+        protagBody = GetComponent<Rigidbody2D>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -34,13 +39,21 @@ public class UnarmedCombat : MonoBehaviour
         if(Mouse.current.leftButton.wasPressedThisFrame == true && !attackDebounce)
         {
             // punch isn't done yet, but not necessary for checkoff
-            Punch();
+            if(playerMovement.combatMode == true)
+            {
+                Punch();
+                attackDebounce = true;
+                StartCoroutine(Cooldown());
+            }
         }
         if(Mouse.current.rightButton.wasPressedThisFrame == true && !attackDebounce)
         {
-            Shove();
-            attackDebounce = true;
-            StartCoroutine(Cooldown());
+            if(playerMovement.combatMode == true)
+            {
+                Shove();
+                attackDebounce = true;
+                StartCoroutine(Cooldown());
+            }
         }
     }
 
@@ -58,13 +71,33 @@ public class UnarmedCombat : MonoBehaviour
         Vector2 hitboxPosition = godHelpMe + toMouse.normalized * (attackRange / 2);
         float angle = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
         Collider2D[] allHit = Physics2D.OverlapBoxAll(hitboxPosition, new Vector2(attackRange, 1), angle);
-        Debug.Log($"Entities hit: {allHit}");
 
         // AI-generated debug visualization only: show this shove box for one second.
         debugBoxCenter = hitboxPosition;
         debugBoxAngle = angle;
         debugBoxSize = new Vector2(attackRange, 1);
         debugBoxUntil = Time.time + 1f;
+
+        foreach(Collider2D hit in allHit)
+        {
+            if(hit.attachedRigidbody == protagBody || hit.attachedRigidbody == null)
+            {
+                continue;
+            }
+            Debug.Log($"Entities hit: {hit}");
+            Rigidbody2D targetBody = hit.attachedRigidbody;
+            Vector2 impulseVector = toMouse.normalized * shoveDistance;
+            MobMovement mobMovement = targetBody.GetComponent<MobMovement>();
+            if(mobMovement != null)
+            {
+                mobMovement.OnShove(impulseVector, shoveDuration);
+            }
+            else
+            {
+                targetBody.AddForce(impulseVector, ForceMode2D.Impulse);
+            }
+        }
+
     }
 
     IEnumerator Cooldown()
