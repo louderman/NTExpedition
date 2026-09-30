@@ -90,7 +90,7 @@ public class UnarmedCombat : MonoBehaviour
             Debug.Log($"Entities hit: {hit}");
             Rigidbody2D targetBody = hit.attachedRigidbody;
             Vector2 impulseVector = toMouse.normalized * shoveStrength;
-            MobMovement mobMovement = targetBody.GetComponent<MobMovemWoent>();
+            MobMovement mobMovement = targetBody.GetComponent<MobMovement>();
             if(mobMovement != null)
             {
                 mobMovement.OnShove(impulseVector, shoveDuration);
