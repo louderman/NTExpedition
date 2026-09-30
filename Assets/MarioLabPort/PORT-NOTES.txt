@@ -1,0 +1,23 @@
+MarioLab UI port
+
+Contents
+- MarioLabUI.prefab: the Canvas from Dan's Mario lab, including live score text, inactive GameOverPanel, final-score text, and Restart button.
+- Required TextMesh Pro asset dependencies.
+
+Intentionally removed
+- Restart Button's old persistent callback to Mario PlayerMovement.
+- Mario PlayerMovement.cs and JumpOverGoomba.cs are not ported; NTExpedition already has a PlayerMovement class and Mario's jump/ground logic does not belong there.
+
+After import
+1. Drag MarioLabUI.prefab into the NTExpedition scene.
+2. Ensure the scene has an EventSystem using InputSystemUIInputModule.
+3. Create/attach Dan's NTExpedition ScoreManager and GameOver controller.
+4. Bind live-score and final-score TMP fields.
+5. Bind Restart Button OnClick to the new restart callback.
+6. Keep GameOverPanel inactive initially.
+
+Lethal-creature rule
+- Add a serialized lethal flag to the mob data/behavior and expose it read-only.
+- Player collision asks the contacted MobMovement whether it is lethal.
+- FleshGolem lethal=true; FleshHugger lethal=false.
+- NTExpedition uses physical colliders, so use OnCollisionEnter2D rather than Mario's trigger callback.
