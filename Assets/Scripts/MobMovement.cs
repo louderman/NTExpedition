@@ -1,10 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.Serialization;
-using Mono.Cecil;
-using Unity.Mathematics;
 using UnityEngine;
 
 // note, eventually I want to add a player detection system as well.
@@ -73,7 +69,6 @@ public class MobMovement : MonoBehaviour
     {
         if(mobAnimator != null)
         {
-            Debug.Log("Animator is found");
             int index = (int) face;
             mobAnimator.SetInteger("Facing", index);
         }
