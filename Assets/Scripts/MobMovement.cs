@@ -36,6 +36,11 @@ public class MobMovement : MonoBehaviour
         MobLogic();
     }
 
+    public void SetTarget(GameObject target)                                                                                                                                                                                                                                               
+    {                                                                                                                                                                                                                                                                                      
+         protagObject = target;                                                                                                                                                                                                                                                             
+    }
+
 
     void ProcessFacing(Vector3 toTarget)
     {
