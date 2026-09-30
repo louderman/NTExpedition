@@ -17,6 +17,8 @@ public class MobMovement : MonoBehaviour
     private int x;
     private int y;
     private Boolean isStunned;
+    private Coroutine recoveryCoroutine;
+    private Quaternion uprightRotation;
     [SerializeField] private SpriteRenderer mobRenderer;                                                                                                                                          
     [SerializeField] private Sprite[] mobSprites;
     [SerializeField] private GameObject protagObject;
@@ -26,6 +28,8 @@ public class MobMovement : MonoBehaviour
     private List<Facing> faceList = new();
     void Start()
     {
+        recoveryCoroutine = null;
+        uprightRotation = mobRenderer.transform.localRotation;
     }
 
     // Update is called once per frameI'm 
@@ -110,41 +114,56 @@ public class MobMovement : MonoBehaviour
     {
         // probably will be expanded to include other things.
         // for now, only shove matters.
-        isStunned = true;
         mobBody.AddForce(impulseVector, ForceMode2D.Impulse);
         Quaternion startingRotation = mobRenderer.transform.localRotation;
         Quaternion finalRotation;
-        if(Mathf.Abs(impulseVector.x) > Mathf.Abs(impulseVector.y))
+        if(isStunned == true)
         {
-            if(impulseVector.x >= 0)
+            if(recoveryCoroutine != null)
             {
-                finalRotation = Quaternion.Euler(0f, 0f, -90f);
-            }
-            else
-            {
-                finalRotation = Quaternion.Euler(0f, 0f, 90f);
+                StopCoroutine(recoveryCoroutine);
+                StartCoroutine(RecoverFromShove(shoveDuration));
             }
         }
         else
         {
-            if(impulseVector.y >= 0)
+            isStunned = true;
+            if(Mathf.Abs(impulseVector.x) > Mathf.Abs(impulseVector.y))
             {
-                finalRotation = Quaternion.Euler(0f, 0f, -90f);
+                if(impulseVector.x >= 0)
+                {
+                    finalRotation = Quaternion.Euler(0f, 0f, -90f);
+                }
+                else
+                {
+                    finalRotation = Quaternion.Euler(0f, 0f, 90f);
+                }
             }
             else
             {
-                finalRotation = Quaternion.Euler(0f, 0f, 90f);
+                if(impulseVector.y >= 0)
+                {
+                    finalRotation = Quaternion.Euler(0f, 0f, -90f);
+                }
+                else
+                {
+                    finalRotation = Quaternion.Euler(0f, 0f, 90f);
+                }
             }
+            recoveryCoroutine = StartCoroutine(RecoverFromShove(shoveDuration));
+            StartCoroutine(AnimateRotateSprite(startingRotation, finalRotation, 0.3f));
         }
-        StartCoroutine(Stunned(shoveDuration, finalRotation, startingRotation));
-        StartCoroutine(AnimateRotateSprite(startingRotation, finalRotation, 0.3f));
+        
     }
-
-    IEnumerator Stunned(float time, Quaternion fallRotation, Quaternion uprightRotation)
+    IEnumerator RecoverFromShove(float stunDuration)
     {
-        yield return new WaitForSeconds(time); // wait for this long before coming back here
+        yield return new WaitForSeconds(stunDuration);
+
+        Quaternion currentRotation = mobRenderer.transform.localRotation;
+        yield return StartCoroutine(AnimateRotateSprite(currentRotation, uprightRotation, 0.3f));
+
         isStunned = false;
-        StartCoroutine(AnimateRotateSprite(fallRotation, uprightRotation, 0.3f));
+        recoveryCoroutine = null;
     }
     void FixedUpdate()
     {

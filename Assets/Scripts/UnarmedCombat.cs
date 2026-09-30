@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -16,6 +17,7 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] float shoveStrength;
     [SerializeField] float shoveDuration;
     [SerializeField] private AudioSource shoveAudio;
+    [SerializeField] private GameObject shoveFX;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
 
@@ -74,6 +76,10 @@ public class UnarmedCombat : MonoBehaviour
         float angle = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
         Collider2D[] allHit = Physics2D.OverlapBoxAll(hitboxPosition, new Vector2(attackRange, 1), angle);
 
+        Quaternion hitboxRotation = Quaternion.Euler(0f, 0f, angle - 90f);
+        GameObject effect = Instantiate(shoveFX, hitboxPosition, hitboxRotation);
+        Destroy(effect, 0.3f);
+
         // AI-generated debug visualization only: show this shove box for one second.
         debugBoxCenter = hitboxPosition;
         debugBoxAngle = angle;
@@ -108,8 +114,8 @@ public class UnarmedCombat : MonoBehaviour
         SpriteRenderer spriteChild = protagBody.GetComponentInChildren<SpriteRenderer>();
         Vector3 originVector = spriteChild.transform.localPosition;
         Vector3 impulseVector3 = new(impulseVector.x, impulseVector.y, 0f);
-        Vector3 destinationVector = spriteChild.transform.localPosition + impulseVector3.normalized;
-        StartCoroutine(PlayShoveAnimation(originVector, destinationVector * 0.3f));
+        Vector3 destinationVector = spriteChild.transform.localPosition + impulseVector3.normalized * 0.3f;
+        StartCoroutine(PlayShoveAnimation(originVector, destinationVector));
     }
 
     IEnumerator Cooldown(float time, Boolean debounceTriggered)
