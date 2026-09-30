@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
 using Mono.Cecil;
+using Unity.Mathematics;
 using UnityEngine;
 
 // note, eventually I want to add a player detection system as well.
@@ -111,7 +112,7 @@ public class MobMovement : MonoBehaviour
         // for now, only shove matters.
         isStunned = true;
         mobBody.AddForce(impulseVector, ForceMode2D.Impulse);
-        Quaternion startingRotation = mobRenderer.transform.rotation;
+        Quaternion startingRotation = mobRenderer.transform.localRotation;
         Quaternion finalRotation;
         if(Mathf.Abs(impulseVector.x) > Mathf.Abs(impulseVector.y))
         {
@@ -135,20 +136,21 @@ public class MobMovement : MonoBehaviour
                 finalRotation = Quaternion.Euler(0f, 0f, 90f);
             }
         }
-        StartCoroutine(Stunned(shoveDuration));
-        StartCoroutine(AnimateFallProne(startingRotation, finalRotation, shoveDuration));
+        StartCoroutine(Stunned(shoveDuration, finalRotation, startingRotation));
+        StartCoroutine(AnimateRotateSprite(startingRotation, finalRotation, 0.3f));
     }
 
-    IEnumerator Stunned(float time)
+    IEnumerator Stunned(float time, Quaternion fallRotation, Quaternion uprightRotation)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time); // wait for this long before coming back here
         isStunned = false;
+        StartCoroutine(AnimateRotateSprite(fallRotation, uprightRotation, 0.3f));
     }
     void FixedUpdate()
     {
     }
 
-    IEnumerator AnimateFallProne(Quaternion start, Quaternion target, float duration)
+    IEnumerator AnimateRotateSprite(Quaternion start, Quaternion target, float duration)
     {
         float elapsed = 0f; // state survives between Coroutine resumes
 
@@ -159,14 +161,9 @@ public class MobMovement : MonoBehaviour
 
             mobRenderer.transform.localRotation = Quaternion.Slerp(start, target, progress);
 
-            yield return null;
+            yield return null; // resume loop on the next frame
         }
 
         mobRenderer.transform.localRotation = target;
-    }
-
-    void GetUp()
-    {
-
     }
 }
