@@ -20,6 +20,10 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private GameObject protagObject;
     [SerializeField] private Animator mobAnimator;
     [SerializeField] private Rigidbody2D mobBody;
+    [SerializeField] private bool lethal;
+    [SerializeField] private int shoveScore;
+    public bool IsLethal => lethal && !isStunned;
+    public int ShoveScore => shoveScore;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
     void Start()

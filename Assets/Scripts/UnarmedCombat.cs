@@ -18,6 +18,7 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] float shoveDuration;
     [SerializeField] private AudioSource shoveAudio;
     [SerializeField] private GameObject shoveFX;
+    [SerializeField] private ScoreManager scoreManager;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
 
@@ -101,13 +102,14 @@ public class UnarmedCombat : MonoBehaviour
             if(mobMovement != null)
             {
                 mobMovement.OnShove(impulseVector, shoveDuration);
+                scoreManager.AddScore(mobMovement.ShoveScore);
             }
             else
             {
                 targetBody.AddForce(impulseVector, ForceMode2D.Impulse);
             }
         }
-        if(allHit.Count<Collider2D>() > 0)
+        if(allHit.Count() > 0)
         {
             shoveAudio.Play();
         }
