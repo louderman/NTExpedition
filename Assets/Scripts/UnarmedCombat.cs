@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] float attackCooldown;
     [SerializeField] float shoveStrength;
     [SerializeField] float shoveDuration;
+    [SerializeField] private AudioSource shoveAudio;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
 
@@ -88,7 +90,7 @@ public class UnarmedCombat : MonoBehaviour
             Debug.Log($"Entities hit: {hit}");
             Rigidbody2D targetBody = hit.attachedRigidbody;
             Vector2 impulseVector = toMouse.normalized * shoveStrength;
-            MobMovement mobMovement = targetBody.GetComponent<MobMovement>();
+            MobMovement mobMovement = targetBody.GetComponent<MobMovemWoent>();
             if(mobMovement != null)
             {
                 mobMovement.OnShove(impulseVector, shoveDuration);
@@ -98,6 +100,11 @@ public class UnarmedCombat : MonoBehaviour
                 targetBody.AddForce(impulseVector, ForceMode2D.Impulse);
             }
         }
+        if(allHit.Count<Collider2D>() > 0)
+        {
+            shoveAudio.Play();
+        }
+        
 
     }
 

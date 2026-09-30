@@ -1,0 +1,15 @@
+{
+  "file": "punch3.ogg",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station (Space Station 13). Original individual creator not identified.",
+  "source": "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/weapons/punch3.ogg",
+  "licenseSource": "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/README.md#license",
+  "importedFrom": {
+    "repository": "https://github.com/new-frontiers-14/frontier-station-14",
+    "revision": "93da5661d3f39d00dbd34ede80332ef757a566a4",
+    "path": "Resources/Audio/Weapons/punch3.ogg"
+  },
+  "sha256": "fedcaccf3c4a6335d3875f3e13238093441f441f6af3e85f4489bbe1215f33ae",
+  "changes": "None; byte-identical to the linked source audio.",
+  "metadataOrigin": "NTExpedition project record; not an upstream metadata file. License follows the linked source repository's asset declaration; no file-specific exception found."
+}
