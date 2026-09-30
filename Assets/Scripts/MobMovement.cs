@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
+using Mono.Cecil;
 using UnityEngine;
 
 // note, eventually I want to add a player detection system as well.
@@ -20,7 +21,6 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private GameObject protagObject;
     [SerializeField] private Animator mobAnimator;
     [SerializeField] private Rigidbody2D mobBody;
-
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
     void Start()
@@ -111,7 +111,32 @@ public class MobMovement : MonoBehaviour
         // for now, only shove matters.
         isStunned = true;
         mobBody.AddForce(impulseVector, ForceMode2D.Impulse);
+        Quaternion startingRotation = mobRenderer.transform.rotation;
+        Quaternion finalRotation;
+        if(Mathf.Abs(impulseVector.x) > Mathf.Abs(impulseVector.y))
+        {
+            if(impulseVector.x >= 0)
+            {
+                finalRotation = Quaternion.Euler(0f, 0f, -90f);
+            }
+            else
+            {
+                finalRotation = Quaternion.Euler(0f, 0f, 90f);
+            }
+        }
+        else
+        {
+            if(impulseVector.y >= 0)
+            {
+                finalRotation = Quaternion.Euler(0f, 0f, -90f);
+            }
+            else
+            {
+                finalRotation = Quaternion.Euler(0f, 0f, 90f);
+            }
+        }
         StartCoroutine(Stunned(shoveDuration));
+        StartCoroutine(AnimateFallProne(startingRotation, finalRotation, shoveDuration));
     }
 
     IEnumerator Stunned(float time)
@@ -121,5 +146,27 @@ public class MobMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+    }
+
+    IEnumerator AnimateFallProne(Quaternion start, Quaternion target, float duration)
+    {
+        float elapsed = 0f; // state survives between Coroutine resumes
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = elapsed / duration;
+
+            mobRenderer.transform.localRotation = Quaternion.Slerp(start, target, progress);
+
+            yield return null;
+        }
+
+        mobRenderer.transform.localRotation = target;
+    }
+
+    void GetUp()
+    {
+
     }
 }

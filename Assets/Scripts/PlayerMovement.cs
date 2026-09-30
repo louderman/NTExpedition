@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D protagBody;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
+    public Vector2 currentlyFacing = new(0f, 0f);
     public Boolean combatMode = false; 
     void Start()
     {
@@ -135,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mouseScreen = Mouse.current.position.ReadValue(); // reads pixel perfect position of mouse
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
         Vector2 toMouse = mouseWorld - transform.position; // constructs the vector from player to mouse
+        currentlyFacing = toMouse;
         if (Mathf.Abs(toMouse.x) > Mathf.Abs(toMouse.y)) // check horizontal
         {
             if(toMouse.x >= 0)
