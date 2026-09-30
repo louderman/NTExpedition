@@ -43,12 +43,10 @@ public class PlayerMovement : MonoBehaviour
             if(combatMode == false)
             {
                 combatMode = true;
-                Debug.Log($"Combat Mode: {combatMode}");
             }
             else
             {
                 combatMode = false;
-                Debug.Log($"Combat Mode: {combatMode}");
             }
         }
 

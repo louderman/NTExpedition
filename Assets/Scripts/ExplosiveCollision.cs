@@ -6,32 +6,38 @@ using UnityEngine.Jobs;
 
 public class ExplosiveCollision : MonoBehaviour
 {
-    [SerializeField] Boolean isExplosive;
     [SerializeField] GameObject explosionFX;
+    private MobMovement mobMovement;
     private bool explosionTriggered;
     void Start()
     {
-        
+        mobMovement = GetComponent<MobMovement>();
+        explosionTriggered = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"Collision callback: {collision.gameObject.name}");    
-        if(explosionTriggered == true)
+        // 
+        if(explosionTriggered)
         {
-            return;
+            return; // it already exploded
         }
         else
         {
-            if(collision.gameObject.CompareTag("FleshGolem") == true)
+            if(collision.gameObject.CompareTag("FleshGolem") && mobMovement.isStunned)
             {
-                GameObject effect = Instantiate(explosionFX, transform.localPosition, transform.localRotation);
+                Vector2 explosionPosition = collision.GetContact(0).point;
+                GameObject effect = Instantiate(explosionFX, explosionPosition, Quaternion.identity);
                 Destroy(effect, 0.6f);
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                explosionTriggered = true;
             }
         }
     }

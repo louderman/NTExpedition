@@ -1410,7 +1410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2346baec2858587ac0be4b849b586b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosiveCollision
-  isExplosive: 1
   explosionFX: {fileID: 4392614728486612944, guid: 3f29297ff00a9bb7b975ab464c1bfc63, type: 3}
 --- !u!1 &1718987721
 GameObject:

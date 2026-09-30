@@ -12,7 +12,7 @@ public class MobMovement : MonoBehaviour
     private float distanceThisFrame;
     private int x;
     private int y;
-    private Boolean isStunned;
+    public Boolean isStunned;
     private Coroutine recoveryCoroutine;
     private Quaternion uprightRotation;
     [SerializeField] private SpriteRenderer mobRenderer;                                                                                                                                          
