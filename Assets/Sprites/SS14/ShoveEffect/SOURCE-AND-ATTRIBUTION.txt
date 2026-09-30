@@ -1,0 +1,8 @@
+disarm.png
+Source repository: https://github.com/new-frontiers-14/frontier-station-14
+Source revision: 93da5661d3f39d00dbd34ede80332ef757a566a4
+Source path: Resources/Textures/Effects/arcs.rsi/disarm.png
+License: CC-BY-SA-3.0, per original source-meta.json (copied unmodified from RSI meta.json).
+Copyright: Taken from https://github.com/tgstation/tgstation/raw/c545428822f1ee0d402b812221518632dbe198cb/icons/effects/effects.dmi with offsets modified
+Changes by NTExpedition: none to PNG; byte-verified source copy. Unity import/slicing not yet verified.
+Frames: three directionless 32x32 frames, each 0.1 seconds per original metadata.

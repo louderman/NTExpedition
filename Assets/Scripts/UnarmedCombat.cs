@@ -45,7 +45,7 @@ public class UnarmedCombat : MonoBehaviour
             {
                 Punch();
                 attackDebounce = true;
-                StartCoroutine(Cooldown());
+                StartCoroutine(Cooldown(attackCooldown, true));
             }
         }
         if(Mouse.current.rightButton.wasPressedThisFrame == true && !attackDebounce)
@@ -54,7 +54,7 @@ public class UnarmedCombat : MonoBehaviour
             {
                 Shove();
                 attackDebounce = true;
-                StartCoroutine(Cooldown());
+                StartCoroutine(Cooldown(attackCooldown, true));
             }
         }
     }
@@ -81,6 +81,8 @@ public class UnarmedCombat : MonoBehaviour
         debugBoxUntil = Time.time + 1f;
         // end of AI generated code
 
+        Vector2 impulseVector = toMouse.normalized * shoveStrength;
+
         foreach(Collider2D hit in allHit)
         {
             if(hit.attachedRigidbody == protagBody || hit.attachedRigidbody == null)
@@ -89,7 +91,6 @@ public class UnarmedCombat : MonoBehaviour
             }
             Debug.Log($"Entities hit: {hit}");
             Rigidbody2D targetBody = hit.attachedRigidbody;
-            Vector2 impulseVector = toMouse.normalized * shoveStrength;
             MobMovement mobMovement = targetBody.GetComponent<MobMovement>();
             if(mobMovement != null)
             {
@@ -104,14 +105,49 @@ public class UnarmedCombat : MonoBehaviour
         {
             shoveAudio.Play();
         }
-        
-
+        SpriteRenderer spriteChild = protagBody.GetComponentInChildren<SpriteRenderer>();
+        Vector3 originVector = spriteChild.transform.localPosition;
+        Vector3 impulseVector3 = new(impulseVector.x, impulseVector.y, 0f);
+        Vector3 destinationVector = spriteChild.transform.localPosition + impulseVector3.normalized;
+        StartCoroutine(PlayShoveAnimation(originVector, destinationVector * 0.3f));
     }
 
-    IEnumerator Cooldown()
+    IEnumerator Cooldown(float time, Boolean debounceTriggered)
     {
-        yield return new WaitForSeconds(attackCooldown);
-        attackDebounce = false;
+        yield return new WaitForSeconds(time);
+        if(debounceTriggered == true)
+        {
+            attackDebounce = false;
+        }
+        
+    }
+
+    IEnumerator Cooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+
+    IEnumerator PlayShoveAnimation(Vector3 originVector, Vector3 destinationVector)
+    {
+        yield return StartCoroutine(AnimateMoveSprite(originVector, destinationVector));
+        yield return StartCoroutine(AnimateMoveSprite(destinationVector, originVector));      
+    }
+
+    IEnumerator AnimateMoveSprite(Vector3 originVector, Vector3 destinationVector)
+    {
+        SpriteRenderer[] protagSprites = protagBody.GetComponentsInChildren<SpriteRenderer>();
+        float elapsed = 0f; // state survives between Coroutine resumesThe
+        float duration = 0.1f; // hard coded shove animation; will be the same for melee attacks in general
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = elapsed / duration;
+            foreach(SpriteRenderer sprite in protagSprites)
+            {
+                sprite.transform.localPosition =  Vector3.Lerp(originVector, destinationVector, progress);
+            }
+            yield return null; // resume loop on the next frame
+        }
     }
 
     // ai generated code
