@@ -12,6 +12,13 @@ PKACannon/wielded-inhand-right.png and icon.png
   Resources/Textures/_NF/Objects/Weapons/Guns/Basic/kinetic_accelerator_cannon.rsi/
 FleshGolem/golem.png and golem2.png
   Resources/Textures/_NF/Mobs/Aliens/flesh.rsi/golem.png and golem2.png
+FleshLover/lover.png and FleshShared/dead.png
+  Resources/Textures/_NF/Mobs/Aliens/flesh.rsi/lover.png and dead.png
+  Source revision: 93da5661d3f39d00dbd34ede80332ef757a566a4
+  Unmodified PNG copies; CC-BY-SA-3.0. Full original attribution retained in each folder's source-meta.json.
+  lover: EmoGarbage404; original concepts/designs Aleksh#7552; resprite and rudimentary animation erhardsteinhauer.
+  dead: wax391; shared death sprite for flesh mobs.
+  lover.png is 32x64 (two vertically stacked 32x32 frames, delays 1.3s and 0.2s); dead.png is 32x32. Unity import settings/slicing not yet applied.
 Hull/hull.png and hull_reinforced.png
   Resources/Textures/Tiles/
 Hull/steel.png
