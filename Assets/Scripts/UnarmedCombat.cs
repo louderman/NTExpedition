@@ -12,7 +12,7 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] float attackDamage;
     [SerializeField] float attackCooldown;
-    [SerializeField] float shoveDistance;
+    [SerializeField] float shoveStrength;
     [SerializeField] float shoveDuration;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
@@ -77,6 +77,7 @@ public class UnarmedCombat : MonoBehaviour
         debugBoxAngle = angle;
         debugBoxSize = new Vector2(attackRange, 1);
         debugBoxUntil = Time.time + 1f;
+        // end of AI generated code
 
         foreach(Collider2D hit in allHit)
         {
@@ -86,7 +87,7 @@ public class UnarmedCombat : MonoBehaviour
             }
             Debug.Log($"Entities hit: {hit}");
             Rigidbody2D targetBody = hit.attachedRigidbody;
-            Vector2 impulseVector = toMouse.normalized * shoveDistance;
+            Vector2 impulseVector = toMouse.normalized * shoveStrength;
             MobMovement mobMovement = targetBody.GetComponent<MobMovement>();
             if(mobMovement != null)
             {
@@ -106,6 +107,7 @@ public class UnarmedCombat : MonoBehaviour
         attackDebounce = false;
     }
 
+    // ai generated code
     void OnDrawGizmos()
     {
         if (!Application.isPlaying || Time.time > debugBoxUntil) return;
@@ -117,4 +119,5 @@ public class UnarmedCombat : MonoBehaviour
         Gizmos.DrawWireCube(Vector3.zero, debugBoxSize);
         Gizmos.matrix = previousMatrix;
     }
+    // end of ai generated code
 }
