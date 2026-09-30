@@ -7,6 +7,7 @@ using UnityEngine.Jobs;
 public class ExplosiveCollision : MonoBehaviour
 {
     [SerializeField] GameObject explosionFX;
+    [SerializeField] private AudioClip explosionSound;
     private MobMovement mobMovement;
     private bool explosionTriggered;
     void Start()
@@ -34,6 +35,7 @@ public class ExplosiveCollision : MonoBehaviour
             {
                 Vector2 explosionPosition = collision.GetContact(0).point;
                 GameObject effect = Instantiate(explosionFX, explosionPosition, Quaternion.identity);
+                AudioSource.PlayClipAtPoint(explosionSound, explosionPosition);
                 Destroy(effect, 0.6f);
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
