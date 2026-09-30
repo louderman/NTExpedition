@@ -68,7 +68,9 @@ public class MobMovement : MonoBehaviour
     {
         if(mobAnimator != null)
         {
-            // draft out animation handling here
+            Debug.Log("Animator is found");
+            int index = (int) face;
+            mobAnimator.SetInteger("Facing", index);
         }
         else
         {
