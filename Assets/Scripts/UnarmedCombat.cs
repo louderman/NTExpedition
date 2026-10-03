@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using Unity.VisualScripting;
-using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class UnarmedCombat : MonoBehaviour
 {
@@ -59,6 +56,22 @@ public class UnarmedCombat : MonoBehaviour
                 attackDebounce = true;
                 StartCoroutine(Cooldown(attackCooldown, true));
             }
+        }
+    }
+    
+    public void applyInput(int input)
+    {
+        if(input == 1 && !attackDebounce)
+        {
+            Punch();
+            attackDebounce = true;
+            StartCoroutine(Cooldown(attackCooldown, true));
+        }
+        if(input == 2 && !attackDebounce)
+        {
+            Shove();
+            attackDebounce = true;
+            StartCoroutine(Cooldown(attackCooldown, true));
         }
     }
 
@@ -120,6 +133,9 @@ public class UnarmedCombat : MonoBehaviour
         StartCoroutine(PlayShoveAnimation(originVector, destinationVector));
     }
 
+
+    // TODO: probably abstract these out, these are basically functions that are meant to play
+    // regardless of the weapon.
     IEnumerator Cooldown(float time, Boolean debounceTriggered)
     {
         yield return new WaitForSeconds(time);

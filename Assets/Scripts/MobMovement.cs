@@ -22,6 +22,7 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D mobBody;
     [SerializeField] private bool lethal;
     [SerializeField] private int shoveScore;
+    [SerializeField] private bool directionless;
     public bool IsLethal => lethal && !isStunned;
     public int ShoveScore => shoveScore;
     private enum Facing { South, North, East, West };
@@ -84,8 +85,11 @@ public class MobMovement : MonoBehaviour
         else
         {
             // fallback to static sprite handling
-            int index = (int) face;
-            mobRenderer.sprite = mobSprites[index];
+            if(!directionless)
+            {
+                int index = (int) face;
+                mobRenderer.sprite = mobSprites[index];
+            }
         }
         
     }
