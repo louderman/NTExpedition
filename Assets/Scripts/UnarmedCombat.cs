@@ -34,40 +34,17 @@ public class UnarmedCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // draft out inputs
-        // and hope this works!
-        // also btw to future me
-        // x == false can be represented as !x
-        if(Mouse.current.leftButton.wasPressedThisFrame == true && !attackDebounce)
-        {
-            // punch isn't done yet, but not necessary for checkoff
-            if(playerMovement.combatMode == true)
-            {
-                Punch();
-                attackDebounce = true;
-                StartCoroutine(Cooldown(attackCooldown, true));
-            }
-        }
-        if(Mouse.current.rightButton.wasPressedThisFrame == true && !attackDebounce)
-        {
-            if(playerMovement.combatMode == true)
-            {
-                Shove();
-                attackDebounce = true;
-                StartCoroutine(Cooldown(attackCooldown, true));
-            }
-        }
     }
     
-    public void applyInput(int input)
+    public void ApplyInput(WeaponController.AttackType attackType)
     {
-        if(input == 1 && !attackDebounce)
+        if(attackType == WeaponController.AttackType.PrimaryAttack && !attackDebounce)
         {
             Punch();
             attackDebounce = true;
             StartCoroutine(Cooldown(attackCooldown, true));
         }
-        if(input == 2 && !attackDebounce)
+        if(attackType == WeaponController.AttackType.SecondaryAttack && !attackDebounce)
         {
             Shove();
             attackDebounce = true;

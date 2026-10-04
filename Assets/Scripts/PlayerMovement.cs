@@ -37,19 +37,6 @@ public class PlayerMovement : MonoBehaviour
         // normalize resultant vector. does nothing if x 1 but y 0 or vice versa, but necessary
         // when x and y are both 1 as a diagonal vector of (1, 1) is 1.5x faster than a regular horizontal/vertical movement
         
-        // now for combat mode toggles
-        if (Keyboard.current.digit1Key.wasPressedThisFrame == true)
-        {
-            if(combatMode == false)
-            {
-                combatMode = true;
-            }
-            else
-            {
-                combatMode = false;
-            }
-        }
-
         // now for sprite facing
         ProcessFacing();
 
@@ -165,6 +152,18 @@ public class PlayerMovement : MonoBehaviour
         int index = (int) face;
         suitRenderer.sprite = suitSprites[index];
         helmetRenderer.sprite = helmetSprites[index];
+    }
+
+    public void ToggleCombat()
+    {
+        if(combatMode)
+        {
+            combatMode = false;
+        }
+        else
+        {
+            combatMode = true;
+        }
     }
 
     void MoveBody(int x, int y)
