@@ -18,6 +18,7 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
+    private ActionManager actionManager;
 
     // AI-generated debug visualization only; mirrors the shove query.
     private Vector2 debugBoxCenter;
@@ -29,6 +30,7 @@ public class UnarmedCombat : MonoBehaviour
     {
         protagBody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+        actionManager = GetComponent<ActionManager>();
     }
 
     // Update is called once per frame
@@ -59,7 +61,7 @@ public class UnarmedCombat : MonoBehaviour
 
     void Shove()
     {
-        Vector2 mouseScreen = Mouse.current.position.ReadValue(); // reads pixel perfect position of mouse
+        Vector2 mouseScreen = actionManager.crosshairPosition; // reads pixel perfect position of mouse
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
         Vector2 toMouse = mouseWorld - transform.position; // constructs the vector from player to mouse
         Vector2 godHelpMe = new Vector2(transform.position.x, transform.position.y);

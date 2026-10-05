@@ -6,6 +6,7 @@ public class ActionManager : MonoBehaviour
 {
     [SerializeField] HandSystem handSystem;
     [SerializeField] WeaponController weaponController;
+    public Vector2 crosshairPosition;
     private PlayerMovement playerMovement;
     void Start()
     {
@@ -16,6 +17,22 @@ public class ActionManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            playerMovement.moveVelocity = context.ReadValue<Vector2>();
+        }
+        if(context.canceled)
+        {
+            playerMovement.moveVelocity = Vector2.zero;
+        }
+    }
+    public void OnPoint(InputAction.CallbackContext context)
+    {
+        crosshairPosition = context.ReadValue<Vector2>();
     }
 
     public void OnToggleCombat(InputAction.CallbackContext context)

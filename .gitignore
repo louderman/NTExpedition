@@ -114,3 +114,8 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 Assets/_Recovery/
+
+# Private tutoring vision and lab roadmap (outside Unity Assets)
+/TUTOR-ROADMAP.md
+Assets/Editor/AutoRefreshWatcher.cs
+Assets/Editor/AutoRefreshWatcher.cs.meta

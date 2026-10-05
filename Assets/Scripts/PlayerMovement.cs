@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,26 +18,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Sprite[] suitSprites;
     [SerializeField] private Sprite[] helmetSprites;
     [SerializeField] private Rigidbody2D protagBody;
+    private ActionManager actionManager;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
     public Vector2 currentlyFacing = new(0f, 0f);
     public Boolean combatMode = false; 
+    public Vector2 moveVelocity;
     void Start()
     {
+        actionManager = GetComponent<ActionManager>();
     }
 
     // Update is called once per frameI'm 
     void Update()
     {  
-        // conditional: if key is pressed ? 1 if true, 0 if false
-        // a little bit hard to read but this compresses like 24 lines worth of if statements so its pretty good
-        x = (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0);
-        y = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0);
-        MoveBody(x, y);
-
-        // normalize resultant vector. does nothing if x 1 but y 0 or vice versa, but necessary
-        // when x and y are both 1 as a diagonal vector of (1, 1) is 1.5x faster than a regular horizontal/vertical movement
-        
         // now for sprite facing
         ProcessFacing();
 
@@ -118,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CombatModeFacing()
     {
-        Vector2 mouseScreen = Mouse.current.position.ReadValue(); // reads pixel perfect position of mouse
+        Vector2 mouseScreen = actionManager.crosshairPosition; // reads pixel perfect position of mouse
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
         Vector2 toMouse = mouseWorld - transform.position; // constructs the vector from player to mouse
         currentlyFacing = toMouse;
@@ -166,10 +161,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void MoveBody(int x, int y)
+    void MoveBody()
     {
-        step2D = new Vector2(x, y);
-        protagBody.linearVelocity = step2D.normalized * moveSpeed;
+        protagBody.linearVelocity = moveVelocity.normalized * moveSpeed;
 
         // TODO: use this for nograv environments
         // medium priority, also this implementation makes the player slow as hell
@@ -178,5 +172,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+        MoveBody();
     }
 }
