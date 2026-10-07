@@ -1898,14 +1898,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67214d2dd9222761491d543076fc0f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
-  golemPrefab: {fileID: 3291428769164681841, guid: 4647c7a4f662a6ed78cb55f7cc379818, type: 3}
   huggerPrefab: {fileID: 1835714799980602221, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
   initialHugger: {fileID: 1160221498}
-  huggerDeathReward: 2
   player: {fileID: 1718987721}
-  golemSpawnpoint: {fileID: 422646397}
   huggerSpawnpoint: {fileID: 570612505}
   respawnDelay: 3
+  huggerDeathReward: 2
 --- !u!1 &1677264983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,6 +2238,7 @@ MonoBehaviour:
   shoveStrength: 4
   shoveDuration: 1.4
   shoveAudio: {fileID: 1718987727}
+  punchAudio: {fileID: 1718987734}
   shoveFX: {fileID: 5530622042202558826, guid: eb6290b2bf59366498b45b262d1470e9, type: 3}
   scoreManager: {fileID: 572678489}
 --- !u!82 &1718987727
@@ -2255,7 +2254,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 43c26f4c248bae00e87b48d402485322, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.142
+  m_Volume: 1
   m_Pitch: 1.12
   Loop: 0
   Mute: 0

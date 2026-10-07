@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3214057082988083497}
   - component: {fileID: 6829827393416143769}
   - component: {fileID: -3094526119583206494}
+  - component: {fileID: 5721037285470926868}
   m_Layer: 0
   m_Name: FleshHugger
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835714799980602221}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.237, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -130,7 +131,6 @@ MonoBehaviour:
   mobAnimator: {fileID: 5657099153346771976}
   mobBody: {fileID: 4014630666611068177}
   lethal: 0
-  shoveScore: 1
   directionless: 0
 --- !u!114 &6829827393416143769
 MonoBehaviour:
@@ -159,6 +159,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHP: 50
+--- !u!114 &5721037285470926868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835714799980602221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dda880944d9064e79f18354f97e5a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobDeath
+  mobDeadSprite: {fileID: 3604192591476135790, guid: c1621f2cdf3103d44a12351961f1c97e, type: 3}
+  deathReward: 2
+  scoreManager: {fileID: 0}
 --- !u!1 &8489496698093708198
 GameObject:
   m_ObjectHideFlags: 0

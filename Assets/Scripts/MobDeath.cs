@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 public class MobDeath : MonoBehaviour
 {
     private Health mobHealth;
+    private MobMovement mobMovement;
+    private SpriteRenderer mobSprite;
+    private Rigidbody2D mobBody;
+    private Animator mobAnimator;
+    [SerializeField] Sprite mobDeadSprite;
     [SerializeField] private int deathReward;
     [SerializeField] private ScoreManager scoreManager;
     private MobSpawner huggerSpawner;
@@ -10,6 +16,10 @@ public class MobDeath : MonoBehaviour
     void Awake()
     {
         mobHealth = GetComponent<Health>();
+        mobMovement = GetComponent<MobMovement>();
+        mobBody = GetComponent<Rigidbody2D>();
+        mobSprite = GetComponentInChildren<SpriteRenderer>();
+        mobAnimator = GetComponentInChildren<Animator>();
     }
 
     void OnEnable()
@@ -33,7 +43,13 @@ public class MobDeath : MonoBehaviour
     void OnDeath()
     {
         scoreManager.AddScore(deathReward);
+        mobMovement.StopAllCoroutines();
+        mobMovement.enabled = false;
+        mobBody.linearVelocity = new Vector2(0f, 0f);
+        mobBody.simulated = false;
+        mobAnimator.enabled = false;
+        mobSprite.sprite = mobDeadSprite;
         if (huggerSpawner != null) huggerSpawner.RespawnHugger();
-        Destroy(gameObject);
+        Destroy(gameObject, 3f);
     }
 }

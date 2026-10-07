@@ -67,15 +67,15 @@ public class UnarmedCombat : MonoBehaviour
             }
             if(attackContext == WeaponController.AttackPower.BeginCharge && !attackDebounce)
             {
-                ChargeStartup(); // Starting wind-up still requires a ready weapon.
+                ChargeStartup(); 
             }
             if(attackContext == WeaponController.AttackPower.Charged)
             {
-                bool wasCharging = _isCharging; // Snapshot this call's prior state before clearing it.
-                _isCharging = false; // End wind-up even if the attack below is rejected.
-                if(!wasCharging || attackDebounce) return; // Require an accepted charge AND readiness.
-                Debug.Log("Charged Punch!");
-                Punch(); // Still the existing placeholder; distinct charged feedback comes later.
+                bool wasCharging = _isCharging; 
+                _isCharging = false; 
+                if(!wasCharging || attackDebounce) return; 
+                Debug.Log("Charged Punch!"); 
+                Punch(); // TODO; distinct feedback for charging the punch
                 attackDebounce = true;
                 StartCoroutine(Cooldown(attackCooldown, true));
             }
