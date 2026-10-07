@@ -79,8 +79,11 @@ public class MobMovement : MonoBehaviour
     {
         if(mobAnimator != null)
         {
-            int index = (int) face;
-            mobAnimator.SetInteger("Facing", index);
+            if(!directionless)
+            {
+                int index = (int) face;
+                mobAnimator.SetInteger("Facing", index);
+            }
         }
         else
         {

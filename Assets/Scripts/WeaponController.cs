@@ -6,6 +6,8 @@ public class WeaponController : MonoBehaviour
     private PlayerMovement playerMovement;
     private UnarmedCombat unarmedFallback;
     public enum AttackType {PrimaryAttack, SecondaryAttack};
+    public enum AttackPower {Quick, BeginCharge, Charged, CancelCharge};
+    public bool IsCharging { get {return unarmedFallback.IsCharging;}}
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>(); 
@@ -18,7 +20,7 @@ public class WeaponController : MonoBehaviour
         
     }
 
-    public void Attack(AttackType attackType)
+    public void Attack(AttackType attackType, AttackPower attackContext)
     {
         // TODO: this command should be called with an active hand. find the weapon
         // in the active hand and perform the attack there. generally secondary attacks
@@ -27,9 +29,9 @@ public class WeaponController : MonoBehaviour
 
         // add logic for checking for held weapon here
 
-        if(playerMovement.combatMode == true)
+        if(playerMovement.combatMode)
         {
-            unarmedFallback.ApplyInput(attackType);
+            unarmedFallback.ApplyInput(attackType, attackContext);
         }
     }
     public void SwapHands()

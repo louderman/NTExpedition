@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,7 +26,8 @@ public class UnarmedCombat : MonoBehaviour
     private float debugBoxAngle;
     private Vector2 debugBoxSize;
     private float debugBoxUntil;
-
+    private bool _isCharging = false;
+    public bool IsCharging {get { return _isCharging;}}
     void Start()
     {
         protagBody = GetComponent<Rigidbody2D>();
@@ -38,13 +40,41 @@ public class UnarmedCombat : MonoBehaviour
     {
     }
     
-    public void ApplyInput(WeaponController.AttackType attackType)
+    public void ApplyInput(WeaponController.AttackType attackType, WeaponController.AttackPower attackContext)
     {
-        if(attackType == WeaponController.AttackType.PrimaryAttack && !attackDebounce)
+        if(attackContext == WeaponController.AttackPower.CancelCharge)
+            {
+                _isCharging = false;
+                Debug.Log("Charge canceled.");
+                return;
+            }
+        
+        if(attackType == WeaponController.AttackType.PrimaryAttack)
         {
-            Punch();
-            attackDebounce = true;
-            StartCoroutine(Cooldown(attackCooldown, true));
+            if(attackContext == WeaponController.AttackPower.Quick)
+            {
+                _isCharging = false;
+                if(attackDebounce) return;
+                Debug.Log("Quick Punch!");
+                Punch();
+                attackDebounce = true;
+                StartCoroutine(Cooldown(attackCooldown, true));
+            }
+            if(attackContext == WeaponController.AttackPower.BeginCharge && !attackDebounce)
+            {
+                ChargeStartup(); // Starting wind-up still requires a ready weapon.
+            }
+            if(attackContext == WeaponController.AttackPower.Charged)
+            {
+                bool wasCharging = _isCharging; // Snapshot this call's prior state before clearing it.
+                _isCharging = false; // End wind-up even if the attack below is rejected.
+                if(!wasCharging || attackDebounce) return; // Require an accepted charge AND readiness.
+                Debug.Log("Charged Punch!");
+                Punch(); // Still the existing placeholder; distinct charged feedback comes later.
+                attackDebounce = true;
+                StartCoroutine(Cooldown(attackCooldown, true));
+            }
+        
         }
         if(attackType == WeaponController.AttackType.SecondaryAttack && !attackDebounce)
         {
@@ -54,6 +84,11 @@ public class UnarmedCombat : MonoBehaviour
         }
     }
 
+    void ChargeStartup()
+    {
+        _isCharging = true;
+        Debug.Log("Charging...");
+    }
     void Punch()
     {
         // TODO: punch, raycast, all that jazz

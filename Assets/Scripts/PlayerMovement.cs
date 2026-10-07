@@ -24,9 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 currentlyFacing = new(0f, 0f);
     public Boolean combatMode = false; 
     public Vector2 moveVelocity;
+    private WeaponController weaponController;
     void Start()
     {
         actionManager = GetComponent<ActionManager>();
+        weaponController = GetComponent<WeaponController>();
     }
 
     // Update is called once per frameI'm 
@@ -163,7 +165,14 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveBody()
     {
-        protagBody.linearVelocity = moveVelocity.normalized * moveSpeed;
+        if(!weaponController.IsCharging)
+        {
+            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed;
+        }
+        else
+        {
+            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed * 0.35f; // change hardcoded multiplier to exposed number thru weapon controller later
+        }
 
         // TODO: use this for nograv environments
         // medium priority, also this implementation makes the player slow as hell

@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class ActionManager : MonoBehaviour
 {
@@ -39,21 +40,38 @@ public class ActionManager : MonoBehaviour
     {
         if(context.performed)
         {
+            if(playerMovement.combatMode)
+            {
+                weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.CancelCharge); // misleading af method name, this just cancels any charging that was done while in combat.
+            }
             playerMovement.ToggleCombat();
         }
     }
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        Debug.Log($"Printing sum shit {context.phase}, {context.interaction}");
+        if(context.interaction is TapInteraction && context.performed)
         {
-            weaponController.Attack(WeaponController.AttackType.PrimaryAttack);
+            weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.Quick);
+        }
+        if(context.interaction is SlowTapInteraction && context.started)
+        {
+            weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.BeginCharge);
+        }
+        if(context.interaction is SlowTapInteraction && context.performed)
+        {
+            weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.Charged);
+        }
+        if(context.interaction is SlowTapInteraction && context.canceled)
+        {
+            weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.Quick);
         }
     }
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
         if(context.performed)
         {
-            weaponController.Attack(WeaponController.AttackType.SecondaryAttack);
+            weaponController.Attack(WeaponController.AttackType.SecondaryAttack, WeaponController.AttackPower.Quick);
         }
     }
     public void OnSwapHands(InputAction.CallbackContext context)

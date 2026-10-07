@@ -42,7 +42,7 @@
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "Tap,SlowTap",
                     "initialStateCheck": false,
                     "priority": 0
                 },
