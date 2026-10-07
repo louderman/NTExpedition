@@ -49,7 +49,6 @@ public class ActionManager : MonoBehaviour
     }
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        Debug.Log($"Printing sum shit {context.phase}, {context.interaction}");
         if(context.interaction is TapInteraction && context.performed)
         {
             weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.Quick);

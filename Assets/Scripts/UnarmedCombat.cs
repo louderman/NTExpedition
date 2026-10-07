@@ -11,23 +11,28 @@ public class UnarmedCombat : MonoBehaviour
     private Boolean attackDebounce = false;
     [SerializeField] float attackRange;
     [SerializeField] float attackDamage;
+    [SerializeField, Min(0f)] float punchKnockbackStrength = 0.5f;
+    [SerializeField, Min(0f)] float punchKnockbackDuration = 0.12f;
     [SerializeField] float attackCooldown;
     [SerializeField] float shoveStrength;
     [SerializeField] float shoveDuration;
     [SerializeField] private AudioSource shoveAudio;
+    [SerializeField] private AudioSource punchAudio;
     [SerializeField] private GameObject shoveFX;
     [SerializeField] private ScoreManager scoreManager;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
     private ActionManager actionManager;
+    private bool _isCharging = false;
+    public bool IsCharging {get { return _isCharging;}}
+
 
     // AI-generated debug visualization only; mirrors the shove query.
     private Vector2 debugBoxCenter;
     private float debugBoxAngle;
     private Vector2 debugBoxSize;
     private float debugBoxUntil;
-    private bool _isCharging = false;
-    public bool IsCharging {get { return _isCharging;}}
+
     void Start()
     {
         protagBody = GetComponent<Rigidbody2D>();
@@ -91,7 +96,61 @@ public class UnarmedCombat : MonoBehaviour
     }
     void Punch()
     {
-        // TODO: punch, raycast, all that jazz
+        Vector2 mouseScreen = actionManager.crosshairPosition; // reads pixel perfect position of mouse
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
+        Vector2 toMouse = mouseWorld - transform.position; // constructs the vector from player to mouse
+        Vector2 godHelpMe = new Vector2(transform.position.x, transform.position.y);
+        Vector2 hitboxPosition = godHelpMe + toMouse.normalized * (attackRange / 2);
+        float angle = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
+        Collider2D[] allHit = Physics2D.OverlapBoxAll(hitboxPosition, new Vector2(attackRange, 1), angle);
+
+        Quaternion hitboxRotation = Quaternion.Euler(0f, 0f, angle - 90f);
+        GameObject effect = Instantiate(shoveFX, hitboxPosition, hitboxRotation);
+        Destroy(effect, 0.3f);
+
+        // AI-generated debug visualization only: show this shove box for one second.
+        debugBoxCenter = hitboxPosition;
+        debugBoxAngle = angle;
+        debugBoxSize = new Vector2(attackRange, 1);
+        debugBoxUntil = Time.time + 1f;
+        // end of AI generated code
+
+        Vector2 impulseVector = toMouse.normalized * shoveStrength;
+
+        foreach(Collider2D hit in allHit)
+        {
+            if(hit.attachedRigidbody == protagBody || hit.attachedRigidbody == null)
+            {
+                continue;
+            }
+            Debug.Log($"Entities hit: {hit}");
+            Rigidbody2D targetBody = hit.attachedRigidbody;
+            Health mobHealth = targetBody.GetComponent<Health>();
+            if(mobHealth != null)
+            {
+                // AI-assisted: recoil only living damageable mobs; death response stays in MobDeath.
+                if (mobHealth.CurrentHP > 0f && attackDamage > 0f)
+                {
+                    MobMovement movement = targetBody.GetComponent<MobMovement>();
+                    if (movement != null)
+                        movement.OnKnockback(toMouse.normalized * punchKnockbackStrength, punchKnockbackDuration);
+                    mobHealth.TakeDamage(attackDamage);
+                }
+            }
+            else
+            {
+                Debug.Log("you aint breaking this, dummy.");
+            }
+        }
+        if(allHit.Count() > 0)
+        {
+            punchAudio.Play();
+        }
+        SpriteRenderer spriteChild = protagBody.GetComponentInChildren<SpriteRenderer>();
+        Vector3 originVector = spriteChild.transform.localPosition;
+        Vector3 impulseVector3 = new(impulseVector.x, impulseVector.y, 0f);
+        Vector3 destinationVector = spriteChild.transform.localPosition + impulseVector3.normalized * 0.3f;
+        StartCoroutine(PlayShoveAnimation(originVector, destinationVector));
     }
 
     void Shove()
@@ -129,7 +188,6 @@ public class UnarmedCombat : MonoBehaviour
             if(mobMovement != null)
             {
                 mobMovement.OnShove(impulseVector, shoveDuration);
-                scoreManager.AddScore(mobMovement.ShoveScore);
             }
             else
             {

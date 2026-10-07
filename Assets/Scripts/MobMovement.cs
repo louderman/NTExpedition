@@ -14,6 +14,8 @@ public class MobMovement : MonoBehaviour
     private int y;
     public Boolean isStunned;
     private Coroutine recoveryCoroutine;
+    private bool isRecoiling;
+    private Coroutine recoilCoroutine;
     private Quaternion uprightRotation;
     [SerializeField] private SpriteRenderer mobRenderer;                                                                                                                                          
     [SerializeField] private Sprite[] mobSprites;
@@ -21,10 +23,8 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private Animator mobAnimator;
     [SerializeField] private Rigidbody2D mobBody;
     [SerializeField] private bool lethal;
-    [SerializeField] private int shoveScore;
     [SerializeField] private bool directionless;
     public bool IsLethal => lethal && !isStunned;
-    public int ShoveScore => shoveScore;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
     void Start()
@@ -107,7 +107,8 @@ public class MobMovement : MonoBehaviour
         Vector3 toTarget = protagObject.transform.position - transform.position; // constructs the vector from player to mouse
         if(!isStunned)
         {
-            MoveBody(toTarget);
+            // Recoil preserves physics velocity instead of replacing it with chase velocity.
+            if (!isRecoiling) MoveBody(toTarget);
             ProcessFacing(toTarget);
         }
     }
@@ -119,6 +120,23 @@ public class MobMovement : MonoBehaviour
         // medium priority, also this implementation makes the player slow as hell
         // distanceThisFrame = moveSpeed * Time.deltaTime;
         // protagBody.AddForce(step2D.normalized * distanceThisFrame);
+    }
+
+    public void OnKnockback(Vector2 impulse, float duration)
+    {
+        if (duration <= 0f) return;
+        if (recoilCoroutine != null) StopCoroutine(recoilCoroutine); // cancel the old expiry.
+        isRecoiling = true; // prevent chase from erasing the impulse.
+        mobBody.linearVelocity = Vector2.zero; // remove forward momentum before the small kick.
+        mobBody.AddForce(impulse, ForceMode2D.Impulse);
+        recoilCoroutine = StartCoroutine(RecoverFromKnockback(duration));
+    }
+
+    IEnumerator RecoverFromKnockback(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isRecoiling = false;
+        recoilCoroutine = null;
     }
 
     public void OnShove(Vector2 impulseVector, float shoveDuration)

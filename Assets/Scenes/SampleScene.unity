@@ -1708,7 +1708,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 567f0d62296d94061991a3bc572dca7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1757,6 +1757,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1718987723}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1160221498 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1835714799980602221, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
+  m_PrefabInstance: {fileID: 6333036243283319413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1236164739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,6 +1900,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
   golemPrefab: {fileID: 3291428769164681841, guid: 4647c7a4f662a6ed78cb55f7cc379818, type: 3}
   huggerPrefab: {fileID: 1835714799980602221, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
+  initialHugger: {fileID: 1160221498}
+  huggerDeathReward: 2
   player: {fileID: 1718987721}
   golemSpawnpoint: {fileID: 422646397}
   huggerSpawnpoint: {fileID: 570612505}
@@ -2032,7 +2039,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 567f0d62296d94061991a3bc572dca7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2085,6 +2092,8 @@ GameObject:
   - component: {fileID: 1718987730}
   - component: {fileID: 1718987731}
   - component: {fileID: 1718987732}
+  - component: {fileID: 1718987733}
+  - component: {fileID: 1718987734}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2224,7 +2233,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnarmedCombat
   attackRange: 1
-  attackDamage: 0
+  attackDamage: 10
+  punchKnockbackStrength: 0.5
+  punchKnockbackDuration: 0.12
   attackCooldown: 1
   shoveStrength: 4
   shoveDuration: 1.4
@@ -2240,7 +2251,7 @@ AudioSource:
   m_GameObject: {fileID: 1718987721}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2380898314313855353, guid: e0b628af6ef8c0b3cb6497dc60834b2d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 43c26f4c248bae00e87b48d402485322, type: 3}
   m_PlayOnAwake: 0
@@ -2577,6 +2588,119 @@ MonoBehaviour:
   handSystem: {fileID: 1718987729}
   weaponController: {fileID: 1718987731}
   crosshairPosition: {x: 0, y: 0}
+--- !u!114 &1718987733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718987721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202e4fae3244c32c58aa651c2c1090f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActorFlash
+  spriteRenderers:
+  - {fileID: 1107762898}
+  - {fileID: 1678282632}
+  pulseSpeed: 3
+--- !u!82 &1718987734
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718987721}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -8424983353658094406, guid: e0b628af6ef8c0b3cb6497dc60834b2d, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 43c26f4c248bae00e87b48d402485322, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1844243872 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 76106043614238468, guid: d1d7935839107a56a84574714ec00a05, type: 3}
@@ -3864,7 +3988,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1835714799980602221, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9012213005233638113}
   m_SourcePrefab: {fileID: 100100000, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
 --- !u!1001 &6701242111853934308
 PrefabInstance:
@@ -3952,6 +4079,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4457736297717398135, guid: c609d649ee5c39adaa6bafbbce06cfba, type: 3}
   m_PrefabInstance: {fileID: 6333036243283319413}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9012213005233638113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160221498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dda880944d9064e79f18354f97e5a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobDeath
+  deathReward: 2
+  scoreManager: {fileID: 572678489}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
