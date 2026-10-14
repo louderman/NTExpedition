@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6829827393416143769}
   - component: {fileID: -3094526119583206494}
   - component: {fileID: 5721037285470926868}
+  - component: {fileID: 7094293946569906007}
   m_Layer: 0
   m_Name: FleshHugger
   m_TagString: Untagged
@@ -159,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHP: 50
+  debugDamageEnabled: 0
 --- !u!114 &5721037285470926868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +176,20 @@ MonoBehaviour:
   mobDeadSprite: {fileID: 3604192591476135790, guid: c1621f2cdf3103d44a12351961f1c97e, type: 3}
   deathReward: 2
   scoreManager: {fileID: 0}
+--- !u!114 &7094293946569906007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835714799980602221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369bb6363b9be2b51a97404e37a77ba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MobContactDamage
+  damage: 10
+  interval: 1
 --- !u!1 &8489496698093708198
 GameObject:
   m_ObjectHideFlags: 0
