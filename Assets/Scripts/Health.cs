@@ -9,16 +9,25 @@ public class Health : MonoBehaviour
     public float CurrentHP {get {return currentHP;}}
     public event Action<float, int> HealthChanged;
     public event Action Died;
+    [SerializeField] private bool debugDamageEnabled = false;
+
     
     void Start()
     {
         currentHP = maxHP;
+        HealthChanged?.Invoke(currentHP, maxHP);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // forcing an update on  this fuckass script
+        if (!debugDamageEnabled) return;
+
+        var keyboard = UnityEngine.InputSystem.Keyboard.current;
+        if (keyboard == null) return;
+        
+        // One press of F8 deals 10 damage; holding it does not repeat damage.
+        if (keyboard.f8Key.wasPressedThisFrame)
+            TakeDamage(10f);
     }
 
     public void TakeDamage(float amount)
