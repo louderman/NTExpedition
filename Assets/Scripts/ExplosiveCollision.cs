@@ -37,7 +37,7 @@ public class ExplosiveCollision : MonoBehaviour
                 GameObject effect = Instantiate(explosionFX, explosionPosition, Quaternion.identity);
                 AudioSource.PlayClipAtPoint(explosionSound, explosionPosition);
                 explosionTriggered = true;
-                scoreManager.AddScore(5);
+                ScoreManager.Instance.AddScore(5);
                 mobSpawner.RespawnPair();
                 Destroy(effect, 0.6f);
                 Destroy(collision.gameObject);

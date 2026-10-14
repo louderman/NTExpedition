@@ -42,7 +42,8 @@ public class MobDeath : MonoBehaviour
 
     void OnDeath()
     {
-        scoreManager.AddScore(deathReward);
+        // AI-assisted: the newly loaded scene's serialized manager may be a discarded duplicate.
+        ScoreManager.Instance.AddScore(deathReward);
         mobMovement.StopAllCoroutines();
         mobMovement.enabled = false;
         mobBody.linearVelocity = new Vector2(0f, 0f);

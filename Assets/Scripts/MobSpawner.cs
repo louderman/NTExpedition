@@ -14,7 +14,7 @@ public class MobSpawner : MonoBehaviour
 
     void Start()
     {
-        scoreManager = FindAnyObjectByType<ScoreManager>();
+        scoreManager = ScoreManager.Instance; // Resolve the survivor, not the new scene's duplicate.
         if (initialHugger != null) ConfigureHugger(initialHugger);
     }
 

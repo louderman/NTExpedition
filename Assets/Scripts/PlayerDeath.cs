@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using TMPro;                                                                                                                                                                                                                                                                           
 using UnityEngine;                                                                                                                                                                                                                                                                     
 using UnityEngine.SceneManagement;                                                                                                                                                                                                                                                     
@@ -6,19 +7,31 @@ public class PlayerDeath : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverPanel;                                                                                                                                                                                                                                 
     [SerializeField] private TMP_Text finalScoreText;                                                                                                                                                                                                                                  
-    [SerializeField] private ScoreManager scoreManager;                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                            
-    void OnCollisionEnter2D(Collision2D collision)                                                                                                                                                                                                                                     
-    {                                                                                                                                                                                                                                                                                  
-        MobMovement mob = collision.gameObject.GetComponentInParent<MobMovement>();                                                                                                                                                                                                                  
-                                                                                                                                                                                                                                                                                            
-        if (mob != null && mob.IsLethal)                                                                                                                                                                                                                                               
-        {                                                                                                                                                                                                                                                                              
-            finalScoreText.text = $"Score: {scoreManager.CurrentScore}";                                                                                                                                                                                                                                                
-            gameOverPanel.SetActive(true);                                                                                                                                                                                                                                             
-            Time.timeScale = 0f;                                                                                                                                                                                                                                                       
-        }                                                                                                                                                                                                                                                                              
-    }                                                                                                                                                                                                                                                                                  
+    [SerializeField] private ScoreManager scoreManager;
+
+    [SerializeField] private Health playerHealth;
+
+    void Awake()
+    {
+        playerHealth = GetComponent<Health>();
+    }          
+
+    void OnEnable()
+    {
+        playerHealth.Died += HandleDeath;
+    }
+
+    void OnDisable()
+    {
+        playerHealth.Died -= HandleDeath;
+    }
+
+    void HandleDeath()
+    {
+        finalScoreText.text = $"Score: {ScoreManager.Instance.CurrentScore}";                                                                                                                                                                                                                                                
+        gameOverPanel.SetActive(true);                                                                                                                                                                                                                                             
+        Time.timeScale = 0f;    
+    }                                                                                                                                                                                                                                                                              
                                                                                                                                                                                                                                                                                             
     public void RestartGame()                                                                                                                                                                                                                                                          
     {                                                                                                                                                                                                                                                                                  
