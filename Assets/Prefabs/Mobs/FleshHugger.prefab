@@ -131,7 +131,7 @@ MonoBehaviour:
   mobAnimator: {fileID: 5657099153346771976}
   mobBody: {fileID: 4014630666611068177}
   lethal: 0
-  directionless: 0
+  directionless: 1
 --- !u!114 &6829827393416143769
 MonoBehaviour:
   m_ObjectHideFlags: 0
