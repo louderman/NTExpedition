@@ -28,6 +28,8 @@ public class PlayerDeath : MonoBehaviour
 
     void HandleDeath()
     {
+        var flow = FindAnyObjectByType<ExpeditionFlow>();
+        if (flow != null) { flow.EndRun(); return; }
         finalScoreText.text = $"Score: {ScoreManager.Instance.CurrentScore}";                                                                                                                                                                                                                                                
         gameOverPanel.SetActive(true);                                                                                                                                                                                                                                             
         Time.timeScale = 0f;    
@@ -35,6 +37,9 @@ public class PlayerDeath : MonoBehaviour
                                                                                                                                                                                                                                                                                             
     public void RestartGame()                                                                                                                                                                                                                                                          
     {                                                                                                                                                                                                                                                                                  
+        var flow = FindAnyObjectByType<ExpeditionFlow>();
+        if (flow != null) { flow.RestartRun(); return; }
+        ScoreManager.Instance?.ResetCurrentScore();
         Time.timeScale = 1f;                                                                                                                                                                                                                                                           
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     }                                                                                                                                                                                                                                                                                  

@@ -39,7 +39,7 @@ public class ScenePortal : MonoBehaviour
 
     public void Travel()
     {
-        if (travelling) return; // Multiple overlapping colliders must not load twice.
+        if (travelling || Time.timeScale == 0f) return; // Multiple overlapping colliders must not load twice.
         if (!Application.CanStreamedLevelBeLoaded(destinationScene))
         {
             Debug.LogError($"Scene is not enabled in Build Settings: {destinationScene}", this);

@@ -6,6 +6,8 @@ public class HealthUi : MonoBehaviour
     [SerializeField] Health health;
     [SerializeField] Slider slider;
     
+    void Start() { DisplayHealth(health.CurrentHP, health.MaxHP); }
+
     void OnEnable()
     {
         health.HealthChanged += DisplayHealth;

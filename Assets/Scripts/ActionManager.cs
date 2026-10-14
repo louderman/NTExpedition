@@ -9,7 +9,7 @@ public class ActionManager : MonoBehaviour
     [SerializeField] WeaponController weaponController;
     public Vector2 crosshairPosition;
     private PlayerMovement playerMovement;
-    void Start()
+    void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
     }
