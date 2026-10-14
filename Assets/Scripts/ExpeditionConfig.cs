@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-// Lab 4: authored defaults are shared assets, not a disk save or mutable actor state.
 [CreateAssetMenu(menuName = "NTExpedition/Expedition config")]
 public class ExpeditionConfig : ScriptableObject
 {
