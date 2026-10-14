@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -134,7 +133,7 @@ public class UnarmedCombat : MonoBehaviour
                     MobMovement movement = targetBody.GetComponent<MobMovement>();
                     if (movement != null)
                         movement.OnKnockback(toMouse.normalized * punchKnockbackStrength, punchKnockbackDuration);
-                    mobHealth.TakeDamage(attackDamage);
+                    mobHealth.TakeDamage(attackDamage * (GetComponent<PlayerPowerups>()?.DamageMultiplier ?? 1f));
                 }
             }
             else

@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ProcessFacing()
     {
+        if (Keyboard.current == null || Time.timeScale == 0f) return;
         if (Keyboard.current.wKey.wasPressedThisFrame == true)
         { 
             SetFacing(Facing.North);
@@ -163,15 +164,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private float PowerupSpeed => GetComponent<PlayerPowerups>()?.SpeedMultiplier ?? 1f;
+
     void MoveBody()
     {
         if(!weaponController.IsCharging)
         {
-            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed;
+            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed * PowerupSpeed;
         }
         else
         {
-            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed * 0.35f; // change hardcoded multiplier to exposed number thru weapon controller later
+            protagBody.linearVelocity = moveVelocity.normalized * moveSpeed * PowerupSpeed * 0.35f; // change hardcoded multiplier to exposed number thru weapon controller later
         }
 
         // TODO: use this for nograv environments

@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
     [SerializeField] private bool debugDamageEnabled = false;
 
     
-    void Start()
+    void Awake()
     {
         currentHP = maxHP;
         HealthChanged?.Invoke(currentHP, maxHP);
@@ -28,6 +28,13 @@ public class Health : MonoBehaviour
         // One press of F8 deals 10 damage; holding it does not repeat damage.
         if (keyboard.f8Key.wasPressedThisFrame)
             TakeDamage(10f);
+    }
+
+    public void Heal(float amount)
+    {
+        if (currentHP <= 0f || amount <= 0f) return;
+        currentHP = Mathf.Min(maxHP, currentHP + amount);
+        HealthChanged?.Invoke(currentHP, maxHP);
     }
 
     public void TakeDamage(float amount)
