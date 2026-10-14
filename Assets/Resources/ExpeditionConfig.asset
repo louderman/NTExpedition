@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc7309dae9b754408bf038b469b5bb9, type: 3}
+  m_Name: ExpeditionConfig
+  m_EditorClassIdentifier: Assembly-CSharp::ExpeditionConfig
+  menuScene: Main Menu
+  loadingScene: Loading
+  firstWorld: HomeShip
+  startingScore: 0
+  highscoreKey: NTExpedition.BestScore.v1
+  overchargeDuration: 8
+  speedMultiplier: 1.5
+  damageMultiplier: 2
+  repairAmount: 40
+  pickupEmergenceSeconds: 0.45
+  music: {fileID: 8300000, guid: 4b58db19721bf5ca19cb685ba808278b, type: 3}
+  spawnSound: {fileID: 8300000, guid: f96f7420438c255cc8806c34e6a57f25, type: 3}
+  pickupSound: {fileID: 8300000, guid: 0a185140f049273589a0446a0ea77faa, type: 3}
+  deathSound: {fileID: 8300000, guid: 65647560d51155595a0f14618b3146d2, type: 3}
+  gameOverSound: {fileID: 8300000, guid: 5122f95c80568149ea72cf41b2386a83, type: 3}
+  musicGroup: {fileID: 24300002, guid: e0b628af6ef8c0b3cb6497dc60834b2d, type: 2}
+  effectsGroup: {fileID: 24300002, guid: e0b628af6ef8c0b3cb6497dc60834b2d, type: 2}
