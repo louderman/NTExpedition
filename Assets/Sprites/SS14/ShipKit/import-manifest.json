@@ -1,0 +1,2218 @@
+{
+  "createdBy": "NTExpedition asset preparation, not upstream RSI metadata",
+  "sourceRepository": "https://github.com/louderman/frontier-station-14.git",
+  "sourceRevision": "fc74013522ef2ee1c5049c986748c9f0866fb4c3",
+  "unityVersion": "6000.6.0f1",
+  "verification": {
+    "pngCount": 137,
+    "spriteCount": 479,
+    "status": "PASS"
+  },
+  "settings": {
+    "pixelsPerUnit": 32,
+    "filter": "Point",
+    "compression": "Uncompressed",
+    "mipmaps": false,
+    "sliceOrder": "left-to-right, top-to-bottom",
+    "pivot": "Center"
+  },
+  "notes": [
+    "Slices include transparent grid cells and animation frames. No Animator controllers, RuleTiles, colliders or SS14 auto-tiling behavior supplied.",
+    "Consoles and crates use separate base/overlay PNG layers; a screen overlay is not a complete console.",
+    "Use preserved source-meta.json or source-attributions.yml for original credits."
+  ],
+  "files": [
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/full.png",
+      "destination": "Walls/Shuttle/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "f004b405ca080d61dd8d0823c9e7a7173ba0b0364b421dae2996cb5aed4a7593",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state0.png",
+      "destination": "Walls/Shuttle/state0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "9b93586d2d5aa3f0b4d0e5acc9f6beeb0fe3d807b6d883e4c5c940ebcb6be6e2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state1.png",
+      "destination": "Walls/Shuttle/state1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "490ce2fae6d1ef054a839670aaf42d86ad0e96b514342f291feca0feb943b048",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state2.png",
+      "destination": "Walls/Shuttle/state2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "9b93586d2d5aa3f0b4d0e5acc9f6beeb0fe3d807b6d883e4c5c940ebcb6be6e2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state3.png",
+      "destination": "Walls/Shuttle/state3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "573309828eae16ff607960f035d35abac94fb6edbf3fab2d8ba7ca704a81e6e5",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state4.png",
+      "destination": "Walls/Shuttle/state4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "e894feb352ced98fa80c4e09f37bd9e2dc8815802bd2ada8eaded8cffced25b3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state5.png",
+      "destination": "Walls/Shuttle/state5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "375ec11adbf23718a2667c63c9e4da5689b90040cb3283dcd2d20afbe198c95b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state6.png",
+      "destination": "Walls/Shuttle/state6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "68f971765bfaa300785446ce49dab3a78578a5a185196944d0f9f509288cf07c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/state7.png",
+      "destination": "Walls/Shuttle/state7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/shuttle.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "f41abe10d1e7c4ecb8d273c63b02520fb049b770be0be7ece767764e174661cf",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/full.png",
+      "destination": "Walls/Steel/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "5740ba786636bec50d289d91e15ad7e4c4625a33e6c847ce367e1706b8e46889",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over0.png",
+      "destination": "Walls/Steel/reinf_over0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "05ae9a648c147b6dd11b4f79831855704de1c5cb47490bf483dd63a4b4b98cc2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over1.png",
+      "destination": "Walls/Steel/reinf_over1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "74e50cd1bfb79a1b6f8b59ffc98242f44e0a95c0cff621ffaea76e87e6322ba2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over2.png",
+      "destination": "Walls/Steel/reinf_over2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "05ae9a648c147b6dd11b4f79831855704de1c5cb47490bf483dd63a4b4b98cc2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over3.png",
+      "destination": "Walls/Steel/reinf_over3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "74e50cd1bfb79a1b6f8b59ffc98242f44e0a95c0cff621ffaea76e87e6322ba2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over4.png",
+      "destination": "Walls/Steel/reinf_over4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "d8a981beb9175346ff0ca74fd52cf12cdead9b3c1a723f26cfd1b9b5df18be08",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over5.png",
+      "destination": "Walls/Steel/reinf_over5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "f305f175ffac7662f2e2f6b41f5b7493c27effdb2f090c83811b09ca802dc535",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over6.png",
+      "destination": "Walls/Steel/reinf_over6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "d8a981beb9175346ff0ca74fd52cf12cdead9b3c1a723f26cfd1b9b5df18be08",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/reinf_over7.png",
+      "destination": "Walls/Steel/reinf_over7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "48d6931316d47f3a7d96e8bea4c95d46fe94f282162bf418f39fd04f8a41afbe",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid0.png",
+      "destination": "Walls/Steel/solid0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "94bfafe13dd7a39a36f69319d4a859daf77a6bed847c859d6acd452a244939c4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid1.png",
+      "destination": "Walls/Steel/solid1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "71b7a6b0f3b205049ea92f17133612a54d07d359a54a7fce368999e2f55121bd",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid2.png",
+      "destination": "Walls/Steel/solid2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "94bfafe13dd7a39a36f69319d4a859daf77a6bed847c859d6acd452a244939c4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid3.png",
+      "destination": "Walls/Steel/solid3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "71b7a6b0f3b205049ea92f17133612a54d07d359a54a7fce368999e2f55121bd",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid4.png",
+      "destination": "Walls/Steel/solid4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "e279c4d90aca418caf5d5ffc77b6b000dd9e4bead466a1750b593eb096cc879b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid5.png",
+      "destination": "Walls/Steel/solid5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "6d73096e1c19f09481aec7e114b27c864c73c6deb0a20179554af48f174acee8",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid6.png",
+      "destination": "Walls/Steel/solid6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "e279c4d90aca418caf5d5ffc77b6b000dd9e4bead466a1750b593eb096cc879b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/solid7.png",
+      "destination": "Walls/Steel/solid7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/solid.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "6d1334dd91e5c622e3fe13a11a0a145a345e467515edefa8f3b548721abd9ace",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/full.png",
+      "destination": "Walls/Riveted/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "7586cbe20805997a558e17c1b32c4846ce3e227d69df0cbd389cde203086826b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted0.png",
+      "destination": "Walls/Riveted/riveted0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "04b332e07ff65cfdfa0d24bb2a2671267fa6145ebca5a9421ecd14d78400482c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted1.png",
+      "destination": "Walls/Riveted/riveted1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3400df86cc22f6ae9123a7bc2c32123ea005cd2cb8ae8cb2cc539654a92f5a8f",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted2.png",
+      "destination": "Walls/Riveted/riveted2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "04b332e07ff65cfdfa0d24bb2a2671267fa6145ebca5a9421ecd14d78400482c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted3.png",
+      "destination": "Walls/Riveted/riveted3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3400df86cc22f6ae9123a7bc2c32123ea005cd2cb8ae8cb2cc539654a92f5a8f",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted4.png",
+      "destination": "Walls/Riveted/riveted4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b11702efad6a9fc8b618810112d7924a447f8464aba9ea24e5bec49cbffb288e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted5.png",
+      "destination": "Walls/Riveted/riveted5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "67ba5353b8bae8cb4db172371eb06a2fa85f01e8caab0ea18459b7018af05222",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted6.png",
+      "destination": "Walls/Riveted/riveted6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b11702efad6a9fc8b618810112d7924a447f8464aba9ea24e5bec49cbffb288e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/riveted7.png",
+      "destination": "Walls/Riveted/riveted7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Walls/riveted.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "67ba5353b8bae8cb4db172371eb06a2fa85f01e8caab0ea18459b7018af05222",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/full.png",
+      "destination": "Tables/Steel/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "570ec0260ad8a98ae69c4a1a57358a4c2ca9aef537414ca67b36b13156cb324c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_0.png",
+      "destination": "Tables/Steel/state_0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "80124ec1906ef44c99a7a6981670b62180487aeeb56dfe5bb7a9fb9e309d208e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_1.png",
+      "destination": "Tables/Steel/state_1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "ea59fc2d7bf6a321b54d62b5afb7a35a5191de9ad4acec236547b363855cba00",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_2.png",
+      "destination": "Tables/Steel/state_2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "80124ec1906ef44c99a7a6981670b62180487aeeb56dfe5bb7a9fb9e309d208e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_3.png",
+      "destination": "Tables/Steel/state_3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "ea59fc2d7bf6a321b54d62b5afb7a35a5191de9ad4acec236547b363855cba00",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_4.png",
+      "destination": "Tables/Steel/state_4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "6f8262eb2eea40b6aa0cc4dba90243f36ea4be502f00b6042c0eb073943b53a6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_5.png",
+      "destination": "Tables/Steel/state_5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "912e376807bf8445bbbe7eefa66a4384138f5a0b335a90e774d88d5cac63741b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_6.png",
+      "destination": "Tables/Steel/state_6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "6f8262eb2eea40b6aa0cc4dba90243f36ea4be502f00b6042c0eb073943b53a6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/state_7.png",
+      "destination": "Tables/Steel/state_7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "a001c3898d95baf98b1a7d1f35f8f564d6a71f930e2d02bbc67370cc8b7fa0b3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/full.png",
+      "destination": "Tables/Glass/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "cb3f119d921d5a7c93ad28570987f45aaf5ac7c96f512aa04fdfe1361801950e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_0.png",
+      "destination": "Tables/Glass/state_0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3d95c60ad003e22d04a0783a544818514bb6e4813a38e5e0cd8a264337f0f1d7",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_1.png",
+      "destination": "Tables/Glass/state_1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3cc48669d0cf65fdd4262ef85c570ddca98ca6ab414c9ad4b6c5a83a8279f971",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_2.png",
+      "destination": "Tables/Glass/state_2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3d95c60ad003e22d04a0783a544818514bb6e4813a38e5e0cd8a264337f0f1d7",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_3.png",
+      "destination": "Tables/Glass/state_3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3cc48669d0cf65fdd4262ef85c570ddca98ca6ab414c9ad4b6c5a83a8279f971",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_4.png",
+      "destination": "Tables/Glass/state_4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "0c4334c05208bdb04a7eeca4ea6204af6e273c067a7b08799192a5b934e834d3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_5.png",
+      "destination": "Tables/Glass/state_5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "c37fb56157893a31e102f8d2248a2f969482dccf01bee9d27806b1147b0b330d",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_6.png",
+      "destination": "Tables/Glass/state_6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "0c4334c05208bdb04a7eeca4ea6204af6e273c067a7b08799192a5b934e834d3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/state_7.png",
+      "destination": "Tables/Glass/state_7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/glass.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "0e2c277581e25fea3455f866ffb3d20340d202589afd5973d55d1f15e6100093",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/full.png",
+      "destination": "Tables/Wood/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "b3a18e8499399fe4d0b61bdd76ca0902c9325ccec5a0ba6457f57067f8a6d8c3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_0.png",
+      "destination": "Tables/Wood/state_0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "92957151b359e7b43aed20769ced115cb5b3ac6712a390f692415b6c8ed42017",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_1.png",
+      "destination": "Tables/Wood/state_1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "2da98028ee8631cce47cb70b6083950db298ab0b7b89bc0b83780ddd040154f2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_2.png",
+      "destination": "Tables/Wood/state_2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "92957151b359e7b43aed20769ced115cb5b3ac6712a390f692415b6c8ed42017",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_3.png",
+      "destination": "Tables/Wood/state_3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "2da98028ee8631cce47cb70b6083950db298ab0b7b89bc0b83780ddd040154f2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_4.png",
+      "destination": "Tables/Wood/state_4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "aed77dd6afec39ce840fa022b89c239e0576f9e3c1200405b546634fdd948312",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_5.png",
+      "destination": "Tables/Wood/state_5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "02aa62b6aba502c23cf4b04c2f5c96fb06ea0f9b133e800e80b39f7b7e378f55",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_6.png",
+      "destination": "Tables/Wood/state_6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "aed77dd6afec39ce840fa022b89c239e0576f9e3c1200405b546634fdd948312",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/state_7.png",
+      "destination": "Tables/Wood/state_7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/Tables/wood.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "4dd55c199b2eaf1eabe48abbc0a2ece3a59939584d6a16d261d2353b378dc4f3",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/full.png",
+      "destination": "Windows/Standard/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "50c4067e56d232e9cf43bae3e3673ab7f1cb40cb37a3b123ffb2fbea78c2f2ba",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window0.png",
+      "destination": "Windows/Standard/window0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "f4ff97fcf8c4ff1aaa6fa9a7192887e46ac0b4567a734437cab2988cf7e32802",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window1.png",
+      "destination": "Windows/Standard/window1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "c17af4a85f1f8d24fe72f8a70954d49e5021bf92c334d9306ba006298228fc63",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window2.png",
+      "destination": "Windows/Standard/window2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "f4ff97fcf8c4ff1aaa6fa9a7192887e46ac0b4567a734437cab2988cf7e32802",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window3.png",
+      "destination": "Windows/Standard/window3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "c17af4a85f1f8d24fe72f8a70954d49e5021bf92c334d9306ba006298228fc63",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window4.png",
+      "destination": "Windows/Standard/window4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "60f72b2b408d198a59d38c78209f014911ff35b8678fab10b5d15b146bcba679",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window5.png",
+      "destination": "Windows/Standard/window5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "1ee1bd5d2cb6d93de5c68c6cb51ae160600b4c2d9b77a9b04cefe629d4de3706",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window6.png",
+      "destination": "Windows/Standard/window6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "60f72b2b408d198a59d38c78209f014911ff35b8678fab10b5d15b146bcba679",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/window7.png",
+      "destination": "Windows/Standard/window7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b9e408d22e7d1bb56f1b59f461877c2f16e95106d741d79d6a7e95c616f06667",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/full.png",
+      "destination": "Windows/Reinforced/full.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "5e2e6421b76acefd3aed9548162f72c9272b86192fe9a58e72b7a9fafd8e0556",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow0.png",
+      "destination": "Windows/Reinforced/rwindow0.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "93d29d04bf4e419209de506d0b5f5f414a28f9b82baa836ff72c01657b294378",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow1.png",
+      "destination": "Windows/Reinforced/rwindow1.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b3bed4dfc2792173eb7a1a1ceb9003d04f73dac8ecaae8463abe673dbe879bc4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow2.png",
+      "destination": "Windows/Reinforced/rwindow2.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "93d29d04bf4e419209de506d0b5f5f414a28f9b82baa836ff72c01657b294378",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow3.png",
+      "destination": "Windows/Reinforced/rwindow3.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "b3bed4dfc2792173eb7a1a1ceb9003d04f73dac8ecaae8463abe673dbe879bc4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow4.png",
+      "destination": "Windows/Reinforced/rwindow4.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "5799bdc750024a33afda11740c51c1fc4382e157237234ce1adfba6a80919b89",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow5.png",
+      "destination": "Windows/Reinforced/rwindow5.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "e2170b81254c36965bece03472e3d984e5910b6e7092f57d74c4faa23d3860f6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow6.png",
+      "destination": "Windows/Reinforced/rwindow6.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "5799bdc750024a33afda11740c51c1fc4382e157237234ce1adfba6a80919b89",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/rwindow7.png",
+      "destination": "Windows/Reinforced/rwindow7.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Windows/reinforced_window.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "62086c1d18d404f60ef7245521c09049a1c9bf905711c56d2fc4ab9ae3928bd9",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/comm.png",
+      "destination": "Consoles/comm.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        96,
+        96
+      ],
+      "sha256": "9828a74126a3a03c90db206747482340248b351ddf037df63067b25273bd18ae",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/command.png",
+      "destination": "Consoles/command.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        96,
+        96
+      ],
+      "sha256": "9268a135d02d801d85b67a132b5e1f932e4e29fb75eb2b403c66dcb962389cde",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/computer.png",
+      "destination": "Consoles/computer.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "db767bdfd3d8ef8ab76223b73c445b8752bd785da4e47dfa7d6344d6f43b01de",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/generic.png",
+      "destination": "Consoles/generic.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        96,
+        96
+      ],
+      "sha256": "e4db0d8a6ef49ee18b0e6d07b81674e51e1a2cab441022869ea6e16bd24aaa5c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/generic_keyboard.png",
+      "destination": "Consoles/generic_keyboard.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "3abe0c9c177a4781ae4736c510f7a994aac565c71db489a1879ba6374cffaa40",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/generic_keys.png",
+      "destination": "Consoles/generic_keys.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "65bcac22bd14257e946131938265123b51a522f7db0c43204217fdd51f12851c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/screen_broken.png",
+      "destination": "Consoles/screen_broken.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "9e88c5806af9019e3bcf2e204387201034d39b212ff92c69dbe56dd58167fbe6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/shuttle.png",
+      "destination": "Consoles/shuttle.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        96
+      ],
+      "sha256": "bbd2aed4c565d6240421bb0f3cbf761536581016dbcd916628ae264b255136e6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/supply.png",
+      "destination": "Consoles/supply.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Machines/computers.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "2bde836b28d8cc53c3e0221185095139e0e866884b0e6d46d193c85c07303b6e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/chair.png",
+      "destination": "Chairs/chair.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "e7216d6aa4a086005cde8363cbf2618641be8450dd46df9f53b4d593668ebe9b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/office-dark.png",
+      "destination": "Chairs/office-dark.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "eb8e42bdb42308d8bef658cd5b26790d99cf91d391ba068dfddc41c6705f01aa",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/office-white.png",
+      "destination": "Chairs/office-white.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "d1173ea518e2190a18d24131b14fa1909283bb8577b75d34e9336a70c6330e92",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/shuttle-overlay.png",
+      "destination": "Chairs/shuttle-overlay.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "f32e4926c783850066e594a9db96fd526b582194a70a9c997d168c604bd7abb5",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/shuttle.png",
+      "destination": "Chairs/shuttle.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "7e5d63e06d891fa842b49ba489835f105d22072e43660e3eecc8885738649503",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/stool.png",
+      "destination": "Chairs/stool.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "56c48fc548251a137353281f1e518f77e419c05dd9f2f942c212bd3f750443ba",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/wooden.png",
+      "destination": "Chairs/wooden.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/chairs.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        64,
+        64
+      ],
+      "sha256": "dab665fe63c7014e5b2d61e04c68a6d72afc38e43b32948d70cc38da3fc79f00",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/bed-MED.png",
+      "destination": "Furniture/bed-MED.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "f2a5d0fed4581d59a02f5765c8c074ff1003b378c698ddbbe1bdbe7b2748ec03",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/bed.png",
+      "destination": "Furniture/bed.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "5b7f81b315dc54aceee12947086ffd92709dfa25babcf1c2d55bde32cc386104",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/dogbed.png",
+      "destination": "Furniture/dogbed.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "62dc2c1614f0b37855b489665fc9f415d844dce6dd4c36b17a2252a5e280a873",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/dresser.png",
+      "destination": "Furniture/dresser.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "efbfe3e41f7a302d3f88cf1413d1f27071e532bf43b76b0ef1f45466cbb8f03a",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/mattress.png",
+      "destination": "Furniture/mattress.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "1eb1029277cb5920b1001de7ecd6bba231ac6fe3da672266d0b3a9184fd629e9",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/psychbed.png",
+      "destination": "Furniture/psychbed.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "2f05f76dbfe4660cd41d040972b0554b8dd4953f3a4685df831a71a4612344d6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/rack.png",
+      "destination": "Furniture/rack.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/furniture.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "7bed5f0c79c1b80f89a0a3c956a1d831811ca67d9d2174dabf6c588f5fb4e30c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/base.png",
+      "destination": "Crates/Steel/base.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "e10636002a837e741323615a878114e459ef0225e05790c620cdb348906fd481",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/closed.png",
+      "destination": "Crates/Steel/closed.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "7cd278d8ea7783732e45af33f0329e750f80f967a579319d3299b00fb2046990",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/icon.png",
+      "destination": "Crates/Steel/icon.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "1cf962982e908aa80b1bfe8f64296fef145fad0103332c95f28dda37f7376799",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/open.png",
+      "destination": "Crates/Steel/open.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "659a0ac5ddeb774d90225fe0e1ec08f7956286858de830dca849f9b2923b43f6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/sparking.png",
+      "destination": "Crates/Steel/sparking.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        96,
+        64
+      ],
+      "sha256": "ae9c8adaad25016aefd43bf460a6934e1328a1c36519ae301fa2b75daa26abf4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/welded.png",
+      "destination": "Crates/Steel/welded.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/generic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "5c230a13bc25301d6cc21e8a37308f6ddb36780379798b6535f6d7dcfc7528ae",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/base.png",
+      "destination": "Crates/Plastic/base.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "e9fb5a7bfb165919c6d789554501fdf6413103482f1648853def295c5350d139",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/closed.png",
+      "destination": "Crates/Plastic/closed.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "b3008d73e2f6361748f74a9ec97c1138b5cee16ced14c75d4e03ef39b5742ebf",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/icon.png",
+      "destination": "Crates/Plastic/icon.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "a452b442493910cac95a5aca110b468645e8d9a82dd6066d5461f1f2b40366af",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/open.png",
+      "destination": "Crates/Plastic/open.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "972cf6ece55126fc00bad0a4488e3b5ecc8694da679240db426a600dd3190cd6",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/sparking.png",
+      "destination": "Crates/Plastic/sparking.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        96,
+        64
+      ],
+      "sha256": "ae9c8adaad25016aefd43bf460a6934e1328a1c36519ae301fa2b75daa26abf4",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/welded.png",
+      "destination": "Crates/Plastic/welded.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Storage/Crates/plastic.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "5c230a13bc25301d6cc21e8a37308f6ddb36780379798b6535f6d7dcfc7528ae",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/plant-01.png",
+      "destination": "Plants/plant-01.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "f34052a603025e783011025f76fd5456aefdeeb6632d094a7eb6a8c510b702df",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/plant-02.png",
+      "destination": "Plants/plant-02.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "02873032177cb9cd8e05b8a55f1020e02cf17369ae5a5e06dedcd8d4e1052700",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/plant-03.png",
+      "destination": "Plants/plant-03.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "8b7f3d212747cb5c5dd48d33a234ea6da1e986175934558cb5059f6801b4697f",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/plant-04.png",
+      "destination": "Plants/plant-04.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Structures/Furniture/potted_plants.rsi/meta.json",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "896e26807368cb3f9c166023c50a76350193569e76a27d3aa816e8bb6191f4c2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/steel.png",
+      "destination": "Floors/steel.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "d008f2448b24a451fa929a7328be93d1806b1ef69a34b311350795e6b07f9734",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/steel_mini.png",
+      "destination": "Floors/steel_mini.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "cf4566cdc0fbe133d38dc570df8e8d8f4e1e94a94ade84fdca727407e35a090a",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/steel_diagonal.png",
+      "destination": "Floors/steel_diagonal.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "aa13380dd38e9a08f7679567b8a810aa99f458375ffb31d97b6d518abf27a23e",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/steel_maint.png",
+      "destination": "Floors/steel_maint.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "2e00f899b877edb23d35d39fc38abe29d80fa12c9967ebdf1c7a0a3e77b68e9a",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/white.png",
+      "destination": "Floors/white.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "018625604e86280d410516ff9c7975d1616e57917ccc2db2909c5771edfa00fd",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/white_mini.png",
+      "destination": "Floors/white_mini.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "472f2ea103c6d428dc79894cbfb5d7756357480c109e8758496ae18a51c4a277",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/dark.png",
+      "destination": "Floors/dark.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "017bab91743b65673c1c9e7468f8398cb03bd7831ab925e96faad04d2a688ff5",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/dark_mini.png",
+      "destination": "Floors/dark_mini.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "0df152788dc109cc6ba649f748a81b2327755d2e2d62c08fe5ce0e456c284be2",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/plating.png",
+      "destination": "Floors/plating.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "834ada15a92f01dade8931f47d063defa8c832b96901493ae293f9d667fc719b",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/reinforced.png",
+      "destination": "Floors/reinforced.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        32,
+        32
+      ],
+      "sha256": "e188c432037b7a4975519fd55eb5ca9f997f298b67286540ac488717f4ad8ab5",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/wood.png",
+      "destination": "Floors/wood.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "432cf17d3869db8087f45ef96dbd368e6e92fe8c12a44581815f00680d63cca1",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttlewhite.png",
+      "destination": "Floors/shuttlewhite.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "cec68e7cee6e027bed356b7627af39d39f1f19a63b5793e2fedc1438c3e0003a",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttlegrey.png",
+      "destination": "Floors/shuttlegrey.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "575bb6e72a49b431ac74e8b01fb0f118a1ca31339fe9b589c2bcfe80be88e899",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttleblack.png",
+      "destination": "Floors/shuttleblack.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "b1961c93359d86dc168d3b826e3ef9c7360852a27309e8c19ea5e42b2b4ec3eb",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttleblue.png",
+      "destination": "Floors/shuttleblue.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "e520928349f434416978305a841f9693ad9fd918fe232fcb6e61c576a72f7395",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttlered.png",
+      "destination": "Floors/shuttlered.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "09b6df3ab9aedb2601eaa3c432861971a48cb5729f642b779142dff25711da4c",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttleorange.png",
+      "destination": "Floors/shuttleorange.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "4a0537b267964d8b31586022589f53c3425e102fca646d0f4c8095b20179328d",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    },
+    {
+      "source": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/shuttlepurple.png",
+      "destination": "Floors/shuttlepurple.png",
+      "metadata": "/home/dan/Documents/SS1/frontier-station-14/Resources/Textures/Tiles/attributions.yml",
+      "cell": {
+        "x": 32,
+        "y": 32
+      },
+      "license": "CC-BY-SA-3.0",
+      "dimensions": [
+        128,
+        32
+      ],
+      "sha256": "c9ca1744657bc12dcf290fbad9e1d56427d81b7b098183ae286392bfe66cc7cd",
+      "changes": "PNG unchanged; Unity import settings and full-cell sprite slices added."
+    }
+  ]
+}
