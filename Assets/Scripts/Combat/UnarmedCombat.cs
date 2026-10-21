@@ -231,7 +231,7 @@ public class UnarmedCombat : MonoBehaviour
     IEnumerator AnimateMoveSprite(Vector3 originVector, Vector3 destinationVector)
     {
         SpriteRenderer[] protagSprites = protagBody.GetComponentsInChildren<SpriteRenderer>();
-        float elapsed = 0f; // state survives between Coroutine resumesThe
+        float elapsed = 0f; // state survives between Coroutine resumes
         float duration = 0.1f; // hard coded shove animation; will be the same for melee attacks in general
         while (elapsed < duration)
         {
