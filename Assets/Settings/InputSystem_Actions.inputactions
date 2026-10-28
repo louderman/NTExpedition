@@ -135,9 +135,30 @@
                     "interactions": "Press",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ReleaseItem",
+                    "type": "Button",
+                    "id": "5c4c28ea-f3c0-474f-8c8a-d67f83be67b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "e6be33e9-b733-4b0b-819e-91ddf216e6b5",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ReleaseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "",
                     "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",

@@ -9,6 +9,8 @@ public class HandSystem : MonoBehaviour
     public event System.Action<HandSlot> HandChanged;
     public event System.Action<HandSlot, ItemComponent> HeldItemChanged;
     [SerializeField] float pickupRange = 1.5f;
+    [SerializeField] float throwSpeed = 8f;
+    [SerializeField] float throwDistance = 4f;
     ItemComponent leftItem, rightItem, hovered;
     PlayerMovement movement;
     GameObject outlineRoot;
@@ -27,11 +29,37 @@ public class HandSystem : MonoBehaviour
     public bool TryPickup(ItemComponent item)
     {
         if (Time.timeScale == 0 || (movement != null && movement.combatMode) || item == null || item.Definition == null || !item.gameObject.activeInHierarchy || item.Container != null || HeldItem(CurrentHandSlot) != null || !IsInRange(item)) return false;
+        var flight = item.GetComponent<ItemThrow>();
+        if (flight != null && flight.IsMoving) return false;
         if (CurrentHandSlot == HandSlot.Left) leftItem = item; else rightItem = item;
         ClearHover();
         item.transform.SetParent(transform, true);
         item.gameObject.SetActive(false);
         HeldItemChanged?.Invoke(CurrentHandSlot, item);
+        return true;
+    }
+    public bool ReleaseActiveItem(bool throwing, Vector2 screenPosition)
+    {
+        var item = HeldItem(CurrentHandSlot);
+        if (Time.timeScale == 0 || item == null) return false;
+        Vector2 direction = Vector2.down;
+        if (throwing && Camera.main != null)
+        {
+            var point = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
+            var delta = (Vector2)point - (Vector2)transform.position;
+            if (delta.sqrMagnitude > .0001f) direction = delta.normalized;
+        }
+        if (CurrentHandSlot == HandSlot.Left) leftItem = null; else rightItem = null;
+        item.transform.SetParent(null, true);
+        item.transform.position = transform.position + (Vector3)(direction * .65f);
+        item.gameObject.SetActive(true);
+        HeldItemChanged?.Invoke(CurrentHandSlot, null);
+        if (throwing)
+        {
+            var flight = item.GetComponent<ItemThrow>();
+            if (flight == null) flight = item.gameObject.AddComponent<ItemThrow>();
+            flight.Launch(direction, throwSpeed, throwDistance, transform);
+        }
         return true;
     }
     public void SwapHands()

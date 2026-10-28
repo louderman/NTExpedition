@@ -9,6 +9,26 @@ public class ActionManager : MonoBehaviour
     [SerializeField] WeaponController weaponController;
     public Vector2 crosshairPosition;
     private PlayerMovement playerMovement;
+    private InputAction releaseItemAction;
+    void OnEnable()
+    {
+        var playerInput = GetComponent<PlayerInput>();
+        releaseItemAction = playerInput != null && playerInput.actions != null
+            ? playerInput.actions.FindAction("Player/ReleaseItem") : null;
+        if (releaseItemAction != null) releaseItemAction.performed += OnReleaseItem;
+    }
+    void OnDisable()
+    {
+        if (releaseItemAction != null) releaseItemAction.performed -= OnReleaseItem;
+        releaseItemAction = null;
+    }
+    public void OnReleaseItem(InputAction.CallbackContext context)
+    {
+        if (!context.performed || Time.timeScale == 0 || handSystem == null) return;
+        var keyboard = context.control.device as Keyboard;
+        bool throwing = keyboard != null && (keyboard.leftCtrlKey.isPressed || keyboard.rightCtrlKey.isPressed);
+        handSystem.ReleaseActiveItem(throwing, crosshairPosition);
+    }
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
