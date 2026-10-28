@@ -1,36 +1,30 @@
 using UnityEngine;
 
-// A gun and a bottle can both have this component; weapon behavior stays separate.
+// Per-instance state. Definitions remain shared and immutable during play.
 public class ItemComponent : MonoBehaviour
 {
-    // Assign the shared asset in this item's Inspector, not another scene item.
     [SerializeField] private ItemDefinition definition;
-
-    // A read-only property exposes the referenced asset to other components.
-    // Each access returns the reference currently held in the field above.
     public ItemDefinition Definition => definition;
+    public void Initialize(ItemDefinition itemDefinition) { if (Container == null) definition = itemDefinition; }
+    public int Rotation { get; private set; }
+    public bool IsRotated => Rotation % 2 != 0;
+    public InventoryContainer Container { get; internal set; }
+    public Vector2Int GridPosition { get; internal set; }
 
-    // TODO: Add per-instance state recording whether its footprint is rotated.
-    // Relevant type: bool. Do not rotate the shared definition's footprint.
-    private bool isRotated = false;
-    public bool IsRotated => isRotated;
-
+    // Rotating a stored item must go through its container for collision checks.
     public void Rotate()
     {
-        if(isRotated == false){isRotated = true;}
-        else{isRotated = false;}
+        int next = (Rotation + 1) % 4;
+        if (Container != null) Container.TryPlace(this, GridPosition, next);
+        else Rotation = next;
     }
-
+    internal void SetRotation(int rotation) { Rotation = ((rotation % 4) + 4) % 4; }
     public Vector2Int ReturnDimensions()
     {
-        if(isRotated == false){return Definition.ItemDimensions;}
-        else
-        {
-            Vector2Int flipped = new(Definition.ItemDimensions.y, Definition.ItemDimensions.x);
-            return flipped;
-        }
+        if (Definition == null) return Vector2Int.zero;
+        GridCell[] shape = InventoryGrid<ItemComponent>.Rotate(Definition.GetFootprint(), Rotation);
+        int width = 0, height = 0;
+        foreach (var cell in shape) { width = Mathf.Max(width, cell.X + 1); height = Mathf.Max(height, cell.Y + 1); }
+        return new Vector2Int(width, height);
     }
-    // Later: the grid container will record placement and validate transfers.
-    // Later: magazine-specific state belongs to a magazine behavior component.
-    // Do not add attack, UI-rendering, or reloading methods to this component.
 }

@@ -1,0 +1,14 @@
+Frontier Station / Space Station 14 assets used in this prototype
+
+Source repository: https://github.com/new-frontiers-14/frontier-station-14
+Local source revision: fc74013522ef2ee1c5049c986748c9f0866fb4c3
+License: CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/
+The upstream README says most assets use CC BY-SA 3.0 unless stated otherwise; the storage UI PNGs do not have individual metadata in the local source. Their commit history credits EmoGarbage404 (Nemanja), Grid Inventory #21931 and Grid inventory fixes #22161. Storage UI images are unchanged, rendered at a different scale.
+Source paths: Resources/Textures/Interface/Default/Storage/{tile_empty_opaque,piece_center,sidebar_top,sidebar_mid,sidebar_bottom,exit}.png
+
+Item icons, unchanged:
+- crowbar-storage.png: Objects/Tools/crowbar.rsi/storage.png; metadata attributes tgstation commit eea0599511b088fdab9d43e562210cdbd51c6a98, with a cover edit by Ubaser; CC BY-SA 3.0.
+- wrench-storage.png: Objects/Tools/wrench.rsi/storage.png; metadata attributes vgstation commit 1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d, storage by EmoGarbage404; CC BY-SA 3.0.
+- screwdriver.png: Objects/Tools/screwdriver.rsi/screwdriver-map.png; metadata attributes vgstation commit 1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d; CC BY-SA 3.0.
+
+These terms are licenses, not a blanket fair-use permission. Check each additional asset's metadata and share-alike obligations before distribution. Upstream also notes some assets have non-commercial restrictions.

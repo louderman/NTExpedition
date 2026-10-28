@@ -1,0 +1,6 @@
+Water bottle sprite
+Source: Frontier Station, Resources/Textures/Objects/Consumable/Drinks/waterbottle.rsi/icon.png
+Source revision: fc74013522ef2ee1c5049c986748c9f0866fb4c3
+Copyright as stated in upstream metadata: https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi; icon modified from waterbottle.rsi by Prole0 (GitHub).
+License: CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/
+The sprite is unchanged; Unity imports it at 32 pixels per unit with point filtering.
