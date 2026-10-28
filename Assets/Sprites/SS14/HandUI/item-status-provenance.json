@@ -1,0 +1,33 @@
+{
+  "description": "Project-created provenance, not upstream metadata",
+  "source_repository": "https://github.com/space-wizards/space-station-14",
+  "source_path": "Resources/Textures/Interface/Default",
+  "frontier_revision": "fc74013522ef2ee1c5049c986748c9f0866fb4c3",
+  "introducing_commit": "https://github.com/space-wizards/space-station-14/commit/58f025ba8043bcf5c32204b08eec8ae9e5d2bd41",
+  "pull_request": "https://github.com/space-wizards/space-station-14/pull/22986",
+  "contributor": "Pieter-Jan Briers (PJB3005), PR author and commit author; exact artwork authorship not independently established",
+  "license_note": "Upstream README says most assets CC-BY-SA-3.0 unless otherwise stated; no per-file license located for these PNGs. This is a provisional attribution, not confirmation that no exception applies.",
+  "changes": "None; copied PNG bytes",
+  "files": [
+    {
+      "file": "item_status_left.png",
+      "sha256": "2b85d4e05ae5cf901fbed29b2df7d8f65ff7e7784302f7a7a02e6029ecd70d12",
+      "verified": true
+    },
+    {
+      "file": "item_status_right.png",
+      "sha256": "a796fa1e8782e0ac0defcc73f6f1e56261d770aa4765652a5e1e69e3fb0d7efe",
+      "verified": true
+    },
+    {
+      "file": "item_status_left_highlight.png",
+      "sha256": "836cb38d8724481a7353894d95c58caa27ab1ff0d1690ef86e21b417cbb93231",
+      "verified": true
+    },
+    {
+      "file": "item_status_right_highlight.png",
+      "sha256": "065d5598088343cdc994058afa1f54e306c2cb64a5d79413a3cd268b0503c2b7",
+      "verified": true
+    }
+  ]
+}
