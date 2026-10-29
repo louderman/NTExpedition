@@ -62,11 +62,49 @@ public class HandSystem : MonoBehaviour
         }
         return true;
     }
-    public void SwapHands()
+    public bool TryMoveActiveItemTo(HandSlot destination)
     {
-        CurrentHandSlot = CurrentHandSlot == HandSlot.Left ? HandSlot.Right : HandSlot.Left;
+        if (destination == CurrentHandSlot) return true;
+        var source = CurrentHandSlot;
+        var sourceItem = HeldItem(source);
+        var destinationItem = HeldItem(destination);
+        if (sourceItem != null)
+        {
+            SetHeldItems(source, destinationItem, destination, sourceItem);
+        }
+        SetActiveHand(destination);
+        return true;
+    }
+    public bool TryStoreActiveItem(InventoryContainer container)
+    {
+        var item = HeldItem(CurrentHandSlot);
+        if (container == null || item == null || !container.TryAutoPlace(item)) return false;
+        var source = CurrentHandSlot;
+        SetHeldItem(source, null);
+        item.transform.SetParent(container.transform, true);
+        return true;
+    }
+    void SetHeldItem(HandSlot hand, ItemComponent item)
+    {
+        if (hand == HandSlot.Left) leftItem = item; else rightItem = item;
+        HeldItemChanged?.Invoke(hand, item);
+    }
+    void SetHeldItems(HandSlot firstHand, ItemComponent firstItem, HandSlot secondHand, ItemComponent secondItem)
+    {
+        if (firstHand == HandSlot.Left) leftItem = firstItem; else rightItem = firstItem;
+        if (secondHand == HandSlot.Left) leftItem = secondItem; else rightItem = secondItem;
+        HeldItemChanged?.Invoke(firstHand, firstItem);
+        HeldItemChanged?.Invoke(secondHand, secondItem);
+    }
+    void SetActiveHand(HandSlot hand)
+    {
+        CurrentHandSlot = hand;
         HandChanged?.Invoke(CurrentHandSlot);
         Debug.Log($"Hand changed: {CurrentHandSlot}");
+    }
+    public void SwapHands()
+    {
+        SetActiveHand(CurrentHandSlot == HandSlot.Left ? HandSlot.Right : HandSlot.Left);
     }
     void Update()
     {

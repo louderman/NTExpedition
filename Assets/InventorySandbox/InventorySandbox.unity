@@ -150,10 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySandbox
   bag: {fileID: 43236632}
-  samples:
-  - {fileID: 11400000, guid: aa87c68f5059bd0788130445d030ac3f, type: 2}
-  - {fileID: 11400000, guid: 8ede9996cdd037b68aa44100553caa15, type: 2}
-  - {fileID: 11400000, guid: 9030c0be54db8214f99cfc641b72f957, type: 2}
 --- !u!114 &43236632
 MonoBehaviour:
   m_ObjectHideFlags: 0

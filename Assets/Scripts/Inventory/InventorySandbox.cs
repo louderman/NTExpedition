@@ -1,18 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-// Temporary sample storage shown in HomeShip; not yet wired to gameplay hands.
+// Temporary sample storage shown in HomeShip.
 public class InventorySandbox : MonoBehaviour
 {
     public InventoryContainer bag;
-    public ItemDefinition[] samples;
+    [SerializeField] ItemDefinition[] startingItems;
     ItemComponent dragging;
     int dragRotation;
     Vector2Int dragAnchor;
     const float Cell = 32f;
     const float Gap = 0f;
     Texture2D tileTexture, pieceTexture, sidebarTop, sidebarMid, sidebarBottom, exitIcon;
-    Texture2D[] sampleIcons;
+    HandSystem handSystem;
     Texture2D LoadTexture(string name)
     {
         var texture = Resources.Load<Texture2D>("FrontierInventory/" + name);
@@ -26,13 +26,15 @@ public class InventorySandbox : MonoBehaviour
 
     void Start()
     {
+        handSystem = Object.FindFirstObjectByType<HandSystem>();
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "--inventory-self-test") >= 0)
         {
+            var definition = Resources.Load<ItemDefinition>("WorldItems/WaterBottleDefinition");
             var obj = new GameObject("integration-test-item");
-            var item = obj.AddComponent<ItemComponent>(); item.Initialize(samples[0]);
-            bool ok = true;
-            foreach (var sample in samples)
-                ok &= sample != null && sample.ItemDimensions == new Vector2Int(1, 2) && sample.GetFootprint().Length == 2;
+            var item = obj.AddComponent<ItemComponent>(); item.Initialize(definition);
+            bool ok = definition != null && definition.ItemName == "Water bottle"
+                && definition.ItemIcon != null && definition.ItemDimensions == new Vector2Int(1, 2)
+                && definition.GetFootprint().Length == 2 && IsEmpty();
             ok &= bag.TryPlace(item, new Vector2Int(0, 0), 0) && bag.GetItem(0, 1) == item && item.Container == bag;
             item.Rotate();
             ok &= item.Rotation == 1 && bag.GetItem(1, 0) == item && bag.GetItem(0, 1) == null;
@@ -42,19 +44,41 @@ public class InventorySandbox : MonoBehaviour
             Application.Quit(ok ? 0 : 1);
             return;
         }
+        AddStartingItems();
         tileTexture = LoadTexture("tile_empty_opaque"); pieceTexture = LoadTexture("piece_center");
         sidebarTop = LoadTexture("sidebar_top"); sidebarMid = LoadTexture("sidebar_mid");
         sidebarBottom = LoadTexture("sidebar_bottom"); exitIcon = LoadTexture("exit");
-        sampleIcons = new[] { LoadTexture("crowbar-storage"), LoadTexture("wrench-storage"), LoadTexture("screwdriver") };
-        // Sample items make layout and packing directly visible for testing.
-        foreach (var sample in samples)
-        {
-            if (sample == null) continue;
-            var obj = new GameObject("Sample " + sample.ItemName);
-            var item = obj.AddComponent<ItemComponent>(); item.Initialize(sample);
-            if (!bag.TryAutoPlace(item)) Destroy(obj);
-        }
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "--inventory-screenshot") >= 0) StartCoroutine(Capture());
+    }
+    void AddStartingItems()
+    {
+        if (bag == null || startingItems == null) return;
+        foreach (var definition in startingItems)
+        {
+            if (definition == null) continue;
+            var obj = new GameObject(definition.ItemName + " (stored)");
+            obj.transform.SetParent(transform, false);
+            var item = obj.AddComponent<ItemComponent>();
+            item.Initialize(definition);
+            if (!bag.TryAutoPlace(item))
+            {
+                Debug.LogError("Could not place starting item in storage: " + definition.ItemName);
+                Destroy(obj);
+            }
+        }
+    }
+    bool IsEmpty()
+    {
+        if (bag == null) return false;
+        var dimensions = bag.ContainerDimensions;
+        for (int y = 0; y < dimensions.y; y++) for (int x = 0; x < dimensions.x; x++)
+            if (bag.GetItem(x, y) != null) return false;
+        return true;
+    }
+    public bool TryUseBag()
+    {
+        if (handSystem == null) handSystem = Object.FindFirstObjectByType<HandSystem>();
+        return handSystem != null && handSystem.TryStoreActiveItem(bag);
     }
     IEnumerator Capture()
     {
@@ -84,6 +108,13 @@ public class InventorySandbox : MonoBehaviour
         Rect panel = new Rect(24, 70, width + 32, height + 24);
         Rect grid = new Rect(panel.x + 32, panel.y + 24, width, height);
         Event e = Event.current;
+        if (e.type == EventType.MouseDown && e.button == 0 && panel.Contains(e.mousePosition)
+            && handSystem != null && handSystem.HeldItem(handSystem.CurrentHandSlot) != null)
+        {
+            if (!TryUseBag()) Debug.Log("Inventory full: held item was not stored");
+            e.Use();
+            return;
+        }
         Vector2Int hovered = new Vector2Int(Mathf.FloorToInt((e.mousePosition.x-grid.x)/Cell), Mathf.FloorToInt((e.mousePosition.y-grid.y)/Cell));
         bool inGrid = grid.Contains(e.mousePosition);
         if (e.type == EventType.MouseDown && e.button == 0 && inGrid)
@@ -151,25 +182,13 @@ public class InventorySandbox : MonoBehaviour
         var shape = InventoryGrid<ItemComponent>.Rotate(item.Definition.GetFootprint(),rotation);
         int w=0,h=0; foreach(var p in shape) { w=Mathf.Max(w,p.X+1); h=Mathf.Max(h,p.Y+1); }
         Rect r = new Rect(grid.x+pos.x*Cell, grid.y+pos.y*Cell, w*Cell-Gap, h*Cell-Gap);
-        int index = System.Array.IndexOf(samples, item.Definition);
-        var icon = index >= 0 && index < sampleIcons.Length ? sampleIcons[index] : null;
-        if (icon != null)
-        {
-            var before = GUI.matrix;
-            // Frontier's crowbar and wrench storage states are already vertical;
-            // its screwdriver source points horizontally and needs a quarter turn.
-            float baseAngle = index == 2 ? 90f : 0f;
-            GUIUtility.RotateAroundPivot(baseAngle + rotation * 90f, r.center);
-            // The art has transparent margins; scale it to the longer side of
-            // the footprint so a vertical icon spans its 1x2 slot.
-            float side = Mathf.Max(r.width, r.height);
-            GUI.DrawTexture(new Rect(r.center.x-side/2, r.center.y-side/2, side, side), icon, ScaleMode.ScaleToFit);
-            GUI.matrix = before;
-        }
-        else if (item.Definition.ItemIcon != null)
+        if (item.Definition.ItemIcon != null)
         {
             var sprite = item.Definition.ItemIcon; var t = sprite.texture; var sr = sprite.textureRect;
-            GUI.DrawTextureWithTexCoords(r, t, new Rect(sr.x/t.width,sr.y/t.height,sr.width/t.width,sr.height/t.height));
+            float scale = Mathf.Min(r.width / sr.width, r.height / sr.height);
+            var iconRect = new Rect(r.center.x - sr.width * scale / 2f, r.center.y - sr.height * scale / 2f,
+                sr.width * scale, sr.height * scale);
+            GUI.DrawTextureWithTexCoords(iconRect, t, new Rect(sr.x/t.width,sr.y/t.height,sr.width/t.width,sr.height/t.height));
         }
         else
         {

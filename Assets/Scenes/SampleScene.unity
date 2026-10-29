@@ -4155,6 +4155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandUI
   leftHighlight: {fileID: 211003558}
   rightHighlight: {fileID: 1956390384}
+  leftSlot: {fileID: 772101933}
+  rightSlot: {fileID: 1677264985}
   handSystem: {fileID: 1718987729}
 --- !u!1 &1042858724
 GameObject:
