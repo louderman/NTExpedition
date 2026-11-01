@@ -153,6 +153,65 @@ public static class InventorySandboxSetup
         Debug.Log("BASEBALL_BAT_SETUP_PASS");
     }
 
+    public static void ConfigureProtoKineticAccelerator()
+    {
+        const string baseSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-icon.png";
+        const string glowSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-icon-unshaded.png";
+        const string projectileSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-projectile-chronobolt.png";
+        const string definitionPath = "Assets/Resources/WorldItems/ProtoKineticAcceleratorDefinition.asset";
+        const string prefabPath = "Assets/Resources/WorldItems/ProtoKineticAccelerator.prefab";
+
+        foreach (string spritePath in new[] { baseSpritePath, glowSpritePath, projectileSpritePath })
+        {
+            AssetDatabase.ImportAsset(spritePath, ImportAssetOptions.ForceUpdate);
+            var importer = (TextureImporter)AssetImporter.GetAtPath(spritePath);
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 32;
+            importer.mipmapEnabled = false;
+            importer.filterMode = FilterMode.Point;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        var baseSprite = AssetDatabase.LoadAssetAtPath<Sprite>(baseSpritePath);
+        var glowSprite = AssetDatabase.LoadAssetAtPath<Sprite>(glowSpritePath);
+        var projectileSprite = AssetDatabase.LoadAssetAtPath<Sprite>(projectileSpritePath);
+        var definition = MakeItem(definitionPath, "Proto-kinetic accelerator", new Vector2Int(3, 2), null);
+        var definitionData = new SerializedObject(definition);
+        definitionData.FindProperty("itemIcon").objectReferenceValue = baseSprite;
+        definitionData.FindProperty("itemWeight").floatValue = 1.5f;
+        definitionData.FindProperty("isMeleeWeapon").boolValue = false;
+        definitionData.ApplyModifiedPropertiesWithoutUndo();
+
+        var root = new GameObject("ProtoKineticAccelerator");
+        var renderer = root.AddComponent<SpriteRenderer>();
+        renderer.sprite = baseSprite;
+        renderer.sortingOrder = 5;
+        var glow = new GameObject("Unshaded detail");
+        glow.transform.SetParent(root.transform, false);
+        var glowRenderer = glow.AddComponent<SpriteRenderer>();
+        glowRenderer.sprite = glowSprite;
+        glowRenderer.sortingOrder = 6;
+        var collider = root.AddComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+        collider.size = new Vector2(1f, .5f);
+        root.AddComponent<ItemComponent>().Initialize(definition);
+        var ranged = root.AddComponent<RangedWeapon>();
+        var rangedData = new SerializedObject(ranged);
+        rangedData.FindProperty("damage").floatValue = 5f;
+        rangedData.FindProperty("fireCooldown").floatValue = .65f;
+        rangedData.FindProperty("range").floatValue = 8f;
+        rangedData.FindProperty("projectileSpeed").floatValue = 12f;
+        rangedData.FindProperty("glowSprite").objectReferenceValue = glowSprite;
+        rangedData.FindProperty("projectileSprite").objectReferenceValue = projectileSprite;
+        rangedData.ApplyModifiedPropertiesWithoutUndo();
+        PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+        Object.DestroyImmediate(root);
+        AssetDatabase.SaveAssets();
+        Debug.Log("PKA_SETUP_PASS");
+    }
+
     static ItemDefinition MakeItem(string path, string name, Vector2Int dimensions, Vector2Int[] footprint)
     {
         var item = AssetDatabase.LoadAssetAtPath<ItemDefinition>(path);

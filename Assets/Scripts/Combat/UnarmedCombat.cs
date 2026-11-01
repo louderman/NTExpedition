@@ -44,13 +44,14 @@ public class UnarmedCombat : MonoBehaviour
     {
     }
     
-    public void ApplyInput(WeaponController.AttackType attackType, WeaponController.AttackPower attackContext)
+    public bool ApplyInput(WeaponController.AttackType attackType, WeaponController.AttackPower attackContext,
+        bool showShoveFx = true)
     {
         if(attackContext == WeaponController.AttackPower.CancelCharge)
             {
                 _isCharging = false;
                 Debug.Log("Charge canceled.");
-                return;
+                return false;
             }
         
         if(attackType == WeaponController.AttackType.PrimaryAttack)
@@ -58,11 +59,12 @@ public class UnarmedCombat : MonoBehaviour
             if(attackContext == WeaponController.AttackPower.Quick)
             {
                 _isCharging = false;
-                if(attackDebounce) return;
+                if(attackDebounce) return false;
                 Debug.Log("Quick Punch!");
                 Punch();
                 attackDebounce = true;
                 StartCoroutine(Cooldown(attackCooldown, true));
+                return true;
             }
             if(attackContext == WeaponController.AttackPower.BeginCharge && !attackDebounce)
             {
@@ -72,20 +74,23 @@ public class UnarmedCombat : MonoBehaviour
             {
                 bool wasCharging = _isCharging; 
                 _isCharging = false; 
-                if(!wasCharging || attackDebounce) return; 
+                if(!wasCharging || attackDebounce) return false;
                 Debug.Log("Charged Punch!"); 
                 Punch(); // TODO; distinct feedback for charging the punch
                 attackDebounce = true;
                 StartCoroutine(Cooldown(attackCooldown, true));
+                return true;
             }
         
         }
         if(attackType == WeaponController.AttackType.SecondaryAttack && !attackDebounce)
         {
-            Shove();
+            Shove(showShoveFx);
             attackDebounce = true;
             StartCoroutine(Cooldown(attackCooldown, true));
+            return true;
         }
+        return false;
     }
 
     void ChargeStartup()
@@ -152,7 +157,7 @@ public class UnarmedCombat : MonoBehaviour
         StartCoroutine(PlayShoveAnimation(originVector, destinationVector));
     }
 
-    void Shove()
+    void Shove(bool showFx)
     {
         Vector2 mouseScreen = actionManager.crosshairPosition; // reads pixel perfect position of mouse
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen); // converts that to an actual point in realspace
@@ -162,9 +167,12 @@ public class UnarmedCombat : MonoBehaviour
         float angle = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
         Collider2D[] allHit = Physics2D.OverlapBoxAll(hitboxPosition, new Vector2(attackRange, 1), angle);
 
-        Quaternion hitboxRotation = Quaternion.Euler(0f, 0f, angle - 90f);
-        GameObject effect = Instantiate(shoveFX, hitboxPosition, hitboxRotation);
-        Destroy(effect, 0.3f);
+        if (showFx)
+        {
+            Quaternion hitboxRotation = Quaternion.Euler(0f, 0f, angle - 90f);
+            GameObject effect = Instantiate(shoveFX, hitboxPosition, hitboxRotation);
+            Destroy(effect, 0.3f);
+        }
 
         // AI-generated debug visualization only: show this shove box for one second.
         debugBoxCenter = hitboxPosition;
@@ -239,7 +247,8 @@ public class UnarmedCombat : MonoBehaviour
             float progress = elapsed / duration;
             foreach(SpriteRenderer sprite in protagSprites)
             {
-                sprite.transform.localPosition =  Vector3.Lerp(originVector, destinationVector, progress);
+                if (sprite != null)
+                    sprite.transform.localPosition = Vector3.Lerp(originVector, destinationVector, progress);
             }
             yield return null; // resume loop on the next frame
         }
