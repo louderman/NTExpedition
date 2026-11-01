@@ -9,12 +9,10 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] private Transform huggerSpawnpoint;
     [SerializeField] private float respawnDelay = 3f;
     [SerializeField] private int huggerDeathReward = 2;
-    private ScoreManager scoreManager;
     private bool respawnPending;
 
     void Start()
     {
-        scoreManager = ScoreManager.Instance; // Resolve the survivor, not the new scene's duplicate.
         if (initialHugger != null) ConfigureHugger(initialHugger);
     }
 
@@ -23,7 +21,7 @@ public class MobSpawner : MonoBehaviour
         hugger.GetComponent<MobMovement>().SetTarget(player);
         MobDeath death = hugger.GetComponent<MobDeath>();
         if (death == null) death = hugger.AddComponent<MobDeath>();
-        death.ConfigureHugger(scoreManager, this, huggerDeathReward);
+        death.ConfigureHugger(this, huggerDeathReward);
         ExplosiveCollision explosion = hugger.GetComponent<ExplosiveCollision>();
         if (explosion != null) explosion.enabled = false;
     }

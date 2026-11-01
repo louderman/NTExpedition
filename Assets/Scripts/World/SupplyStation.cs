@@ -28,7 +28,7 @@ public class SupplyStation : MonoBehaviour
         if (label != null) label.text = "Dispensed";
         var pickup = Instantiate(pickupPrefab, transform.position, Quaternion.identity);
         var flow = FindAnyObjectByType<ExpeditionFlow>();
-        if (flow != null) flow.PlayEffect(pickup.config.spawnSound);
+        if (flow != null && flow.config != null) flow.PlayEffect(flow.config.spawnSound);
         return pickup;
     }
 }

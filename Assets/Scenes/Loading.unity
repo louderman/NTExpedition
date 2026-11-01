@@ -750,6 +750,7 @@ GameObject:
   - component: {fileID: 930663058}
   - component: {fileID: 930663060}
   - component: {fileID: 930663059}
+  - component: {fileID: 930663062}
   m_Layer: 0
   m_Name: Expedition flow
   m_TagString: Untagged
@@ -773,12 +774,14 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 1626a8c3b4ccd29a6902fa94d4b9bd74, type: 2}
   musicSource: {fileID: 930663060}
   effectsSource: {fileID: 930663059}
-  summaryText: {fileID: 1735873778}
   statusText: {fileID: 0}
   pausePanel: {fileID: 0}
   gameOverPanel: {fileID: 0}
   gameOverText: {fileID: 0}
   player: {fileID: 0}
+  runScore: {fileID: 11400000, guid: 65708fe701a41d268aef3fcf3824313e, type: 2}
+  bestScore: {fileID: 11400000, guid: bbc6e4d9558b285ad8ef86d4a4b27e86, type: 2}
+  onGameRestart: {fileID: 11400000, guid: a55c190407fb5c21684e14b0efeee60a, type: 2}
 --- !u!82 &930663059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -988,6 +991,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &930663062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930663057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758b33bed89b39fb3851186108c7d625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  Event: {fileID: 11400000, guid: a55c190407fb5c21684e14b0efeee60a, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 930663058}
+        m_TargetAssemblyTypeName: ExpeditionFlow, Assembly-CSharp
+        m_MethodName: ResetRunScore
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1042858724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1506,8 @@ GameObject:
   - component: {fileID: 1735873780}
   - component: {fileID: 1735873779}
   - component: {fileID: 1735873778}
+  - component: {fileID: 1735873782}
+  - component: {fileID: 1735873783}
   m_Layer: 0
   m_Name: Best score
   m_TagString: Untagged
@@ -1601,6 +1634,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1735873782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735873777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617d2e3b4008b9407a3e49b99f1e4b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IntVariableText
+  text: {fileID: 1735873778}
+  source: {fileID: 11400000, guid: bbc6e4d9558b285ad8ef86d4a4b27e86, type: 2}
+  prefix: 'Best score: '
+--- !u!114 &1735873783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735873777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4add6ec5f19207c1fbf7949cc5e4b3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IntGameEventListener
+  Event: {fileID: 11400000, guid: 39d9b627875399de88c09fc0190edc12, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1735873782}
+        m_TargetAssemblyTypeName: IntVariableText, Assembly-CSharp
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2054055654
 GameObject:
   m_ObjectHideFlags: 0

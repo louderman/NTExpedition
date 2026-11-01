@@ -7,13 +7,12 @@ public class ExplosiveCollision : MonoBehaviour
     private MobMovement mobMovement;
     private bool explosionTriggered;
     private MobSpawner mobSpawner;
-    private ScoreManager scoreManager;
+    [SerializeField] private IntVariable runScore;
     void Start()
     {
         mobMovement = GetComponent<MobMovement>();
         explosionTriggered = false;
         mobSpawner = FindAnyObjectByType<MobSpawner>();
-        scoreManager = FindAnyObjectByType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class ExplosiveCollision : MonoBehaviour
                 GameObject effect = Instantiate(explosionFX, explosionPosition, Quaternion.identity);
                 AudioSource.PlayClipAtPoint(explosionSound, explosionPosition);
                 explosionTriggered = true;
-                ScoreManager.Instance.AddScore(5);
+                if (runScore != null) runScore.Add(5);
                 mobSpawner.RespawnPair();
                 Destroy(effect, 0.6f);
                 Destroy(collision.gameObject);

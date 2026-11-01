@@ -37,6 +37,22 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(currentHP, maxHP);
     }
 
+    // Explicit state-driven death (the actor FSM's Downed state), so the HUD and the FSM agree.
+    public void Kill()
+    {
+        currentHP = 0f;
+        HealthChanged?.Invoke(currentHP, maxHP);
+        Died?.Invoke();
+        Debug.Log("YOU DIED");
+    }
+
+    // Full restore used by a complete game/level restart.
+    public void ResetToFull()
+    {
+        currentHP = maxHP;
+        HealthChanged?.Invoke(currentHP, maxHP);
+    }
+
     public void TakeDamage(float amount)
     {
         if(CurrentHP <= 0)

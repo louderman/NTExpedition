@@ -9,6 +9,7 @@ public class ActionManager : MonoBehaviour
     [SerializeField] WeaponController weaponController;
     public Vector2 crosshairPosition;
     private PlayerMovement playerMovement;
+    private ExpeditionerStateController actorState;
     private InputAction releaseItemAction;
     void OnEnable()
     {
@@ -32,6 +33,15 @@ public class ActionManager : MonoBehaviour
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        actorState = GetComponent<ExpeditionerStateController>();
+    }
+
+    // Lab 5: the state machine's EventAction trigger. Input is still sanitised here; the actor FSM
+    // decides whether the current state has an Attack action to cast (only Armed does).
+    public void OnPowerupAttack(InputAction.CallbackContext context)
+    {
+        if (!context.performed || Time.timeScale == 0f) return;
+        if (actorState != null) actorState.Fire();
     }
 
     // Update is called once per frame

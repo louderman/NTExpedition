@@ -13,9 +13,6 @@ public class GameEvent<T> : ScriptableObject
 {
     private readonly List<IGameEventListener<T>> eventListeners = new List<IGameEventListener<T>>();
 
-    // Used by the Lab 5 verification harness to prove a channel has real scene subscribers.
-    public int ListenerCount => eventListeners.Count;
-
     public void Raise(T data)
     {
         for (int i = eventListeners.Count - 1; i >= 0; i--)

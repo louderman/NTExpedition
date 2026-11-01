@@ -106,7 +106,7 @@ public class WeaponController : MonoBehaviour
             }
             if (attackContext == AttackPower.BeginCharge) return;
             Vector2 rangedDirection = AimDirection();
-            float multiplier = GetComponent<PlayerPowerups>()?.DamageMultiplier ?? 1f;
+            float multiplier = GetComponent<BuffStateController>()?.DamageMultiplier ?? 1f;
             if (ranged.TryFire((Vector2)transform.position + rangedDirection * .65f,
                 rangedDirection, playerBody, multiplier))
                 LastAttackDirection = rangedDirection;
@@ -255,7 +255,7 @@ public class WeaponController : MonoBehaviour
             if (health == null || health.CurrentHP <= 0f) continue;
             var movement = body.GetComponent<MobMovement>();
             if (movement != null) movement.OnKnockback(direction * weapon.MeleeKnockback, .12f);
-            health.TakeDamage(weapon.MeleeDamage * (GetComponent<PlayerPowerups>()?.DamageMultiplier ?? 1f));
+            health.TakeDamage(weapon.MeleeDamage * (GetComponent<BuffStateController>()?.DamageMultiplier ?? 1f));
         }
     }
 

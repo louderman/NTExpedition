@@ -10,7 +10,7 @@ public class MobDeath : MonoBehaviour
     private Animator mobAnimator;
     [SerializeField] Sprite mobDeadSprite;
     [SerializeField] private int deathReward;
-    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private IntVariable runScore;
     private MobSpawner huggerSpawner;
 
     void Awake()
@@ -33,17 +33,17 @@ public class MobDeath : MonoBehaviour
     }
 
     // AI-assisted: only Huggers receive this wiring; Golems keep their existing death behavior.
-    public void ConfigureHugger(ScoreManager score, MobSpawner spawner, int reward)
+    public void ConfigureHugger(MobSpawner spawner, int reward)
     {
-        scoreManager = score;
         huggerSpawner = spawner;
         deathReward = reward;
     }
 
     void OnDeath()
     {
-        // AI-assisted: the newly loaded scene's serialized manager may be a discarded duplicate.
-        ScoreManager.Instance.AddScore(deathReward);
+        // Score lives in a ScriptableObject variable now, so no manager lookup is needed and the
+        // value still survives a scene change.
+        if (runScore != null) runScore.Add(deathReward);
         var flow = FindAnyObjectByType<ExpeditionFlow>();
         if (flow != null) flow.PlayEffect(flow.config.deathSound);
         mobMovement.StopAllCoroutines();

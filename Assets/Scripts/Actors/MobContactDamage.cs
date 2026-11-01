@@ -1,20 +1,24 @@
 using UnityEngine;
 
-// A contact is damage, not a bypass around Health.Died and the game-over observers.
+// Mob contact damage. The mob no longer reaches into the player's components: it raises the shared
+// OnPlayerDamaged channel with the damage amount, and whatever listens (the player's actor state
+// machine) decides what that damage means.
 public class MobContactDamage : MonoBehaviour
 {
-    public float damage = 10f;
-    public float interval = 1f;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float interval = 1f;
+    [SerializeField] private IntGameEvent onPlayerDamaged;
+
     private float nextHit;
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (Time.timeScale == 0f || Time.time < nextHit) return;
         var movement = GetComponent<MobMovement>();
         var ownHealth = GetComponent<Health>();
         if (movement == null || movement.isStunned || (ownHealth != null && ownHealth.CurrentHP <= 0f)) return;
-        var player = collision.gameObject.GetComponent<PlayerPowerups>();
-        if (player == null) return;
+        if (collision.gameObject.GetComponentInParent<ExpeditionerStateController>() == null) return;
         nextHit = Time.time + interval;
-        player.GetComponent<Health>().TakeDamage(damage);
+        if (onPlayerDamaged != null) onPlayerDamaged.Raise(damage);
     }
 }

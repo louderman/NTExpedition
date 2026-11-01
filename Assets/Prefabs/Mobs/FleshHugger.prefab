@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplosiveCollision
   explosionFX: {fileID: 4392614728486612944, guid: 3f29297ff00a9bb7b975ab464c1bfc63, type: 3}
   explosionSound: {fileID: 8300000, guid: 8812b9af2ced809e6be7011dfa3282b1, type: 3}
+  runScore: {fileID: 0}
 --- !u!114 &-3094526119583206494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobDeath
   mobDeadSprite: {fileID: 3604192591476135790, guid: c1621f2cdf3103d44a12351961f1c97e, type: 3}
   deathReward: 2
-  scoreManager: {fileID: 0}
+  runScore: {fileID: 11400000, guid: 65708fe701a41d268aef3fcf3824313e, type: 2}
 --- !u!114 &7094293946569906007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobContactDamage
   damage: 10
   interval: 1
+  onPlayerDamaged: {fileID: 11400000, guid: 5d6cf8fd179d00239b84a72582ba87c6, type: 2}
 --- !u!1 &8489496698093708198
 GameObject:
   m_ObjectHideFlags: 0

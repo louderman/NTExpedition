@@ -128,7 +128,7 @@ MonoBehaviour:
   mobAnimator: {fileID: 451029149664027369}
   mobBody: {fileID: 5383786149919367366}
   lethal: 1
-  shoveScore: 2
+  directionless: 0
 --- !u!1 &3710556480891885388
 GameObject:
   m_ObjectHideFlags: 0

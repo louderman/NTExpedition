@@ -18,7 +18,6 @@ public class UnarmedCombat : MonoBehaviour
     [SerializeField] private AudioSource shoveAudio;
     [SerializeField] private AudioSource punchAudio;
     [SerializeField] private GameObject shoveFX;
-    [SerializeField] private ScoreManager scoreManager;
     private Rigidbody2D protagBody;
     private PlayerMovement playerMovement;
     private ActionManager actionManager;
@@ -138,7 +137,7 @@ public class UnarmedCombat : MonoBehaviour
                     MobMovement movement = targetBody.GetComponent<MobMovement>();
                     if (movement != null)
                         movement.OnKnockback(toMouse.normalized * punchKnockbackStrength, punchKnockbackDuration);
-                    mobHealth.TakeDamage(attackDamage * (GetComponent<PlayerPowerups>()?.DamageMultiplier ?? 1f));
+                    mobHealth.TakeDamage(attackDamage * (GetComponent<BuffStateController>()?.DamageMultiplier ?? 1f));
                 }
             }
             else

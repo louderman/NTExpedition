@@ -142,5 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d0e933fc6229c20832ed183b6f3911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerupPickup
-  kind: 1
+  definition: {fileID: 11400000, guid: d22214d7c47a8f433a0ddc5e9898e26a, type: 2}
   config: {fileID: 11400000, guid: 1626a8c3b4ccd29a6902fa94d4b9bd74, type: 2}
+  onPowerupCollected: {fileID: 11400000, guid: a35b8f4eb6997e633a2056bbe8983b3c, type: 2}
+  onCollectibleSpawned: {fileID: 11400000, guid: 879f3432266e11a438aeb81214806173, type: 2}
+  onCollectibleExpired: {fileID: 11400000, guid: b31a0f48bcb85f8d281a342d9e038bf8, type: 2}
+  lifetimeSeconds: -1
+  blinkSeconds: 2.5

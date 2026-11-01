@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Sprite[] suitSprites;
     [SerializeField] private Sprite[] helmetSprites;
     [SerializeField] private Rigidbody2D protagBody;
+    // Lab 5: appearance and buff multipliers now come from the two state machines.
+    [SerializeField] private ExpeditionerStateController stateController;
+    [SerializeField] private BuffStateController buffState;
+    [SerializeField] private BoolVariable playerFacingRight;
     private ActionManager actionManager;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
@@ -29,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     {
         actionManager = GetComponent<ActionManager>();
         weaponController = GetComponent<WeaponController>();
+        if (stateController == null) stateController = GetComponent<ExpeditionerStateController>();
+        if (buffState == null) buffState = GetComponent<BuffStateController>();
     }
 
     // Update is called once per frameI'm 
@@ -104,9 +110,30 @@ public class PlayerMovement : MonoBehaviour
         if (faceList.Count > 0)
         {
             int index = (int) faceList[^1];
-            suitRenderer.sprite = suitSprites[index];
-            helmetRenderer.sprite = helmetSprites[index];
+            ApplyFacing(index);
+            UpdateFacingVariable(index == (int) Facing.East);
         }
+    }
+
+    // Lab 5: which sprite set is drawn is decided by the actor state machine's tier plus this
+    // script's facing, so a tier change is visible without duplicating movement code.
+    void ApplyFacing(int index)
+    {
+        index = Mathf.Clamp(index, 0, suitSprites.Length - 1);
+        suitRenderer.sprite = suitSprites[index];
+        helmetRenderer.sprite = helmetSprites[Mathf.Clamp(index, 0, helmetSprites.Length - 1)];
+        if (stateController != null)
+        {
+            suitRenderer.color = stateController.SuitTint;
+            helmetRenderer.color = stateController.HelmetTint;
+        }
+    }
+
+    // Publishes the current facing to a ScriptableObject so a state machine action asset (which
+    // cannot reference a scene component) can aim the ranged attack.
+    void UpdateFacingVariable(bool facingRight)
+    {
+        if (playerFacingRight != null) playerFacingRight.SetValue(facingRight);
     }
 
     // special method to deal with sprite facing when combat mode is active
@@ -148,8 +175,8 @@ public class PlayerMovement : MonoBehaviour
     void CombatModeDisplayFacing(Facing face)
     {
         int index = (int) face;
-        suitRenderer.sprite = suitSprites[index];
-        helmetRenderer.sprite = helmetSprites[index];
+        ApplyFacing(index);
+        UpdateFacingVariable(index == (int) Facing.East);
     }
 
     public void ToggleCombat()
@@ -164,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private float PowerupSpeed => GetComponent<PlayerPowerups>()?.SpeedMultiplier ?? 1f;
+    private float PowerupSpeed => GetComponent<BuffStateController>()?.SpeedMultiplier ?? 1f;
 
     void MoveBody()
     {

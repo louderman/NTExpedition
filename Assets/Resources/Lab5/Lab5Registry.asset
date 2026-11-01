@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b0bad4e05360e9cb9388f6ec68890b, type: 3}
+  m_Name: Lab5Registry
+  m_EditorClassIdentifier: Assembly-CSharp::Lab5Registry
+  onGameRestart: {fileID: 11400000, guid: a55c190407fb5c21684e14b0efeee60a, type: 2}
+  onPlayerDied: {fileID: 11400000, guid: 5ff3646daf45be93f9621e4200131933, type: 2}
+  onCollectibleSpawned: {fileID: 11400000, guid: 879f3432266e11a438aeb81214806173, type: 2}
+  onCollectibleExpired: {fileID: 11400000, guid: b31a0f48bcb85f8d281a342d9e038bf8, type: 2}
+  onSceneTransition: {fileID: 11400000, guid: c91e0f17b3f457a98a88690daef49943, type: 2}
+  onPlayerDamaged: {fileID: 11400000, guid: 5d6cf8fd179d00239b84a72582ba87c6, type: 2}
+  onScoreChanged: {fileID: 11400000, guid: 67a63bb963c1ed800af6cb2a1a728477, type: 2}
+  onBestScoreChanged: {fileID: 11400000, guid: 39d9b627875399de88c09fc0190edc12, type: 2}
+  onActorTierChanged: {fileID: 11400000, guid: f8dcc558827620d71821e7168750cd71, type: 2}
+  onBuffStateChanged: {fileID: 11400000, guid: 949aaef74fb9a614ea185d61e71a4982, type: 2}
+  onPowerupCollected: {fileID: 11400000, guid: a35b8f4eb6997e633a2056bbe8983b3c, type: 2}
+  onBuffApplied: {fileID: 11400000, guid: 78b6f02839e2832fe9615c51d1717928, type: 2}
+  runScore: {fileID: 11400000, guid: 65708fe701a41d268aef3fcf3824313e, type: 2}
+  bestScore: {fileID: 11400000, guid: bbc6e4d9558b285ad8ef86d4a4b27e86, type: 2}
+  actorTier: {fileID: 11400000, guid: 8f847f11384043603a7f2557daa5283a, type: 2}
+  playerFacingRight: {fileID: 11400000, guid: 5fe9de3a96180c910805898d474c7943, type: 2}
+  actorInvulnerable: {fileID: 11400000, guid: 43e0140db38a714c6bd64f0d225a2235, type: 2}
+  config: {fileID: 11400000, guid: 1626a8c3b4ccd29a6902fa94d4b9bd74, type: 2}
+  actorRemainInState: {fileID: 11400000, guid: 55a84a2efb6120dfe8a51e71337f30df, type: 2}
+  actorBase: {fileID: 11400000, guid: 51d6d8af2c722f421b7edc197c9c9318, type: 2}
+  actorArmored: {fileID: 11400000, guid: 5a41be815a309cb788193b4893736142, type: 2}
+  actorArmed: {fileID: 11400000, guid: 2fbc0ceaf238fd4eda45d641417e3a8b, type: 2}
+  actorRecovering: {fileID: 11400000, guid: 6943805f98a3e07d2a57c229d44e6e6c, type: 2}
+  actorDowned: {fileID: 11400000, guid: 551712324153c7e1693481c565e29042, type: 2}
+  buffDefault: {fileID: 11400000, guid: 16cf1428c9f1a78ff8ff9eab59b3ea99, type: 2}
+  buffOvercharged: {fileID: 11400000, guid: 99463703abe9580a3b48375202b8ceea, type: 2}
+  buffInvincible: {fileID: 11400000, guid: 5d3e020b84a5152c2a73cbc744ffa2c9, type: 2}
+  suitKit: {fileID: 11400000, guid: fbe56e782167fdf52baccc46ad363fd8, type: 2}
+  kineticCore: {fileID: 11400000, guid: 87c6a0b5c21c6d8dc8b16920550b39b7, type: 2}
+  repair: {fileID: 11400000, guid: b64465136eba0987db053b5891ead0aa, type: 2}
+  suitOvercharge: {fileID: 11400000, guid: d22214d7c47a8f433a0ddc5e9898e26a, type: 2}
+  shield: {fileID: 11400000, guid: 336bda9c4a6b1abc3aa4e7164fc72975, type: 2}
