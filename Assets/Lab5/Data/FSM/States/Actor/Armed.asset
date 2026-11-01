@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09464daebefdfe1faa584c2b45a7c009, type: 3}
+  m_Name: Armed
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  setupActions:
+  - {fileID: 11400000, guid: 4155ca4e8456d21edac1916b0d3ba7c8, type: 2}
+  - {fileID: 11400000, guid: 788a5c4e465fe0a62be36d49047c3ba6, type: 2}
+  - {fileID: 11400000, guid: 030960904033c86fb9831841bae5c579, type: 2}
+  actions: []
+  eventTriggeredActions:
+  - action: {fileID: 11400000, guid: 1415d2d40200d254fa4dcc019ca2d612, type: 2}
+    type: 0
+  exitActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: 8c294cf39a6b18723a88940dda3aff87, type: 2}
+    trueState: {fileID: 11400000, guid: 551712324153c7e1693481c565e29042, type: 2}
+    falseState: {fileID: 11400000, guid: 55a84a2efb6120dfe8a51e71337f30df, type: 2}
+  - decision: {fileID: 11400000, guid: d5c657e509d07d5ba8586506dd2a0081, type: 2}
+    trueState: {fileID: 11400000, guid: 6943805f98a3e07d2a57c229d44e6e6c, type: 2}
+    falseState: {fileID: 11400000, guid: 55a84a2efb6120dfe8a51e71337f30df, type: 2}
+  sceneGizmoColor: {r: 0.55, g: 0.9, b: 1, a: 1}

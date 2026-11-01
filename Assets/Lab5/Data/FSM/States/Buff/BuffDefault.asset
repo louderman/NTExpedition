@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09464daebefdfe1faa584c2b45a7c009, type: 3}
+  m_Name: BuffDefault
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  setupActions:
+  - {fileID: 11400000, guid: 4d314d057bfebc5efb13dacf18a0d098, type: 2}
+  - {fileID: 11400000, guid: 565555b98481b730996de55bd46e8432, type: 2}
+  actions: []
+  eventTriggeredActions: []
+  exitActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: 52e7b4ad96cb6290f98e3db51c2e4dff, type: 2}
+    trueState: {fileID: 11400000, guid: 99463703abe9580a3b48375202b8ceea, type: 2}
+    falseState: {fileID: 11400000, guid: 55a84a2efb6120dfe8a51e71337f30df, type: 2}
+  - decision: {fileID: 11400000, guid: 41f7f3fdfb106e7399f9b87f07a3402b, type: 2}
+    trueState: {fileID: 11400000, guid: 5d3e020b84a5152c2a73cbc744ffa2c9, type: 2}
+    falseState: {fileID: 11400000, guid: 55a84a2efb6120dfe8a51e71337f30df, type: 2}
+  sceneGizmoColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
