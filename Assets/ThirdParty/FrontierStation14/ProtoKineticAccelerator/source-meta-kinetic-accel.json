@@ -1,0 +1,20 @@
+{
+  "file": "pka-kinetic-accel.ogg",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Frontier Station 14 (new-frontiers-14/frontier-station-14) gunshot asset. Not listed in the directory's Resources/Audio/Weapons/Guns/Gunshots/attributions.yml and with no per-file meta.json, so the repository-wide asset default applies: \"Most assets are licensed under CC-BY-SA 3.0 unless stated otherwise\" (README.md, License section). Individual creator not identified upstream.",
+  "source": "https://github.com/new-frontiers-14/frontier-station-14/blob/fc74013522ef2ee1c5049c986748c9f0866fb4c3/Resources/Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg",
+  "licenseSource": "https://github.com/new-frontiers-14/frontier-station-14/blob/fc74013522ef2ee1c5049c986748c9f0866fb4c3/README.md#license",
+  "importedFrom": {
+    "repository": "https://github.com/new-frontiers-14/frontier-station-14",
+    "revision": "fc74013522ef2ee1c5049c986748c9f0866fb4c3",
+    "path": "Resources/Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg",
+    "localCheckout": "/home/dan/Documents/SS1/frontier-station-14"
+  },
+  "sha256": "e4bbc2d65a8b9fc695e1256a797b3cfa58d66a80e325dddfbe97a8570c09aee1",
+  "usedBy": [
+    "Resources/Prototypes/Entities/Objects/Weapons/Guns/Basic/base_pka.yml (Gun.soundGunshot)",
+    "Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/Tools/pka.yml (Gun.soundGunshot)"
+  ],
+  "changes": "None; byte-identical to the linked source audio.",
+  "metadataOrigin": "NTExpedition project record; not an upstream metadata file. Checked at the recorded revision: the directory's Resources/Audio/Weapons/Guns/Gunshots/attributions.yml (kinetic_accel.ogg not listed), no per-file meta.json, LEGAL.md (assets carry per-file licenses in attributions.yml/meta.json), README.md License section, and a repository-wide grep for the filename (only prototype references, no legal notice). No conflicting per-file license found."
+}

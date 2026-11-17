@@ -109,7 +109,7 @@ public class ActionManager : MonoBehaviour
         // pretty far out in terms of features to implement, though.
         if(context.performed)
         {
-            handSystem.SwapHands();
+            weaponController.SwapHands();
             Debug.Log($"Swapped active hand. {handSystem.CurrentHandSlot}");
         }
     }

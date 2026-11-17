@@ -16,6 +16,8 @@ public class WeaponController : MonoBehaviour
     private GameObject activeWeaponVisual;
     private GameObject activeBatShoveVisual;
     private GameObject activeRangedVisual;
+    private SpriteRenderer activeRangedPrimaryRenderer;
+    private SpriteRenderer activeRangedGlowRenderer;
     private ItemComponent visualizedRangedItem;
     public enum AttackType {PrimaryAttack, SecondaryAttack};
     public enum AttackPower {Quick, BeginCharge, Charged, CancelCharge};
@@ -60,6 +62,7 @@ public class WeaponController : MonoBehaviour
         {
             handSystem.HandChanged += OnHandChanged;
             handSystem.HeldItemChanged += OnHeldItemChanged;
+            handSystem.WieldChanged += OnWieldChanged;
         }
     }
 
@@ -69,6 +72,7 @@ public class WeaponController : MonoBehaviour
         {
             handSystem.HandChanged -= OnHandChanged;
             handSystem.HeldItemChanged -= OnHeldItemChanged;
+            handSystem.WieldChanged -= OnWieldChanged;
         }
         CancelWeaponState();
         DestroyRangedVisual();
@@ -78,12 +82,17 @@ public class WeaponController : MonoBehaviour
     {
         RefreshRangedVisual();
         if (activeRangedVisual == null) return;
+        var ranged = ActiveRangedWeapon;
         Vector2 direction = AimDirection();
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        activeRangedVisual.transform.localPosition = direction * .48f;
-        activeRangedVisual.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-        foreach (var renderer in activeRangedVisual.GetComponentsInChildren<SpriteRenderer>())
-            renderer.sortingOrder = direction.y < 0f ? 20 : 7;
+        bool wielded = handSystem.IsTwoHandWielded(ActiveItem);
+        var facing = HeldFacing(playerMovement != null && !playerMovement.combatMode
+            ? playerMovement.FacingDirection
+            : direction);
+        bool hasHeldArt = ranged.HasHeldSprites(wielded, handSystem.CurrentHandSlot);
+        if (hasHeldArt)
+            UpdateHeldRangedVisual(ranged, wielded, facing);
+        else
+            UpdateFallbackRangedVisual(direction);
     }
 
     public void Attack(AttackType attackType, AttackPower attackContext)
@@ -101,15 +110,21 @@ public class WeaponController : MonoBehaviour
         {
             if (attackType == AttackType.SecondaryAttack)
             {
-                unarmedFallback?.ApplyInput(attackType, attackContext);
+                var item = ActiveItem;
+                bool changedWield = ranged.SupportsTwoHandedUse
+                    && (handSystem.IsTwoHandWielded(item)
+                        ? handSystem.TryUnwield(item)
+                        : handSystem.TryWieldActiveItem(item));
+                if (!changedWield) unarmedFallback?.ApplyInput(attackType, attackContext);
                 return;
             }
             if (attackContext == AttackPower.BeginCharge) return;
             Vector2 rangedDirection = AimDirection();
             float multiplier = GetComponent<BuffStateController>()?.DamageMultiplier ?? 1f;
+            bool wielded = handSystem.IsTwoHandWielded(ActiveItem);
             if (ranged.TryFire((Vector2)transform.position + rangedDirection * .65f,
-                rangedDirection, playerBody, multiplier))
-                LastAttackDirection = rangedDirection;
+                rangedDirection, playerBody, multiplier, wielded))
+                LastAttackDirection = ranged.LastShotDirection;
             return;
         }
         var weapon = ActiveWeaponDefinition;
@@ -156,11 +171,7 @@ public class WeaponController : MonoBehaviour
 
     public void SwapHands()
     {
-        // TODO: if single handed weapon, simply swap hand. defer to regular swap code
-        // if two-handed, swap to an empty hand, unwield weapon
-        // if there isnt any weapon being held then this shouldnt be active in the
-        // first place since handsystem exists but given nearly everything except healing tools count as a
-        // weapon in my vision this should be an edge case
+        handSystem?.SwapHands();
     }
 
     Vector2 AimDirection()
@@ -170,6 +181,34 @@ public class WeaponController : MonoBehaviour
             -Camera.main.transform.position.z);
         Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(screen) - (Vector2)transform.position;
         return direction.sqrMagnitude > .0001f ? direction.normalized : Vector2.down;
+    }
+
+    RangedWeapon.HeldDirection HeldFacing(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            return direction.x >= 0f ? RangedWeapon.HeldDirection.East : RangedWeapon.HeldDirection.West;
+        return direction.y >= 0f ? RangedWeapon.HeldDirection.North : RangedWeapon.HeldDirection.South;
+    }
+
+    void UpdateHeldRangedVisual(RangedWeapon ranged, bool wielded, RangedWeapon.HeldDirection facing)
+    {
+        activeRangedVisual.transform.localPosition = Vector3.zero;
+        activeRangedVisual.transform.localRotation = Quaternion.identity;
+        activeRangedPrimaryRenderer.sprite = ranged.HeldSprite(wielded, handSystem.CurrentHandSlot, facing);
+        activeRangedPrimaryRenderer.sortingOrder = facing == RangedWeapon.HeldDirection.South ? 20 : 7;
+        if (activeRangedGlowRenderer != null) activeRangedGlowRenderer.enabled = false;
+    }
+
+    void UpdateFallbackRangedVisual(Vector2 direction)
+    {
+        var item = ActiveItem;
+        activeRangedPrimaryRenderer.sprite = item != null && item.Definition != null ? item.Definition.ItemIcon : null;
+        if (activeRangedGlowRenderer != null) activeRangedGlowRenderer.enabled = true;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        activeRangedVisual.transform.localPosition = direction * .48f;
+        activeRangedVisual.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+        foreach (var renderer in activeRangedVisual.GetComponentsInChildren<SpriteRenderer>())
+            if (renderer.enabled) renderer.sortingOrder = direction.y < 0f ? 20 : 7;
     }
 
     IEnumerator Swing(ItemDefinition weapon, Vector2 direction)
@@ -276,12 +315,14 @@ public class WeaponController : MonoBehaviour
         visualizedRangedItem = item;
         activeRangedVisual = new GameObject("Held ranged weapon");
         activeRangedVisual.transform.SetParent(transform, false);
-        activeRangedVisual.AddComponent<SpriteRenderer>().sprite = item.Definition.ItemIcon;
+        activeRangedPrimaryRenderer = activeRangedVisual.AddComponent<SpriteRenderer>();
+        activeRangedPrimaryRenderer.sprite = item.Definition.ItemIcon;
         if (ranged.GlowSprite != null)
         {
             var glow = new GameObject("Unshaded detail");
             glow.transform.SetParent(activeRangedVisual.transform, false);
-            glow.AddComponent<SpriteRenderer>().sprite = ranged.GlowSprite;
+            activeRangedGlowRenderer = glow.AddComponent<SpriteRenderer>();
+            activeRangedGlowRenderer.sprite = ranged.GlowSprite;
         }
     }
 
@@ -289,6 +330,8 @@ public class WeaponController : MonoBehaviour
     {
         if (activeRangedVisual != null) Destroy(activeRangedVisual);
         activeRangedVisual = null;
+        activeRangedPrimaryRenderer = null;
+        activeRangedGlowRenderer = null;
         visualizedRangedItem = null;
     }
 
@@ -296,6 +339,10 @@ public class WeaponController : MonoBehaviour
     void OnHeldItemChanged(HandSystem.HandSlot hand, ItemComponent item)
     {
         if (hand == handSystem.CurrentHandSlot) { CancelWeaponState(); RefreshRangedVisual(); }
+    }
+    void OnWieldChanged(ItemComponent item, bool wielded)
+    {
+        if (item == ActiveItem) RefreshRangedVisual();
     }
 
     void CancelWeaponState()
