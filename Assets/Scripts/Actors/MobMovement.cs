@@ -2,16 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// note, eventually I want to add a player detection system as well.
-// for now we'll just have mobs that follow the player around.
+using UnityEngine.Tilemaps;
 
 public class MobMovement : MonoBehaviour
 {
     public float moveSpeed;
-    private float distanceThisFrame;
-    private int x;
-    private int y;
     public Boolean isStunned;
     private Coroutine recoveryCoroutine;
     private bool isRecoiling;
@@ -24,28 +19,55 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D mobBody;
     [SerializeField] private bool lethal;
     [SerializeField] private bool directionless;
+    [SerializeField, Min(0.1f)] private float aggroRadius = 6f;
+    [SerializeField, Min(0.1f)] private float deaggroRadius = 10f;
+    [SerializeField, Min(0.1f)] private float repathInterval = 0.3f;
+    [SerializeField] private Tilemap navigationFloor;
+    public bool IsAggroed { get; private set; }
     public bool IsLethal => lethal && !isStunned;
+    private GridPathfinder pathfinder;
+    private Collider2D bodyCollider;
+    private readonly List<Vector2> path = new();
+    private int waypoint;
+    private float nextPathTime;
     private enum Facing { South, North, East, West };
-    private List<Facing> faceList = new();
+    void Awake()
+    {
+        bodyCollider = GetComponent<Collider2D>();
+        if (navigationFloor == null)
+        {
+            foreach (Tilemap tilemap in FindObjectsByType<Tilemap>())
+            {
+                if (tilemap.gameObject.scene == gameObject.scene &&
+                    tilemap.gameObject.layer == LayerMask.NameToLayer("Floor"))
+                {
+                    navigationFloor = tilemap;
+                    break;
+                }
+            }
+        }
+        pathfinder = new GridPathfinder(navigationFloor);
+    }
+
+    void OnValidate()
+    {
+        aggroRadius = Mathf.Max(0.1f, aggroRadius);
+        deaggroRadius = Mathf.Max(aggroRadius + 0.1f, deaggroRadius);
+        repathInterval = Mathf.Max(0.1f, repathInterval);
+    }
     void Start()
     {
         recoveryCoroutine = null;
         uprightRotation = mobRenderer.transform.localRotation;
     }
 
-    // Update is called once per frameI'm 
-    void Update()
-    {  
-        // ai brain
-        // this will be turned into a seperate script later down the line
-        MobLogic();
+    public void SetTarget(GameObject target)
+    {
+        protagObject = target;
+        IsAggroed = false;
+        path.Clear();
+        nextPathTime = 0f;
     }
-
-    public void SetTarget(GameObject target)                                                                                                                                                                                                                                               
-    {                                                                                                                                                                                                                                                                                      
-         protagObject = target;                                                                                                                                                                                                                                                             
-    }
-
 
     void ProcessFacing(Vector3 toTarget)
     {
@@ -97,29 +119,66 @@ public class MobMovement : MonoBehaviour
         
     }
 
-    void MobLogic()
+    void FixedUpdate()
     {
-        // note that the current AI simply just moves towards the player
-        // it doesn't care at all about obstacles, walls or whether it should
-        // see the player.
-        // in the future this function should be its own class but for the
-        // purposes of this checkoff it's acceptable.
-        Vector3 toTarget = protagObject.transform.position - transform.position; // constructs the vector from player to mouse
-        if(!isStunned)
+        float distance = protagObject == null ? float.PositiveInfinity :
+            Vector2.Distance(transform.position, protagObject.transform.position);
+        bool wasAggroed = IsAggroed;
+        IsAggroed = protagObject != null && (IsAggroed
+            ? distance <= Mathf.Max(deaggroRadius, aggroRadius + 0.1f)
+            : distance <= aggroRadius);
+        if (!IsAggroed || !wasAggroed)
         {
-            // Recoil preserves physics velocity instead of replacing it with chase velocity.
-            if (!isRecoiling) MoveBody(toTarget);
-            ProcessFacing(toTarget);
+            path.Clear();
+            nextPathTime = 0f;
         }
-    }
-    void MoveBody(Vector3 toTarget)
-    {
-        mobBody.linearVelocity = toTarget.normalized * moveSpeed;
 
-        // TODO: use this for nograv environments
-        // medium priority, also this implementation makes the player slow as hell
-        // distanceThisFrame = moveSpeed * Time.deltaTime;
-        // protagBody.AddForce(step2D.normalized * distanceThisFrame);
+        // Chase and idle must both leave shove and recoil velocity alone.
+        if (isStunned || isRecoiling) return;
+        if (!IsAggroed || bodyCollider == null)
+        {
+            mobBody.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        Vector2 position = bodyCollider.bounds.center;
+        Vector2 size = bodyCollider.bounds.size;
+        Vector2 target = (Vector2)protagObject.transform.position +
+            (position - (Vector2)transform.position);
+        Vector2 destination = target;
+        if (!pathfinder.CanTravel(position, target, size))
+        {
+            if (Time.time >= nextPathTime)
+            {
+                pathfinder.FindPath(position, target, size, path);
+                // Rejoining a route must not send us back to the centre of the previous cell.
+                waypoint = path.Count > 1 && pathfinder.CanTravel(position, path[1], size) ? 1 : 0;
+                nextPathTime = Time.time + repathInterval;
+            }
+            while (waypoint < path.Count &&
+                Vector2.Distance(position, path[waypoint]) <= 0.08f) waypoint++;
+            if (waypoint >= path.Count)
+            {
+                mobBody.linearVelocity = Vector2.zero;
+                return;
+            }
+            destination = path[waypoint];
+        }
+        else
+        {
+            path.Clear();
+            nextPathTime = 0f;
+        }
+
+        Vector2 direction = destination - position;
+        Vector2 step = Vector2.ClampMagnitude(direction, moveSpeed * Time.fixedDeltaTime);
+        if (!pathfinder.CanTravel(position, position + step, size))
+        {
+            mobBody.linearVelocity = Vector2.zero;
+            return;
+        }
+        mobBody.linearVelocity = step / Time.fixedDeltaTime;
+        if (direction.sqrMagnitude > 0.001f) ProcessFacing(direction);
     }
 
     public void OnKnockback(Vector2 impulse, float duration)
@@ -194,10 +253,6 @@ public class MobMovement : MonoBehaviour
         isStunned = false;
         recoveryCoroutine = null;
     }
-    void FixedUpdate()
-    {
-    }
-
     IEnumerator AnimateRotateSprite(Quaternion start, Quaternion target, float duration)
     {
         float elapsed = 0f; // state survives between Coroutine resumes
