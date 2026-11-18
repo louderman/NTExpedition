@@ -84,6 +84,28 @@ public class HandSystem : MonoBehaviour
         item.transform.SetParent(container.transform, true);
         return true;
     }
+
+    public bool TryTakeItemFromInventory(InventoryContainer container, ItemComponent item)
+    {
+        HandSlot hand = CurrentHandSlot;
+
+        if (container == null || item == null || HeldItem(hand) != null)
+            return false;
+
+        if (!container.Remove(item))
+            return false;
+
+        if (hand == HandSlot.Left)
+            leftItem = item;
+        else
+            rightItem = item;
+
+        item.transform.SetParent(transform, true);
+        item.gameObject.SetActive(false);
+        HeldItemChanged?.Invoke(hand, item);
+
+        return true;
+    }
     void SetHeldItem(HandSlot hand, ItemComponent item)
     {
         if (hand == HandSlot.Left) leftItem = item; else rightItem = item;
