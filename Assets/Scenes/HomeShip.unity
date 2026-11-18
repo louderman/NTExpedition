@@ -48312,6 +48312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenePortal
   destinationScene: DebugArena
+  randomDestinations:
+  - LargeBattleArena
+  - LargeExploreArena
   enterToTravel: 0
   player: {fileID: 1718987722}
   interactionDistance: 2

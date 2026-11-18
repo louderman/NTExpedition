@@ -42,8 +42,15 @@ public static class SalvageShuttlePlayability
     /// <summary>The leftover placeholder console to remove.</summary>
     const string OldConsoleObject = "ShuttleConsole";
 
-    /// <summary>Destination read off the old console's ScenePortal; DebugArena portals back to HomeShip.</summary>
+    /// <summary>Fallback destination on the console portal (used only when no roll is configured); DebugArena portals back to HomeShip.</summary>
     const string ConsoleDestination = "DebugArena";
+
+    /// <summary>
+    /// Dan's ask: the shuttle console rolls between these two arenas on EVERY launch, so the portal
+    /// carries them as a list and picks one per trip (UnityEngine.Random.Range). DebugArena stays the
+    /// fallback destinationScene and stays enabled in Build Settings, so nothing loses its entry point.
+    /// </summary>
+    static readonly string[] ConsoleRandomDestinations = { "LargeBattleArena", "LargeExploreArena" };
 
     const string ScratchDir = "/home/dan/.hermes/profiles/coder/cache/scratch";
     const string ReportPath = ScratchDir + "/playability-report.txt";
@@ -241,12 +248,22 @@ public static class SalvageShuttlePlayability
             var portal = console.AddComponent<ScenePortal>();
             var so = new SerializedObject(portal);
             so.FindProperty("destinationScene").stringValue = ConsoleDestination;
+            var roll = so.FindProperty("randomDestinations");
+            if (roll == null)
+                problems.Add("ScenePortal.randomDestinations is not serialized - recompile the script in the editor first");
+            else
+            {
+                roll.arraySize = ConsoleRandomDestinations.Length;
+                for (int i = 0; i < ConsoleRandomDestinations.Length; i++)
+                    roll.GetArrayElementAtIndex(i).stringValue = ConsoleRandomDestinations[i];
+            }
             so.FindProperty("enterToTravel").boolValue = false;
             so.FindProperty("player").objectReferenceValue = player;
             so.FindProperty("interactionDistance").floatValue = 2f;
             so.ApplyModifiedPropertiesWithoutUndo();
             Debug.Log($"[Play] console portal on {ConsoleObject} at {console.transform.position} -> " +
-                      $"{ConsoleDestination} (player={(player != null ? player.gameObject.name : "null")})");
+                      $"roll({string.Join(" | ", ConsoleRandomDestinations)}) fallback {ConsoleDestination} " +
+                      $"(player={(player != null ? player.gameObject.name : "null")})");
         }
 
         var old = GameObject.Find(OldConsoleObject);
@@ -394,15 +411,36 @@ public static class SalvageShuttlePlayability
         {
             var so = new SerializedObject(portalOnConsole);
             var dest = so.FindProperty("destinationScene").stringValue;
+            var rollProp = so.FindProperty("randomDestinations");
+            var roll = Enumerable.Range(0, rollProp.arraySize)
+                .Select(i => rollProp.GetArrayElementAtIndex(i).stringValue).ToArray();
             var enter = so.FindProperty("enterToTravel").boolValue;
             var target = so.FindProperty("player").objectReferenceValue as PlayerMovement;
             var dist = so.FindProperty("interactionDistance").floatValue;
-            Check(dest == ConsoleDestination, $"console portal destination is {dest}");
+            Check(dest == ConsoleDestination, $"console portal fallback destination is {dest}");
             Check(!enter, "console portal is click-to-travel, not walk-into");
             Check(target != null, $"console portal has the player assigned ({(target != null ? target.gameObject.name : "null")})");
             Check(dist > 0f && dist <= 2f, $"console portal interaction distance is {dist}");
-            bool inBuild = EditorBuildSettings.scenes.Any(s => s.enabled && s.path.EndsWith("/" + dest + ".unity"));
-            Check(inBuild, $"destination {dest} is an enabled scene in Build Settings");
+            Check(roll.Length == ConsoleRandomDestinations.Length && roll.All(ConsoleRandomDestinations.Contains),
+                $"console portal rolls between {roll.Length} arena(s): {string.Join(" | ", roll)}");
+            foreach (var name in ConsoleRandomDestinations)
+            {
+                bool inBuild = EditorBuildSettings.scenes.Any(s => s.enabled && s.path.EndsWith("/" + name + ".unity"));
+                Check(inBuild, $"random destination {name} is an enabled scene in Build Settings");
+                Check(AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Scenes/" + name + ".unity") != null,
+                    $"random destination scene asset Assets/Scenes/{name}.unity exists");
+                Line($"note  Application.CanStreamedLevelBeLoaded({name}) = {Application.CanStreamedLevelBeLoaded(name)} " +
+                     "(edit-mode probe; Build Settings is the authority in the editor)");
+            }
+
+            // The roll must be a fresh pick per trip, not one choice stored at startup: call the same
+            // method Travel() calls and expect both arenas to come back.
+            var picks = Enumerable.Range(0, 200).Select(_ => portalOnConsole.PickDestination())
+                .Distinct().OrderBy(x => x, StringComparer.Ordinal).ToArray();
+            Check(picks.Length == ConsoleRandomDestinations.Length,
+                $"PickDestination() rolls every arena over 200 calls ({string.Join(" | ", picks)})");
+            bool fallbackInBuild = EditorBuildSettings.scenes.Any(s => s.enabled && s.path.EndsWith("/" + dest + ".unity"));
+            Check(fallbackInBuild, $"fallback destination {dest} is an enabled scene in Build Settings");
             Line($"note  Application.CanStreamedLevelBeLoaded({dest}) = {Application.CanStreamedLevelBeLoaded(dest)} " +
                  "(edit-mode probe; Build Settings is the authority in the editor)");
             Check(console.GetComponent<Collider2D>() != null, "console has a collider for the click test");

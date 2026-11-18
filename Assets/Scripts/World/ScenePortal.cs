@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 public class ScenePortal : MonoBehaviour
 {
     [SerializeField] private string destinationScene;
+    /// <summary>
+    /// Dan's rule: two or more names here = the console rolls a fresh coin flip on every launch, so the
+    /// pick must happen at the moment of travel, never be resolved once and cached. Empty list leaves
+    /// the fixed destinationScene in charge (DebugArena stays the fallback / test entry).
+    /// </summary>
+    [SerializeField] private string[] randomDestinations;
     [SerializeField] private bool enterToTravel;
     [SerializeField] private PlayerMovement player;
     [SerializeField] private float interactionDistance = 2f;
@@ -37,12 +43,25 @@ public class ScenePortal : MonoBehaviour
         if (other.attachedRigidbody.gameObject == player.gameObject) Travel();
     }
 
+    /// <summary>
+    /// Resolves the destination for THIS trip. Called from Travel(), so with two entries it is a
+    /// UnityEngine.Random.Range(0, 2) coin flip per launch instead of a choice made once per session.
+    /// </summary>
+    public string PickDestination()
+    {
+        if (randomDestinations != null && randomDestinations.Length > 0)
+            return randomDestinations[UnityEngine.Random.Range(0, randomDestinations.Length)];
+        return destinationScene;
+    }
+
     public void Travel()
     {
         if (travelling || Time.timeScale == 0f) return; // Multiple overlapping colliders must not load twice.
-        if (!Application.CanStreamedLevelBeLoaded(destinationScene))
+        string destination = PickDestination();
+        Debug.Log($"ScenePortal {name}: travelling to {destination}", this);
+        if (!Application.CanStreamedLevelBeLoaded(destination))
         {
-            Debug.LogError($"Scene is not enabled in Build Settings: {destinationScene}", this);
+            Debug.LogError($"Scene is not enabled in Build Settings: {destination}", this);
             return;
         }
         travelling = true;
@@ -50,6 +69,6 @@ public class ScenePortal : MonoBehaviour
         // Dan's rule: held + stowed items travel with the player; snapshot the loadout while this scene is alive.
         PlayerLoadoutCarry.Capture(player != null ? player.GetComponent<HandSystem>() : null,
             FindFirstObjectByType<InventoryContainer>());
-        SceneManager.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(destination, LoadSceneMode.Single);
     }
 }
