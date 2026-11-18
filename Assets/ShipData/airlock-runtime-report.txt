@@ -1,0 +1,367 @@
+Proximity airlock runtime verification (play mode)
+scene: Assets/Scenes/HomeShip.unity
+generated: 2026-11-18 11:11:58Z
+unity: 6000.6.0f1
+result: PASS (0 failures)
+
+== log ==
+universe: automatic airlocks in scene = 2
+PASS  exactly 2 automatic airlocks are wired
+wired AirlockSalvage#128 tile=(2.5,1.5) state=Closed sprite=closed_0 panel=closed_0 sortOrder=10
+PASS  AirlockSalvage#128 has a panel renderer
+PASS  AirlockSalvage#128 drives 6 opening + 6 closing frames (upstream states)
+PASS  AirlockSalvage#128 has open + closed terminal sprites
+PASS  AirlockSalvage#128 stays art-only (no new collider; ship has no hull colliders either)
+PASS  AirlockSalvage#128 starts opening at most one tile away (openDistance=1 m, one tile=1 m)
+wired AirlockEngineering#61 tile=(2.5,-8.5) state=Closed sprite=closed_0 panel=closed_0 sortOrder=10
+PASS  AirlockEngineering#61 has a panel renderer
+PASS  AirlockEngineering#61 drives 6 opening + 6 closing frames (upstream states)
+PASS  AirlockEngineering#61 has open + closed terminal sprites
+PASS  AirlockEngineering#61 stays art-only (no new collider; ship has no hull colliders either)
+PASS  AirlockEngineering#61 starts opening at most one tile away (openDistance=1 m, one tile=1 m)
+PASS  both interior passage doors are the automatic ones
+PASS  the scene's PlayerMovement (player) exists
+player colliders = 1 (BoxCollider2D) rigidbody = Dynamic
+player spawn position = (4.14,-0.09)
+Main Camera present = True
+render 00_start_closed: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_00_start_closed.png
+--- phase 1: AirlockEngineering approached from the north side ---
+transition AirlockEngineering#61: Closed->Opening at player (2.50,-7.50) apertureDist=1.00 t=1.80
+transition AirlockEngineering#61: Opening->Open at player (2.50,-8.48) apertureDist=0.02 t=2.41
+walk approach (2.50,-6.00)->(2.50,-9.80) @1.6u/s (2.38s) states=Opening->Open
+observe AirlockEngineering#61 / passed north->south: state=Open sprite=open_0 player=(2.50,-9.80) apertureDist=1.30 holdDist=1.30
+PASS  passed north->south: door is fully open
+PASS  passed north->south: service-open sprite showing
+render 01_engineering_open: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_01_engineering_open.png
+transition AirlockEngineering#61: Open->Closing at player (2.50,-11.55) apertureDist=3.05 t=4.34
+walk retreat (2.50,-9.80)->(2.50,-12.20) @1.6u/s (1.50s) states=Closing
+observe AirlockEngineering#61 / retreating away south: state=Closing sprite=closing_4 player=(2.50,-12.20) apertureDist=3.70 holdDist=3.70
+PASS  retreating away south: door is closing or closed
+transition AirlockEngineering#61: Closing->Closed at player (2.50,-12.20) apertureDist=3.70 t=4.95
+observe AirlockEngineering#61 / settled south: state=Closed sprite=closed_0 player=(2.50,-12.20) apertureDist=3.70 holdDist=3.70
+PASS  settled south: door is closed
+PASS  settled south: closed sprite showing
+--- phase 2: AirlockEngineering approached from the south side ---
+transition AirlockEngineering#61: Closed->Opening at player (2.50,-9.50) apertureDist=1.00 t=8.44
+transition AirlockEngineering#61: Opening->Open at player (2.50,-8.52) apertureDist=0.02 t=9.05
+walk approach (2.50,-12.20)->(2.50,-6.00) @1.6u/s (3.88s) states=Opening->Open
+observe AirlockEngineering#61 / passed south->north: state=Open sprite=open_0 player=(2.50,-6.00) apertureDist=2.50 holdDist=2.50
+PASS  passed south->north: door is fully open
+PASS  passed south->north: service-open sprite showing
+render 02_engineering_open_from_south: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_02_engineering_open_from_south.png
+transition AirlockEngineering#61: Open->Closing at player (2.50,-5.45) apertureDist=3.05 t=10.97
+transition AirlockEngineering#61: Closing->Closed at player (2.50,-4.48) apertureDist=4.02 t=11.58
+walk retreat (2.50,-6.00)->(2.50,-4.00) @1.6u/s (1.25s) states=Closing->Closed
+observe AirlockEngineering#61 / settled north: state=Closed sprite=closed_0 player=(2.50,-4.00) apertureDist=4.50 holdDist=4.50
+PASS  settled north: door is closed
+PASS  settled north: closed sprite showing
+--- phase 3: AirlockSalvage (the door just outside the cockpit) ---
+transition AirlockSalvage#128: Closed->Opening at player (2.50,0.50) apertureDist=1.00 t=15.76
+transition AirlockSalvage#128: Opening->Open at player (2.50,1.97) apertureDist=0.47 t=16.37
+walk approach (2.50,-4.00)->(2.50,4.60) @2.4u/s (3.58s) states=Opening->Open
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.60) apertureDist=3.10 t=17.61
+transition AirlockSalvage#128: Closing->Closed at player (2.50,4.60) apertureDist=3.10 t=18.22
+observe AirlockSalvage#128 / closed again, player standing clear in the cockpit: state=Closed sprite=closed_0 player=(2.50,4.60) apertureDist=3.10 holdDist=3.10
+PASS  closed again, player standing clear in the cockpit: door is closed
+PASS  closed again, player standing clear in the cockpit: closed sprite showing
+render 03_salvage_closed: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_03_salvage_closed.png
+transition AirlockSalvage#128: Closed->Opening at player (2.50,2.50) apertureDist=1.00 t=21.28
+transition AirlockSalvage#128: Opening->Open at player (2.50,1.52) apertureDist=0.02 t=21.89
+walk approach (2.50,4.60)->(2.50,-1.20) @1.6u/s (3.63s) states=Opening->Open
+observe AirlockSalvage#128 / passed cockpit->bridge: state=Open sprite=open_0 player=(2.50,-1.20) apertureDist=2.70 holdDist=2.70
+PASS  passed cockpit->bridge: door is fully open
+PASS  passed cockpit->bridge: service-open sprite showing
+render 04_salvage_open: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_04_salvage_open.png
+--- phase 4: hold position inside the AirlockSalvage doorway for 3 s ---
+observe AirlockSalvage#128 / arrived in the doorway: state=Open sprite=open_0 player=(2.50,1.90) apertureDist=0.40 holdDist=0.40
+PASS  arrived in the doorway: door is fully open
+PASS  arrived in the doorway: service-open sprite showing
+observe AirlockSalvage#128 / after 3 s standing in the doorway: state=Open sprite=open_0 player=(2.50,1.90) apertureDist=0.40 holdDist=0.40
+PASS  after 3 s standing in the doorway: door is fully open
+PASS  after 3 s standing in the doorway: service-open sprite showing
+PASS  door stayed put while the player stood in the doorway (0 transitions)
+--- phase 5: approach/retreat cycles (chatter test) ---
+walk approach (2.50,5.20)->(2.50,0.90) @5u/s (0.86s) states=
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.50) apertureDist=3.00 t=31.06
+walk retreat (2.50,0.90)->(2.50,5.20) @1.5u/s (2.87s) states=Closing
+transition AirlockSalvage#128: Closing->Closed at player (2.50,5.20) apertureDist=3.70 t=31.67
+transition AirlockSalvage#128: Closed->Opening at player (2.50,2.50) apertureDist=1.00 t=33.66
+walk approach (2.50,5.20)->(2.50,0.90) @5u/s (0.86s) states=Opening
+transition AirlockSalvage#128: Opening->Open at player (2.50,0.90) apertureDist=0.60 t=34.27
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.50) apertureDist=3.00 t=36.74
+walk retreat (2.50,0.90)->(2.50,5.20) @1.5u/s (2.87s) states=Closing
+transition AirlockSalvage#128: Closing->Closed at player (2.50,5.20) apertureDist=3.70 t=37.35
+transition AirlockSalvage#128: Closed->Opening at player (2.50,2.50) apertureDist=1.00 t=39.34
+walk approach (2.50,5.20)->(2.50,0.90) @5u/s (0.86s) states=Opening
+transition AirlockSalvage#128: Opening->Open at player (2.50,0.90) apertureDist=0.60 t=39.95
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.50) apertureDist=3.00 t=42.41
+walk retreat (2.50,0.90)->(2.50,5.20) @1.5u/s (2.87s) states=Closing
+transition AirlockSalvage#128: Closing->Closed at player (2.50,5.20) apertureDist=3.70 t=43.02
+observe AirlockSalvage#128 / settled after the chatter cycles: state=Closed sprite=closed_0 player=(2.50,5.20) apertureDist=3.70 holdDist=3.70
+PASS  settled after the chatter cycles: door is closed
+PASS  settled after the chatter cycles: closed sprite showing
+PASS  no Closing->Opening re-open inside any monotone retreat (5 retreat segments checked)
+render 05_salvage_after_chatter: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_05_salvage_after_chatter.png
+--- phase 5b: hover across the hysteresis band (open 1.0 < hold 2.25) ---
+transition AirlockSalvage#128: Closed->Opening at player (2.50,1.90) apertureDist=0.40 t=46.00
+transition AirlockSalvage#128: Opening->Open at player (2.50,1.90) apertureDist=0.40 t=46.61
+observe AirlockSalvage#128 / back in the doorway before the hover: state=Open sprite=open_0 player=(2.50,1.90) apertureDist=0.40 holdDist=0.40
+PASS  back in the doorway before the hover: door is fully open
+PASS  back in the doorway before the hover: service-open sprite showing
+walk approach (2.50,1.90)->(2.50,3.10) @1.2u/s (1.00s) states=
+walk approach (2.50,3.10)->(2.50,1.90) @1.2u/s (1.00s) states=
+walk approach (2.50,1.90)->(2.50,3.10) @1.2u/s (1.00s) states=
+walk approach (2.50,3.10)->(2.50,1.90) @1.2u/s (1.00s) states=
+walk approach (2.50,1.90)->(2.50,3.10) @1.2u/s (1.00s) states=
+walk approach (2.50,3.10)->(2.50,1.90) @1.2u/s (1.00s) states=
+walk approach (2.50,1.90)->(2.50,3.10) @1.2u/s (1.00s) states=
+walk approach (2.50,3.10)->(2.50,1.90) @1.2u/s (1.00s) states=
+observe AirlockSalvage#128 / after hovering inside the hold band: state=Open sprite=open_0 player=(2.50,1.90) apertureDist=0.40 holdDist=0.40
+PASS  after hovering inside the hold band: door is fully open
+PASS  after hovering inside the hold band: service-open sprite showing
+PASS  hovering inside the hold band never began a close (0 Closing transitions over 8 crossings)
+--- phase 6: stepped threshold measurement for both interior doors ---
+--- phase 6 [AirlockSalvage#128]: stepped approach from the higher-y side, fixed 0.05 m steps, 2 settle frames each (deltaTime right now 0.00131s) ---
+[AirlockSalvage#128] configured openDistance=1 holdDistance=2.25 closeDelay=0.5 apertureHalfWidth=0.8 passageAlongLocalY=True tile=(2.50,1.50) lossyScale=(1.00,1.00) zRotation=0.0
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.70) apertureDist=3.20 t=55.31
+transition AirlockSalvage#128: Closing->Closed at player (2.50,4.70) apertureDist=3.20 t=55.92
+PASS  [AirlockSalvage#128] starts closed with the player 3.20 m clear
+PASS  [AirlockSalvage#128] closed sprite showing before the approach (sprite=closed_0)
+[AirlockSalvage#128] step 00 d=3.20 m playerY=4.70 state=Closed apertureDist=3.200 holdDist=3.200 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 01 d=3.15 m playerY=4.65 state=Closed apertureDist=3.150 holdDist=3.150 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 02 d=3.10 m playerY=4.60 state=Closed apertureDist=3.100 holdDist=3.100 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 03 d=3.05 m playerY=4.55 state=Closed apertureDist=3.050 holdDist=3.050 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 04 d=3.00 m playerY=4.50 state=Closed apertureDist=3.000 holdDist=3.000 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 05 d=2.95 m playerY=4.45 state=Closed apertureDist=2.950 holdDist=2.950 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 06 d=2.90 m playerY=4.40 state=Closed apertureDist=2.900 holdDist=2.900 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 07 d=2.85 m playerY=4.35 state=Closed apertureDist=2.850 holdDist=2.850 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 08 d=2.80 m playerY=4.30 state=Closed apertureDist=2.800 holdDist=2.800 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 09 d=2.75 m playerY=4.25 state=Closed apertureDist=2.750 holdDist=2.750 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 10 d=2.70 m playerY=4.20 state=Closed apertureDist=2.700 holdDist=2.700 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 11 d=2.65 m playerY=4.15 state=Closed apertureDist=2.650 holdDist=2.650 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 12 d=2.60 m playerY=4.10 state=Closed apertureDist=2.600 holdDist=2.600 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 13 d=2.55 m playerY=4.05 state=Closed apertureDist=2.550 holdDist=2.550 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 14 d=2.50 m playerY=4.00 state=Closed apertureDist=2.500 holdDist=2.500 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 15 d=2.45 m playerY=3.95 state=Closed apertureDist=2.450 holdDist=2.450 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 16 d=2.40 m playerY=3.90 state=Closed apertureDist=2.400 holdDist=2.400 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 17 d=2.35 m playerY=3.85 state=Closed apertureDist=2.350 holdDist=2.350 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 18 d=2.30 m playerY=3.80 state=Closed apertureDist=2.300 holdDist=2.300 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 19 d=2.25 m playerY=3.75 state=Closed apertureDist=2.250 holdDist=2.250 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 20 d=2.20 m playerY=3.70 state=Closed apertureDist=2.200 holdDist=2.200 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 21 d=2.15 m playerY=3.65 state=Closed apertureDist=2.150 holdDist=2.150 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 22 d=2.10 m playerY=3.60 state=Closed apertureDist=2.100 holdDist=2.100 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 23 d=2.05 m playerY=3.55 state=Closed apertureDist=2.050 holdDist=2.050 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 24 d=2.00 m playerY=3.50 state=Closed apertureDist=2.000 holdDist=2.000 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 25 d=1.95 m playerY=3.45 state=Closed apertureDist=1.950 holdDist=1.950 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 26 d=1.90 m playerY=3.40 state=Closed apertureDist=1.900 holdDist=1.900 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 27 d=1.85 m playerY=3.35 state=Closed apertureDist=1.850 holdDist=1.850 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 28 d=1.80 m playerY=3.30 state=Closed apertureDist=1.800 holdDist=1.800 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 29 d=1.75 m playerY=3.25 state=Closed apertureDist=1.750 holdDist=1.750 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 30 d=1.70 m playerY=3.20 state=Closed apertureDist=1.700 holdDist=1.700 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 31 d=1.65 m playerY=3.15 state=Closed apertureDist=1.650 holdDist=1.650 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 32 d=1.60 m playerY=3.10 state=Closed apertureDist=1.600 holdDist=1.600 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 33 d=1.55 m playerY=3.05 state=Closed apertureDist=1.550 holdDist=1.550 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 34 d=1.50 m playerY=3.00 state=Closed apertureDist=1.500 holdDist=1.500 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 35 d=1.45 m playerY=2.95 state=Closed apertureDist=1.450 holdDist=1.450 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 36 d=1.40 m playerY=2.90 state=Closed apertureDist=1.400 holdDist=1.400 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 37 d=1.35 m playerY=2.85 state=Closed apertureDist=1.350 holdDist=1.350 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 38 d=1.30 m playerY=2.80 state=Closed apertureDist=1.300 holdDist=1.300 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 39 d=1.25 m playerY=2.75 state=Closed apertureDist=1.250 holdDist=1.250 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 40 d=1.20 m playerY=2.70 state=Closed apertureDist=1.200 holdDist=1.200 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 41 d=1.15 m playerY=2.65 state=Closed apertureDist=1.150 holdDist=1.150 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 42 d=1.10 m playerY=2.60 state=Closed apertureDist=1.100 holdDist=1.100 delta=0.0000 sprite=closed_0
+[AirlockSalvage#128] step 43 d=1.05 m playerY=2.55 state=Closed apertureDist=1.050 holdDist=1.050 delta=0.0000 sprite=closed_0
+transition AirlockSalvage#128: Closed->Opening at player (2.50,2.50) apertureDist=1.00 t=56.38
+[AirlockSalvage#128] step 44 d=1.00 m playerY=2.50 state=Opening apertureDist=1.000 holdDist=1.000 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 45 d=0.95 m playerY=2.45 state=Opening apertureDist=0.950 holdDist=0.950 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 46 d=0.90 m playerY=2.40 state=Opening apertureDist=0.900 holdDist=0.900 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 47 d=0.85 m playerY=2.35 state=Opening apertureDist=0.850 holdDist=0.850 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 48 d=0.80 m playerY=2.30 state=Opening apertureDist=0.800 holdDist=0.800 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 49 d=0.75 m playerY=2.25 state=Opening apertureDist=0.750 holdDist=0.750 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 50 d=0.70 m playerY=2.20 state=Opening apertureDist=0.700 holdDist=0.700 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 51 d=0.65 m playerY=2.15 state=Opening apertureDist=0.650 holdDist=0.650 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 52 d=0.60 m playerY=2.10 state=Opening apertureDist=0.600 holdDist=0.600 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 53 d=0.55 m playerY=2.05 state=Opening apertureDist=0.550 holdDist=0.550 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 54 d=0.50 m playerY=2.00 state=Opening apertureDist=0.500 holdDist=0.500 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 55 d=0.45 m playerY=1.95 state=Opening apertureDist=0.450 holdDist=0.450 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 56 d=0.40 m playerY=1.90 state=Opening apertureDist=0.400 holdDist=0.400 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 57 d=0.35 m playerY=1.85 state=Opening apertureDist=0.350 holdDist=0.350 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 58 d=0.30 m playerY=1.80 state=Opening apertureDist=0.300 holdDist=0.300 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 59 d=0.25 m playerY=1.75 state=Opening apertureDist=0.250 holdDist=0.250 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 60 d=0.20 m playerY=1.70 state=Opening apertureDist=0.200 holdDist=0.200 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 61 d=0.15 m playerY=1.65 state=Opening apertureDist=0.150 holdDist=0.150 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 62 d=0.10 m playerY=1.60 state=Opening apertureDist=0.100 holdDist=0.100 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 63 d=0.05 m playerY=1.55 state=Opening apertureDist=0.050 holdDist=0.050 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 64 d=0.00 m playerY=1.50 state=Opening apertureDist=0.000 holdDist=0.000 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 65 d=-0.05 m playerY=1.45 state=Opening apertureDist=0.050 holdDist=0.050 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 66 d=-0.10 m playerY=1.40 state=Opening apertureDist=0.100 holdDist=0.100 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 67 d=-0.15 m playerY=1.35 state=Opening apertureDist=0.150 holdDist=0.150 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 68 d=-0.20 m playerY=1.30 state=Opening apertureDist=0.200 holdDist=0.200 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 69 d=-0.25 m playerY=1.25 state=Opening apertureDist=0.250 holdDist=0.250 delta=0.0000 sprite=opening_0
+[AirlockSalvage#128] step 70 d=-0.30 m playerY=1.20 state=Opening apertureDist=0.300 holdDist=0.300 delta=0.0000 sprite=opening_0
+PASS  [AirlockSalvage#128] door tracked the live player at every step (worst |apertureDist - |snapped offset|| = 0.0000 m over 71 samples)
+PASS  [AirlockSalvage#128] closed at every sample further than openDistance=1 m
+PASS  [AirlockSalvage#128] never Closed at a sample inside openDistance=1 m
+PASS  [AirlockSalvage#128] never began a close while the player was approaching
+PASS  [AirlockSalvage#128] still closed at d=1.05 m (player y=2.55), one step outside openDistance=1
+PASS  [AirlockSalvage#128] already opening at d=0.95 m, one step inside openDistance=1
+PASS  [AirlockSalvage#128] still Closed just beyond one tile: d=1.05 m (one tile + 0.05 m), player y=2.55
+PASS  [AirlockSalvage#128] opening at one tile: d=1.00 m (one tile=1.00 m), player y=2.50
+transition AirlockSalvage#128: Opening->Open at player (2.50,1.20) apertureDist=0.30 t=56.99
+observe AirlockSalvage#128 / [AirlockSalvage#128] standing in the doorway at the end of the approach: state=Open sprite=open_0 player=(2.50,1.20) apertureDist=0.30 holdDist=0.30
+PASS  [AirlockSalvage#128] standing in the doorway at the end of the approach: door is fully open
+PASS  [AirlockSalvage#128] standing in the doorway at the end of the approach: service-open sprite showing
+observe AirlockSalvage#128 / [AirlockSalvage#128] holding inside the band at d=1.63 m for 1.5s: state=Open sprite=open_0 player=(2.50,3.13) apertureDist=1.63 holdDist=1.63
+PASS  [AirlockSalvage#128] holding inside the band at d=1.63 m for 1.5s: door is fully open
+PASS  [AirlockSalvage#128] holding inside the band at d=1.63 m for 1.5s: service-open sprite showing
+PASS  [AirlockSalvage#128] no close began while the player held inside the hold band (0 Closing transitions)
+PASS  [AirlockSalvage#128] still open 0.25s after stepping clear to d=3.10 m (closeDelay=0.5s)
+transition AirlockSalvage#128: Open->Closing at player (2.50,4.60) apertureDist=3.10 t=59.62
+PASS  [AirlockSalvage#128] began closing once the doorway had been clear for longer than closeDelay=0.5s
+transition AirlockSalvage#128: Closing->Closed at player (2.50,4.60) apertureDist=3.10 t=60.23
+PASS  [AirlockSalvage#128] finished closing 0.36s after the close began
+PASS  [AirlockSalvage#128] no further transitions while the player stayed clear
+observe AirlockSalvage#128 / [AirlockSalvage#128] settled clear after the departure: state=Closed sprite=closed_0 player=(2.50,4.60) apertureDist=3.10 holdDist=3.10
+PASS  [AirlockSalvage#128] settled clear after the departure: door is closed
+PASS  [AirlockSalvage#128] settled clear after the departure: closed sprite showing
+--- phase 6 [AirlockEngineering#61]: stepped approach from the lower-y side, fixed 0.05 m steps, 2 settle frames each (deltaTime right now 0.00117s) ---
+[AirlockEngineering#61] configured openDistance=1 holdDistance=2.25 closeDelay=0.5 apertureHalfWidth=0.8 passageAlongLocalY=True tile=(2.50,-8.50) lossyScale=(1.00,1.00) zRotation=0.0
+PASS  [AirlockEngineering#61] starts closed with the player 3.20 m clear
+PASS  [AirlockEngineering#61] closed sprite showing before the approach (sprite=closed_0)
+[AirlockEngineering#61] step 00 d=3.20 m playerY=-11.70 state=Closed apertureDist=3.200 holdDist=3.200 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 01 d=3.15 m playerY=-11.65 state=Closed apertureDist=3.150 holdDist=3.150 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 02 d=3.10 m playerY=-11.60 state=Closed apertureDist=3.100 holdDist=3.100 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 03 d=3.05 m playerY=-11.55 state=Closed apertureDist=3.050 holdDist=3.050 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 04 d=3.00 m playerY=-11.50 state=Closed apertureDist=3.000 holdDist=3.000 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 05 d=2.95 m playerY=-11.45 state=Closed apertureDist=2.950 holdDist=2.950 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 06 d=2.90 m playerY=-11.40 state=Closed apertureDist=2.900 holdDist=2.900 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 07 d=2.85 m playerY=-11.35 state=Closed apertureDist=2.850 holdDist=2.850 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 08 d=2.80 m playerY=-11.30 state=Closed apertureDist=2.800 holdDist=2.800 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 09 d=2.75 m playerY=-11.25 state=Closed apertureDist=2.750 holdDist=2.750 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 10 d=2.70 m playerY=-11.20 state=Closed apertureDist=2.700 holdDist=2.700 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 11 d=2.65 m playerY=-11.15 state=Closed apertureDist=2.650 holdDist=2.650 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 12 d=2.60 m playerY=-11.10 state=Closed apertureDist=2.600 holdDist=2.600 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 13 d=2.55 m playerY=-11.05 state=Closed apertureDist=2.550 holdDist=2.550 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 14 d=2.50 m playerY=-11.00 state=Closed apertureDist=2.500 holdDist=2.500 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 15 d=2.45 m playerY=-10.95 state=Closed apertureDist=2.450 holdDist=2.450 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 16 d=2.40 m playerY=-10.90 state=Closed apertureDist=2.400 holdDist=2.400 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 17 d=2.35 m playerY=-10.85 state=Closed apertureDist=2.350 holdDist=2.350 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 18 d=2.30 m playerY=-10.80 state=Closed apertureDist=2.300 holdDist=2.300 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 19 d=2.25 m playerY=-10.75 state=Closed apertureDist=2.250 holdDist=2.250 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 20 d=2.20 m playerY=-10.70 state=Closed apertureDist=2.200 holdDist=2.200 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 21 d=2.15 m playerY=-10.65 state=Closed apertureDist=2.150 holdDist=2.150 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 22 d=2.10 m playerY=-10.60 state=Closed apertureDist=2.100 holdDist=2.100 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 23 d=2.05 m playerY=-10.55 state=Closed apertureDist=2.050 holdDist=2.050 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 24 d=2.00 m playerY=-10.50 state=Closed apertureDist=2.000 holdDist=2.000 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 25 d=1.95 m playerY=-10.45 state=Closed apertureDist=1.950 holdDist=1.950 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 26 d=1.90 m playerY=-10.40 state=Closed apertureDist=1.900 holdDist=1.900 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 27 d=1.85 m playerY=-10.35 state=Closed apertureDist=1.850 holdDist=1.850 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 28 d=1.80 m playerY=-10.30 state=Closed apertureDist=1.800 holdDist=1.800 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 29 d=1.75 m playerY=-10.25 state=Closed apertureDist=1.750 holdDist=1.750 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 30 d=1.70 m playerY=-10.20 state=Closed apertureDist=1.700 holdDist=1.700 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 31 d=1.65 m playerY=-10.15 state=Closed apertureDist=1.650 holdDist=1.650 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 32 d=1.60 m playerY=-10.10 state=Closed apertureDist=1.600 holdDist=1.600 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 33 d=1.55 m playerY=-10.05 state=Closed apertureDist=1.550 holdDist=1.550 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 34 d=1.50 m playerY=-10.00 state=Closed apertureDist=1.500 holdDist=1.500 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 35 d=1.45 m playerY=-9.95 state=Closed apertureDist=1.450 holdDist=1.450 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 36 d=1.40 m playerY=-9.90 state=Closed apertureDist=1.400 holdDist=1.400 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 37 d=1.35 m playerY=-9.85 state=Closed apertureDist=1.350 holdDist=1.350 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 38 d=1.30 m playerY=-9.80 state=Closed apertureDist=1.300 holdDist=1.300 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 39 d=1.25 m playerY=-9.75 state=Closed apertureDist=1.250 holdDist=1.250 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 40 d=1.20 m playerY=-9.70 state=Closed apertureDist=1.200 holdDist=1.200 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 41 d=1.15 m playerY=-9.65 state=Closed apertureDist=1.150 holdDist=1.150 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 42 d=1.10 m playerY=-9.60 state=Closed apertureDist=1.100 holdDist=1.100 delta=0.0000 sprite=closed_0
+[AirlockEngineering#61] step 43 d=1.05 m playerY=-9.55 state=Closed apertureDist=1.050 holdDist=1.050 delta=0.0000 sprite=closed_0
+transition AirlockEngineering#61: Closed->Opening at player (2.50,-9.50) apertureDist=1.00 t=62.79
+[AirlockEngineering#61] step 44 d=1.00 m playerY=-9.50 state=Opening apertureDist=1.000 holdDist=1.000 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 45 d=0.95 m playerY=-9.45 state=Opening apertureDist=0.950 holdDist=0.950 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 46 d=0.90 m playerY=-9.40 state=Opening apertureDist=0.900 holdDist=0.900 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 47 d=0.85 m playerY=-9.35 state=Opening apertureDist=0.850 holdDist=0.850 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 48 d=0.80 m playerY=-9.30 state=Opening apertureDist=0.800 holdDist=0.800 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 49 d=0.75 m playerY=-9.25 state=Opening apertureDist=0.750 holdDist=0.750 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 50 d=0.70 m playerY=-9.20 state=Opening apertureDist=0.700 holdDist=0.700 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 51 d=0.65 m playerY=-9.15 state=Opening apertureDist=0.650 holdDist=0.650 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 52 d=0.60 m playerY=-9.10 state=Opening apertureDist=0.600 holdDist=0.600 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 53 d=0.55 m playerY=-9.05 state=Opening apertureDist=0.550 holdDist=0.550 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 54 d=0.50 m playerY=-9.00 state=Opening apertureDist=0.500 holdDist=0.500 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 55 d=0.45 m playerY=-8.95 state=Opening apertureDist=0.450 holdDist=0.450 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 56 d=0.40 m playerY=-8.90 state=Opening apertureDist=0.400 holdDist=0.400 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 57 d=0.35 m playerY=-8.85 state=Opening apertureDist=0.350 holdDist=0.350 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 58 d=0.30 m playerY=-8.80 state=Opening apertureDist=0.300 holdDist=0.300 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 59 d=0.25 m playerY=-8.75 state=Opening apertureDist=0.250 holdDist=0.250 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 60 d=0.20 m playerY=-8.70 state=Opening apertureDist=0.200 holdDist=0.200 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 61 d=0.15 m playerY=-8.65 state=Opening apertureDist=0.150 holdDist=0.150 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 62 d=0.10 m playerY=-8.60 state=Opening apertureDist=0.100 holdDist=0.100 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 63 d=0.05 m playerY=-8.55 state=Opening apertureDist=0.050 holdDist=0.050 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 64 d=0.00 m playerY=-8.50 state=Opening apertureDist=0.000 holdDist=0.000 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 65 d=-0.05 m playerY=-8.45 state=Opening apertureDist=0.050 holdDist=0.050 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 66 d=-0.10 m playerY=-8.40 state=Opening apertureDist=0.100 holdDist=0.100 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 67 d=-0.15 m playerY=-8.35 state=Opening apertureDist=0.150 holdDist=0.150 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 68 d=-0.20 m playerY=-8.30 state=Opening apertureDist=0.200 holdDist=0.200 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 69 d=-0.25 m playerY=-8.25 state=Opening apertureDist=0.250 holdDist=0.250 delta=0.0000 sprite=opening_0
+[AirlockEngineering#61] step 70 d=-0.30 m playerY=-8.20 state=Opening apertureDist=0.300 holdDist=0.300 delta=0.0000 sprite=opening_0
+PASS  [AirlockEngineering#61] door tracked the live player at every step (worst |apertureDist - |snapped offset|| = 0.0000 m over 71 samples)
+PASS  [AirlockEngineering#61] closed at every sample further than openDistance=1 m
+PASS  [AirlockEngineering#61] never Closed at a sample inside openDistance=1 m
+PASS  [AirlockEngineering#61] never began a close while the player was approaching
+PASS  [AirlockEngineering#61] still closed at d=1.05 m (player y=-9.55), one step outside openDistance=1
+PASS  [AirlockEngineering#61] already opening at d=0.95 m, one step inside openDistance=1
+PASS  [AirlockEngineering#61] still Closed just beyond one tile: d=1.05 m (one tile + 0.05 m), player y=-9.55
+PASS  [AirlockEngineering#61] opening at one tile: d=1.00 m (one tile=1.00 m), player y=-9.50
+transition AirlockEngineering#61: Opening->Open at player (2.50,-8.20) apertureDist=0.30 t=63.40
+observe AirlockEngineering#61 / [AirlockEngineering#61] standing in the doorway at the end of the approach: state=Open sprite=open_0 player=(2.50,-8.20) apertureDist=0.30 holdDist=0.30
+PASS  [AirlockEngineering#61] standing in the doorway at the end of the approach: door is fully open
+PASS  [AirlockEngineering#61] standing in the doorway at the end of the approach: service-open sprite showing
+observe AirlockEngineering#61 / [AirlockEngineering#61] holding inside the band at d=1.63 m for 1.5s: state=Open sprite=open_0 player=(2.50,-10.13) apertureDist=1.63 holdDist=1.63
+PASS  [AirlockEngineering#61] holding inside the band at d=1.63 m for 1.5s: door is fully open
+PASS  [AirlockEngineering#61] holding inside the band at d=1.63 m for 1.5s: service-open sprite showing
+PASS  [AirlockEngineering#61] no close began while the player held inside the hold band (0 Closing transitions)
+PASS  [AirlockEngineering#61] still open 0.25s after stepping clear to d=3.10 m (closeDelay=0.5s)
+transition AirlockEngineering#61: Open->Closing at player (2.50,-11.60) apertureDist=3.10 t=66.03
+PASS  [AirlockEngineering#61] began closing once the doorway had been clear for longer than closeDelay=0.5s
+transition AirlockEngineering#61: Closing->Closed at player (2.50,-11.60) apertureDist=3.10 t=66.64
+PASS  [AirlockEngineering#61] finished closing 0.36s after the close began
+PASS  [AirlockEngineering#61] no further transitions while the player stayed clear
+observe AirlockEngineering#61 / [AirlockEngineering#61] settled clear after the departure: state=Closed sprite=closed_0 player=(2.50,-11.60) apertureDist=3.10 holdDist=3.10
+PASS  [AirlockEngineering#61] settled clear after the departure: door is closed
+PASS  [AirlockEngineering#61] settled clear after the departure: closed sprite showing
+PASS  still exactly 2 automatic airlocks at the end of the run
+PASS  automatic airlock is an interior passage door (AirlockSalvage#128)
+PASS  automatic airlock is an interior passage door (AirlockEngineering#61)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#92)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#93)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#94)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#95)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#96)
+PASS  hull-side airlock left untouched (AirlockExternalGlassShuttleArrivals#97)
+--- phase 7: labelled evidence frames for both interior airlocks ---
+PASS  [AirlockSalvage#128] evidence: door closed before the frames
+PASS  [AirlockSalvage#128] evidence frame 1: still Closed at 1.15 m (just outside one tile), player y=2.65, sprite=closed_0
+render 06_salvage_closed_just_outside_one_tile: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_06_salvage_closed_just_outside_one_tile.png
+transition AirlockSalvage#128: Closed->Opening at player (2.50,2.05) apertureDist=0.55 t=69.76
+transition AirlockSalvage#128: Opening->Open at player (2.50,2.05) apertureDist=0.55 t=70.37
+PASS  [AirlockSalvage#128] evidence frame 2: Open at 0.55 m (inside one tile), player y=2.05, sprite=open_0
+render 06_salvage_open_on_approach: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_06_salvage_open_on_approach.png
+transition AirlockSalvage#128: Open->Closing at player (2.50,-5.30) apertureDist=6.80 t=71.46
+transition AirlockSalvage#128: Closing->Closed at player (2.50,-5.30) apertureDist=6.80 t=72.07
+PASS  [AirlockEngineering#61] evidence: door closed before the frames
+PASS  [AirlockEngineering#61] evidence frame 1: still Closed at 1.15 m (just outside one tile), player y=-7.35, sprite=closed_0
+render 07_engineering_closed_just_outside_one_tile: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_07_engineering_closed_just_outside_one_tile.png
+transition AirlockEngineering#61: Closed->Opening at player (2.50,-7.95) apertureDist=0.55 t=73.06
+transition AirlockEngineering#61: Opening->Open at player (2.50,-7.95) apertureDist=0.55 t=73.67
+PASS  [AirlockEngineering#61] evidence frame 2: Open at 0.55 m (inside one tile), player y=-7.95, sprite=open_0
+render 07_engineering_open_on_approach: render-request state(featured door) -> /home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_07_engineering_open_on_approach.png
+frame pacing over this run: 154952 frames in 74.3s (mean deltaTime=0.00048s, ~2086 fps)
+total door state transitions during the run: 42
+
+== renders ==
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_00_start_closed.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_01_engineering_open.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_02_engineering_open_from_south.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_03_salvage_closed.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_04_salvage_open.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_05_salvage_after_chatter.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_06_salvage_closed_just_outside_one_tile.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_06_salvage_open_on_approach.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_07_engineering_closed_just_outside_one_tile.png
+/home/dan/.hermes/profiles/coder/cache/scratch/airlock_renders/airlock_07_engineering_open_on_approach.png

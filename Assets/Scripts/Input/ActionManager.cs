@@ -38,9 +38,13 @@ public class ActionManager : MonoBehaviour
 
     // Lab 5: the state machine's EventAction trigger. Input is still sanitised here; the actor FSM
     // decides whether the current state has an Attack action to cast (only Armed does).
+    // Z: SS14's two-hand/wield key first, Lab 5's EventAction trigger otherwise. Wielding the active
+    // item wins so a two-handed ranged weapon toggles its wielded state; everything else falls through
+    // to the actor FSM, which only casts from states that declare an Attack action.
     public void OnPowerupAttack(InputAction.CallbackContext context)
     {
         if (!context.performed || Time.timeScale == 0f) return;
+        if (weaponController != null && weaponController.TryToggleTwoHandWield()) return;
         if (actorState != null) actorState.Fire();
     }
 
@@ -109,7 +113,7 @@ public class ActionManager : MonoBehaviour
         // pretty far out in terms of features to implement, though.
         if(context.performed)
         {
-            handSystem.SwapHands();
+            weaponController.SwapHands();
             Debug.Log($"Swapped active hand. {handSystem.CurrentHandSlot}");
         }
     }

@@ -173,6 +173,31 @@ MonoBehaviour:
   projectileSpeed: 12
   glowSprite: {fileID: 21300000, guid: ccc0bf4db34bdb810b15f2d4a882b4db, type: 3}
   projectileSprite: {fileID: 21300000, guid: 10c712af83be545dbb89f2719d5d9bbb, type: 3}
+  supportsTwoHandedUse: 1
+  oneHandedSpreadDegrees: 12
+  wieldedSpreadDegrees: 1
+  oneHandedLeftSprites:
+  - {fileID: 1058022566835544745, guid: 3a0d27cdbf67bbea18b50ed7d41a51ec, type: 3}
+  - {fileID: 1935179790816705603, guid: 3a0d27cdbf67bbea18b50ed7d41a51ec, type: 3}
+  - {fileID: -4105623764152133805, guid: 3a0d27cdbf67bbea18b50ed7d41a51ec, type: 3}
+  - {fileID: 6024930911025039781, guid: 3a0d27cdbf67bbea18b50ed7d41a51ec, type: 3}
+  oneHandedRightSprites:
+  - {fileID: -1119261367795216387, guid: 4e788a4842531d1fc84429e8a938eede, type: 3}
+  - {fileID: 4013834281370136927, guid: 4e788a4842531d1fc84429e8a938eede, type: 3}
+  - {fileID: 6392742695481093296, guid: 4e788a4842531d1fc84429e8a938eede, type: 3}
+  - {fileID: -1003395122316907663, guid: 4e788a4842531d1fc84429e8a938eede, type: 3}
+  wieldedLeftSprites:
+  - {fileID: 5740258445781165347, guid: 46ea9bd22e6c9b55dbc51194654fa70d, type: 3}
+  - {fileID: 7152913591132815522, guid: 46ea9bd22e6c9b55dbc51194654fa70d, type: 3}
+  - {fileID: 1138675279334006905, guid: 46ea9bd22e6c9b55dbc51194654fa70d, type: 3}
+  - {fileID: -3417749790515281195, guid: 46ea9bd22e6c9b55dbc51194654fa70d, type: 3}
+  wieldedRightSprites:
+  - {fileID: 3748984002746281843, guid: 3baa0503d84f54baca1a27860f03daf6, type: 3}
+  - {fileID: -4683900066531156206, guid: 3baa0503d84f54baca1a27860f03daf6, type: 3}
+  - {fileID: -1134907930438178497, guid: 3baa0503d84f54baca1a27860f03daf6, type: 3}
+  - {fileID: 4765178425495163220, guid: 3baa0503d84f54baca1a27860f03daf6, type: 3}
+  muzzleFlashSprite: {fileID: 21300000, guid: 1d9e1a7043034e79872bfae36973f603, type: 3}
+  fireSound: {fileID: 8300000, guid: b59265f27e99422baeb5e3138f8cefc2, type: 3}
 --- !u!1 &5686849279871634002
 GameObject:
   m_ObjectHideFlags: 0
