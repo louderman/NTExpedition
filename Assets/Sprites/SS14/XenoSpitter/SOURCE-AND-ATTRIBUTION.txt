@@ -1,0 +1,10 @@
+Xeno Spitter source sheets, copied without modification.
+Source: https://github.com/PyotrIgn/wizden-space-station-14
+Revision: 66a02010f280749ff5bfc0036539064bd3e16e68
+Path: Resources/Textures/Mobs/Aliens/Xenos/spitter.rsi/
+Files: running.png, dead.png, meta.json (saved as source-meta.json).
+License: CC-BY-SA-3.0 (https://creativecommons.org/licenses/by-sa/3.0/).
+Copyright/source credit: https://gitlab.com/cmdevs/colonial-warfare/-/tree/dev/icons/mob/xenonids
+Full upstream license and copyright record retained in source-meta.json.
+Unity slices running.png into four 48x48 directions, South/North/East/West.
+AI-assisted Unity prefab and combat integration; original sprite art is unchanged.

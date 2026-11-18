@@ -7,9 +7,12 @@ public class KineticProjectile : MonoBehaviour
     float damage;
     float speed;
     float remainingRange;
+    IntGameEvent onPlayerDamaged;
 
+    // Enemy shots supply the player damage channel; ordinary weapon shots damage Health directly.
     public static void Launch(Vector2 origin, Vector2 direction, Rigidbody2D ownerBody,
-        float shotDamage, float shotSpeed, float shotRange, Sprite projectileSprite)
+        float shotDamage, float shotSpeed, float shotRange, Sprite projectileSprite,
+        IntGameEvent onPlayerDamaged = null)
     {
         if (projectileSprite == null)
         {
@@ -28,7 +31,9 @@ public class KineticProjectile : MonoBehaviour
         var renderer = bolt.AddComponent<SpriteRenderer>();
         renderer.sprite = projectileSprite;
         renderer.sortingOrder = 18;
-        bolt.AddComponent<KineticProjectile>().Initialize(direction, ownerBody, shotDamage, shotSpeed, shotRange);
+        var projectile = bolt.AddComponent<KineticProjectile>();
+        projectile.Initialize(direction, ownerBody, shotDamage, shotSpeed, shotRange);
+        projectile.onPlayerDamaged = onPlayerDamaged;
     }
 
     void Initialize(Vector2 shotDirection, Rigidbody2D ownerBody, float shotDamage, float shotSpeed, float shotRange)
@@ -42,17 +47,22 @@ public class KineticProjectile : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
         float distance = Mathf.Min(speed * Time.deltaTime, remainingRange);
         if (distance <= 0f) { Destroy(gameObject); return; }
         Vector2 start = transform.position;
-        foreach (var hit in Physics2D.RaycastAll(start, direction, distance))
+        var hit = FirstHit(start, direction, distance, owner, onPlayerDamaged != null);
+        if (hit.collider != null)
         {
-            if (hit.collider == null || hit.collider.attachedRigidbody == owner) continue;
             var health = hit.collider.attachedRigidbody != null
                 ? hit.collider.attachedRigidbody.GetComponent<Health>()
                 : hit.collider.GetComponentInParent<Health>();
-            if (hit.collider.isTrigger && health == null) continue;
-            if (health != null && health.CurrentHP > 0f) health.TakeDamage(damage);
+            if (onPlayerDamaged != null)
+            {
+                if (hit.collider.GetComponentInParent<ExpeditionerStateController>() != null)
+                    onPlayerDamaged.Raise(Mathf.RoundToInt(damage));
+            }
+            else if (health != null && health.CurrentHP > 0f) health.TakeDamage(damage);
             transform.position = hit.point;
             Destroy(gameObject);
             return;
@@ -62,4 +72,25 @@ public class KineticProjectile : MonoBehaviour
         if (remainingRange <= 0f) Destroy(gameObject);
     }
 
+    // Enemy sight and projectile travel use the same blockers, so mobs cannot see through cover.
+    public static bool HasClearShot(Vector2 origin, Vector2 target, Rigidbody2D owner)
+    {
+        Vector2 delta = target - origin;
+        var hit = FirstHit(origin, delta.normalized, delta.magnitude, owner, true);
+        return hit.collider == null ||
+            hit.collider.GetComponentInParent<ExpeditionerStateController>() != null;
+    }
+
+    static RaycastHit2D FirstHit(Vector2 origin, Vector2 direction, float distance,
+        Rigidbody2D owner, bool playerOnly)
+    {
+        foreach (var hit in Physics2D.RaycastAll(origin, direction, distance))
+        {
+            if (hit.collider == null || (owner != null && hit.collider.attachedRigidbody == owner)) continue;
+            if (playerOnly && hit.collider.GetComponentInParent<MobMovement>() != null) continue;
+            if (hit.collider.isTrigger && hit.collider.GetComponentInParent<Health>() == null) continue;
+            return hit;
+        }
+        return default;
+    }
 }
