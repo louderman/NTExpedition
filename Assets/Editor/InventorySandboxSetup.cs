@@ -155,28 +155,32 @@ public static class InventorySandboxSetup
 
     public static void ConfigureProtoKineticAccelerator()
     {
-        const string baseSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-icon.png";
-        const string glowSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-icon-unshaded.png";
-        const string projectileSpritePath = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/pka-projectile-chronobolt.png";
+        const string assetFolder = "Assets/ThirdParty/FrontierStation14/ProtoKineticAccelerator/";
+        const string baseSpritePath = assetFolder + "pka-icon.png";
+        const string glowSpritePath = assetFolder + "pka-icon-unshaded.png";
+        const string projectileSpritePath = assetFolder + "pka-projectile-chronobolt.png";
+        const string inhandLeftPath = assetFolder + "inhand-left.png";
+        const string inhandRightPath = assetFolder + "inhand-right.png";
+        const string wieldedLeftPath = assetFolder + "wielded-inhand-left.png";
+        const string wieldedRightPath = assetFolder + "wielded-inhand-right.png";
+        const string muzzleFlashSpritePath = assetFolder + "pka-muzzle-bullet.png";
+        const string fireSoundPath = assetFolder + "pka-kinetic-accel.ogg";
         const string definitionPath = "Assets/Resources/WorldItems/ProtoKineticAcceleratorDefinition.asset";
         const string prefabPath = "Assets/Resources/WorldItems/ProtoKineticAccelerator.prefab";
 
-        foreach (string spritePath in new[] { baseSpritePath, glowSpritePath, projectileSpritePath })
-        {
-            AssetDatabase.ImportAsset(spritePath, ImportAssetOptions.ForceUpdate);
-            var importer = (TextureImporter)AssetImporter.GetAtPath(spritePath);
-            importer.textureType = TextureImporterType.Sprite;
-            importer.spriteImportMode = SpriteImportMode.Single;
-            importer.spritePixelsPerUnit = 32;
-            importer.mipmapEnabled = false;
-            importer.filterMode = FilterMode.Point;
-            importer.textureCompression = TextureImporterCompression.Uncompressed;
-            importer.SaveAndReimport();
-        }
+        foreach (string spritePath in new[] { baseSpritePath, glowSpritePath, projectileSpritePath, muzzleFlashSpritePath })
+            ConfigureSingleSprite(spritePath);
+        ConfigureAudioClip(fireSoundPath);
+        ConfigureDirectionalSheet(inhandLeftPath, "inhand-left");
+        ConfigureDirectionalSheet(inhandRightPath, "inhand-right");
+        ConfigureDirectionalSheet(wieldedLeftPath, "wielded-inhand-left");
+        ConfigureDirectionalSheet(wieldedRightPath, "wielded-inhand-right");
 
         var baseSprite = AssetDatabase.LoadAssetAtPath<Sprite>(baseSpritePath);
         var glowSprite = AssetDatabase.LoadAssetAtPath<Sprite>(glowSpritePath);
         var projectileSprite = AssetDatabase.LoadAssetAtPath<Sprite>(projectileSpritePath);
+        var muzzleFlashSprite = AssetDatabase.LoadAssetAtPath<Sprite>(muzzleFlashSpritePath);
+        var fireSound = AssetDatabase.LoadAssetAtPath<AudioClip>(fireSoundPath);
         var definition = MakeItem(definitionPath, "Proto-kinetic accelerator", new Vector2Int(3, 2), null);
         var definitionData = new SerializedObject(definition);
         definitionData.FindProperty("itemIcon").objectReferenceValue = baseSprite;
@@ -205,11 +209,104 @@ public static class InventorySandboxSetup
         rangedData.FindProperty("projectileSpeed").floatValue = 12f;
         rangedData.FindProperty("glowSprite").objectReferenceValue = glowSprite;
         rangedData.FindProperty("projectileSprite").objectReferenceValue = projectileSprite;
+        rangedData.FindProperty("supportsTwoHandedUse").boolValue = true;
+        rangedData.FindProperty("oneHandedSpreadDegrees").floatValue = 12f;
+        rangedData.FindProperty("wieldedSpreadDegrees").floatValue = 1f;
+        AssignSprites(rangedData.FindProperty("oneHandedLeftSprites"), LoadDirectionalSprites(inhandLeftPath));
+        AssignSprites(rangedData.FindProperty("oneHandedRightSprites"), LoadDirectionalSprites(inhandRightPath));
+        AssignSprites(rangedData.FindProperty("wieldedLeftSprites"), LoadDirectionalSprites(wieldedLeftPath));
+        AssignSprites(rangedData.FindProperty("wieldedRightSprites"), LoadDirectionalSprites(wieldedRightPath));
+        rangedData.FindProperty("muzzleFlashSprite").objectReferenceValue = muzzleFlashSprite;
+        rangedData.FindProperty("fireSound").objectReferenceValue = fireSound;
         rangedData.ApplyModifiedPropertiesWithoutUndo();
         PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
         Object.DestroyImmediate(root);
         AssetDatabase.SaveAssets();
         Debug.Log("PKA_SETUP_PASS");
+    }
+
+    static void ConfigureSingleSprite(string path)
+    {
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = 32;
+        importer.mipmapEnabled = false;
+        importer.filterMode = FilterMode.Point;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
+        importer.SaveAndReimport();
+    }
+
+    // Same import shape as the project's existing SS14 gun sound (punch3.ogg): decompress on load,
+    // Vorbis 100%, 44.1 kHz preserved, single channel kept from the source file.
+    static void ConfigureAudioClip(string path)
+    {
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        var importer = (AudioImporter)AssetImporter.GetAtPath(path);
+        var settings = importer.defaultSampleSettings;
+        settings.loadType = AudioClipLoadType.DecompressOnLoad;
+        settings.sampleRateSetting = AudioSampleRateSetting.PreserveSampleRate;
+        settings.sampleRateOverride = 44100;
+        settings.compressionFormat = AudioCompressionFormat.Vorbis;
+        settings.quality = 1f;
+        settings.preloadAudioData = false;
+        importer.defaultSampleSettings = settings;
+        importer.forceToMono = false;
+        importer.loadInBackground = false;
+        importer.ambisonic = false;
+        importer.SaveAndReimport();
+    }
+
+    static void ConfigureDirectionalSheet(string path, string name)
+    {
+        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Multiple;
+        importer.spritePixelsPerUnit = 32;
+        importer.mipmapEnabled = false;
+        importer.filterMode = FilterMode.Point;
+        importer.textureCompression = TextureImporterCompression.Uncompressed;
+        importer.spritesheet = new[]
+        {
+            DirectionalSprite(name + "-south", 0, 32),
+            DirectionalSprite(name + "-north", 32, 32),
+            DirectionalSprite(name + "-east", 0, 0),
+            DirectionalSprite(name + "-west", 32, 0)
+        };
+        importer.SaveAndReimport();
+    }
+
+    static SpriteMetaData DirectionalSprite(string name, int x, int y)
+    {
+        return new SpriteMetaData
+        {
+            name = name,
+            rect = new Rect(x, y, 32, 32),
+            alignment = (int)SpriteAlignment.Center,
+            pivot = new Vector2(.5f, .5f)
+        };
+    }
+
+    static Sprite[] LoadDirectionalSprites(string path)
+    {
+        var sprites = new Sprite[4];
+        foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(path))
+        {
+            if (asset is not Sprite sprite) continue;
+            if (sprite.name.EndsWith("-south")) sprites[0] = sprite;
+            else if (sprite.name.EndsWith("-north")) sprites[1] = sprite;
+            else if (sprite.name.EndsWith("-east")) sprites[2] = sprite;
+            else if (sprite.name.EndsWith("-west")) sprites[3] = sprite;
+        }
+        return sprites;
+    }
+
+    static void AssignSprites(SerializedProperty property, Sprite[] sprites)
+    {
+        property.arraySize = sprites.Length;
+        for (int i = 0; i < sprites.Length; i++) property.GetArrayElementAtIndex(i).objectReferenceValue = sprites[i];
     }
 
     static ItemDefinition MakeItem(string path, string name, Vector2Int dimensions, Vector2Int[] footprint)

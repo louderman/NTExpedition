@@ -8,19 +8,56 @@ public class HandSystem : MonoBehaviour
     public HandSlot CurrentHandSlot;
     public event System.Action<HandSlot> HandChanged;
     public event System.Action<HandSlot, ItemComponent> HeldItemChanged;
+    public event System.Action<ItemComponent, bool> WieldChanged;
     [SerializeField] float pickupRange = 1.5f;
     [SerializeField] float throwSpeed = 8f;
     [SerializeField] float throwDistance = 4f;
     ItemComponent leftItem, rightItem, hovered;
+    ItemComponent wieldedItem;
+    HandSlot reservedHand;
+    bool hasWieldReservation;
     PlayerMovement movement;
     GameObject outlineRoot;
     SpriteRenderer[] outlineSprites;
     Material outlineMaterial;
     public ItemComponent HoveredItem => hovered;
+    public ItemComponent WieldedItem => hasWieldReservation ? wieldedItem : null;
     public bool HoverInRange { get; private set; }
 
     void Awake() { movement = GetComponent<PlayerMovement>(); }
     public ItemComponent HeldItem(HandSlot hand) => hand == HandSlot.Left ? leftItem : rightItem;
+    public bool IsHandReserved(HandSlot hand) => hasWieldReservation && reservedHand == hand;
+    public bool IsTwoHandWielded(ItemComponent item) => hasWieldReservation && item != null && wieldedItem == item;
+    public HandSlot OtherHand(HandSlot hand) => hand == HandSlot.Left ? HandSlot.Right : HandSlot.Left;
+
+    public bool TryWieldActiveItem(ItemComponent item)
+    {
+        if (item == null || item != HeldItem(CurrentHandSlot)) return false;
+        if (IsTwoHandWielded(item)) return true;
+        var offhand = OtherHand(CurrentHandSlot);
+        if (hasWieldReservation || HeldItem(offhand) != null) return false;
+        wieldedItem = item;
+        reservedHand = offhand;
+        hasWieldReservation = true;
+        WieldChanged?.Invoke(item, true);
+        return true;
+    }
+
+    public bool TryUnwield(ItemComponent item)
+    {
+        if (!IsTwoHandWielded(item)) return false;
+        ClearWieldReservation();
+        return true;
+    }
+
+    void ClearWieldReservation()
+    {
+        if (!hasWieldReservation) return;
+        var item = wieldedItem;
+        wieldedItem = null;
+        hasWieldReservation = false;
+        WieldChanged?.Invoke(item, false);
+    }
     bool IsInRange(ItemComponent item)
     {
         var collider = item == null ? null : item.GetComponent<Collider2D>();
@@ -28,7 +65,7 @@ public class HandSystem : MonoBehaviour
     }
     public bool TryPickup(ItemComponent item)
     {
-        if (Time.timeScale == 0 || (movement != null && movement.combatMode) || item == null || item.Definition == null || !item.gameObject.activeInHierarchy || item.Container != null || HeldItem(CurrentHandSlot) != null || !IsInRange(item)) return false;
+        if (Time.timeScale == 0 || (movement != null && movement.combatMode) || item == null || item.Definition == null || !item.gameObject.activeInHierarchy || item.Container != null || HeldItem(CurrentHandSlot) != null || IsHandReserved(CurrentHandSlot) || !IsInRange(item)) return false;
         var flight = item.GetComponent<ItemThrow>();
         if (flight != null && flight.IsMoving) return false;
         if (CurrentHandSlot == HandSlot.Left) leftItem = item; else rightItem = item;
@@ -42,6 +79,7 @@ public class HandSystem : MonoBehaviour
     {
         var item = HeldItem(CurrentHandSlot);
         if (Time.timeScale == 0 || item == null) return false;
+        TryUnwield(item);
         Vector2 direction = Vector2.down;
         if (throwing && Camera.main != null)
         {
@@ -66,12 +104,11 @@ public class HandSystem : MonoBehaviour
     {
         if (destination == CurrentHandSlot) return true;
         var source = CurrentHandSlot;
+        if (IsHandReserved(source) || IsHandReserved(destination)) return false;
         var sourceItem = HeldItem(source);
+        if (IsTwoHandWielded(sourceItem)) TryUnwield(sourceItem);
         var destinationItem = HeldItem(destination);
-        if (sourceItem != null)
-        {
-            SetHeldItems(source, destinationItem, destination, sourceItem);
-        }
+        if (sourceItem != null) SetHeldItems(source, destinationItem, destination, sourceItem);
         SetActiveHand(destination);
         return true;
     }
@@ -79,6 +116,7 @@ public class HandSystem : MonoBehaviour
     {
         var item = HeldItem(CurrentHandSlot);
         if (container == null || item == null || !container.TryAutoPlace(item)) return false;
+        TryUnwield(item);
         var source = CurrentHandSlot;
         SetHeldItem(source, null);
         item.transform.SetParent(container.transform, true);
@@ -126,10 +164,12 @@ public class HandSystem : MonoBehaviour
     }
     public void SwapHands()
     {
-        SetActiveHand(CurrentHandSlot == HandSlot.Left ? HandSlot.Right : HandSlot.Left);
+        TryUnwield(HeldItem(CurrentHandSlot));
+        SetActiveHand(OtherHand(CurrentHandSlot));
     }
     void Update()
     {
+        if (hasWieldReservation && wieldedItem == null) ClearWieldReservation();
         var mouse = Mouse.current;
         if (Time.timeScale == 0 || mouse == null || Camera.main == null) { ClearHover(); return; }
         Vector2 screen = mouse.position.ReadValue();
@@ -186,6 +226,6 @@ public class HandSystem : MonoBehaviour
         if (outlineRoot != null) Destroy(outlineRoot);
         outlineRoot = null; outlineSprites = null; hovered = null; HoverInRange = false;
     }
-    void OnDisable() { ClearHover(); }
+    void OnDisable() { ClearHover(); ClearWieldReservation(); }
     void OnDestroy() { if (outlineMaterial != null) Destroy(outlineMaterial); }
 }

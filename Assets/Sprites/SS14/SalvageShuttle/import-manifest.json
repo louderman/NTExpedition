@@ -1,0 +1,266 @@
+{
+ "createdBy": "SalvageShuttle recreation (kanban t_282d2507)",
+ "sourceRevision": "fc74013522ef2ee1c5049c986748c9f0866fb4c3",
+ "settings": {
+  "pixelsPerUnit": 32,
+  "filter": "Point",
+  "compression": "Uncompressed",
+  "mipmaps": false,
+  "slice": "32x32 grid, left-to-right top-to-bottom",
+  "note": "cellIndex == RsiDirection for 4-direction states"
+ },
+ "sprites": [
+  {
+   "dest": "Walls/Reinforced/full.png",
+   "source": "_NF/Structures/Walls/solid.rsi/full.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid0.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid0.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid1.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid1.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid2.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid2.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid3.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid3.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid4.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid4.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid5.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid5.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid6.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid6.png"
+  },
+  {
+   "dest": "Walls/Reinforced/solid7.png",
+   "source": "_NF/Structures/Walls/solid.rsi/solid7.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over0.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over0.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over1.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over1.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over2.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over2.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over3.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over3.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over4.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over4.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over5.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over5.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over6.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over6.png"
+  },
+  {
+   "dest": "Walls/Reinforced/reinf_over7.png",
+   "source": "_NF/Structures/Walls/solid.rsi/reinf_over7.png"
+  },
+  {
+   "dest": "Walls/ReinforcedDiagonal/state0.png",
+   "source": "_NF/Structures/Walls/reinforced_diagonal.rsi/state0.png"
+  },
+  {
+   "dest": "Walls/ReinforcedDiagonal/state1.png",
+   "source": "_NF/Structures/Walls/reinforced_diagonal.rsi/state1.png"
+  },
+  {
+   "dest": "Walls/ReinforcedDiagonal/state2.png",
+   "source": "_NF/Structures/Walls/reinforced_diagonal.rsi/state2.png"
+  },
+  {
+   "dest": "Walls/ReinforcedDiagonal/state3.png",
+   "source": "_NF/Structures/Walls/reinforced_diagonal.rsi/state3.png"
+  },
+  {
+   "dest": "Walls/ReinforcedDiagonal/state4.png",
+   "source": "_NF/Structures/Walls/reinforced_diagonal.rsi/state4.png"
+  },
+  {
+   "dest": "Windows/Reinforced/full.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/full.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow0.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow0.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow1.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow1.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow2.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow2.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow3.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow3.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow4.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow4.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow5.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow5.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow6.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow6.png"
+  },
+  {
+   "dest": "Windows/Reinforced/rwindow7.png",
+   "source": "_NF/Structures/Windows/reinforced_window.rsi/rwindow7.png"
+  },
+  {
+   "dest": "Windows/ReinforcedDiagonal/state0.png",
+   "source": "_NF/Structures/Windows/reinforced_window_diagonal.rsi/state0.png"
+  },
+  {
+   "dest": "Windows/ReinforcedDiagonal/state1.png",
+   "source": "_NF/Structures/Windows/reinforced_window_diagonal.rsi/state1.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_0.png",
+   "source": "Structures/catwalk.rsi/catwalk_0.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_1.png",
+   "source": "Structures/catwalk.rsi/catwalk_1.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_2.png",
+   "source": "Structures/catwalk.rsi/catwalk_2.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_3.png",
+   "source": "Structures/catwalk.rsi/catwalk_3.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_4.png",
+   "source": "Structures/catwalk.rsi/catwalk_4.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_5.png",
+   "source": "Structures/catwalk.rsi/catwalk_5.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_6.png",
+   "source": "Structures/catwalk.rsi/catwalk_6.png"
+  },
+  {
+   "dest": "Catwalk/catwalk_7.png",
+   "source": "Structures/catwalk.rsi/catwalk_7.png"
+  },
+  {
+   "dest": "Grilles/grille.png",
+   "source": "Structures/Walls/grille.rsi/grille.png"
+  },
+  {
+   "dest": "Grilles/grille_diagonal.png",
+   "source": "Structures/Walls/grille.rsi/grille_diagonal.png"
+  },
+  {
+   "dest": "Doors/GlassShuttle/closed.png",
+   "source": "Structures/Doors/Airlocks/Glass/shuttle.rsi/closed.png"
+  },
+  {
+   "dest": "Doors/Engineering/closed.png",
+   "source": "Structures/Doors/Airlocks/Standard/engineering.rsi/closed.png"
+  },
+  {
+   "dest": "Doors/Salvage/closed.png",
+   "source": "Structures/Doors/Airlocks/Standard/salvage.rsi/closed.png"
+  },
+  {
+   "dest": "Doors/SecretDoorReinforced/closed.png",
+   "source": "_NF/Structures/Doors/secret_door_reinforced.rsi/closed.png"
+  },
+  {
+   "dest": "Shuttles/Thruster/base.png",
+   "source": "_NF/Structures/Shuttles/thruster.rsi/base.png"
+  },
+  {
+   "dest": "Shuttles/Gyroscope/base.png",
+   "source": "_NF/Structures/Shuttles/gyroscope.rsi/base.png"
+  },
+  {
+   "dest": "Storage/Canister/nitrogen.png",
+   "source": "_NF/Structures/Storage/canister.rsi/nitrogen.png"
+  },
+  {
+   "dest": "Storage/Canister/oxygen.png",
+   "source": "_NF/Structures/Storage/canister.rsi/oxygen.png"
+  },
+  {
+   "dest": "Storage/Closet/generic.png",
+   "source": "Structures/Storage/closet.rsi/generic.png"
+  },
+  {
+   "dest": "Storage/Closet/generic_door.png",
+   "source": "Structures/Storage/closet.rsi/generic_door.png"
+  },
+  {
+   "dest": "Power/PortableGenerator/portgen1.png",
+   "source": "Structures/Power/Generation/portable_generator.rsi/portgen1.png"
+  },
+  {
+   "dest": "Power/SMES/smes.png",
+   "source": "Structures/Power/smes.rsi/smes.png"
+  },
+  {
+   "dest": "Power/SMES/smes-oc0.png",
+   "source": "Structures/Power/smes.rsi/smes-oc0.png"
+  },
+  {
+   "dest": "Power/SMES/smes-op1.png",
+   "source": "Structures/Power/smes.rsi/smes-op1.png"
+  },
+  {
+   "dest": "Power/Substation/substation.png",
+   "source": "Structures/Power/substation.rsi/substation.png"
+  },
+  {
+   "dest": "Tiles/lattice.png",
+   "source": "Tiles/lattice.png"
+  },
+  {
+   "dest": "Tiles/asteroid_tile.png",
+   "source": "Tiles/Asteroid/asteroid_tile.png"
+  },
+  {
+   "dest": "Tiles/Concrete/grayconcrete.png",
+   "source": "Tiles/Planet/Concrete/grayconcrete.png"
+  },
+  {
+   "dest": "Tiles/Concrete/concrete.png",
+   "source": "Tiles/Planet/Concrete/concrete.png"
+  },
+  {
+   "dest": "Tiles/Concrete/oldconcrete.png",
+   "source": "Tiles/Planet/Concrete/oldconcrete.png"
+  }
+ ]
+}

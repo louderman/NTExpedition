@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private ActionManager actionManager;
     private enum Facing { South, North, East, West };
     private List<Facing> faceList = new();
+    private int facingIndex;
     public Vector2 currentlyFacing = new(0f, 0f);
     public Boolean combatMode = false; 
     public Vector2 moveVelocity;
@@ -120,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
     void ApplyFacing(int index)
     {
         index = Mathf.Clamp(index, 0, suitSprites.Length - 1);
+        facingIndex = index;
         suitRenderer.sprite = suitSprites[index];
         helmetRenderer.sprite = helmetSprites[Mathf.Clamp(index, 0, helmetSprites.Length - 1)];
         if (stateController != null)
@@ -128,6 +130,14 @@ public class PlayerMovement : MonoBehaviour
             helmetRenderer.color = stateController.HelmetTint;
         }
     }
+
+    public Vector2 FacingDirection => facingIndex switch
+    {
+        (int)Facing.North => Vector2.up,
+        (int)Facing.East => Vector2.right,
+        (int)Facing.West => Vector2.left,
+        _ => Vector2.down
+    };
 
     // Publishes the current facing to a ScriptableObject so a state machine action asset (which
     // cannot reference a scene component) can aim the ranged attack.

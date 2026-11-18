@@ -19,7 +19,8 @@ public class ProtoKineticAcceleratorSpawner : MonoBehaviour
 
     static void Spawn(Scene scene)
     {
-        if (scene.name != "HomeShip" || GameObject.Find("ProtoKineticAccelerator") != null) return;
+        // A loadout arriving through a portal hop already carries the accelerator: never hand out a second one.
+        if (scene.name != "HomeShip" || GameObject.Find("ProtoKineticAccelerator") != null || PlayerLoadoutCarry.PendingCarry) return;
         var hands = UnityEngine.Object.FindFirstObjectByType<HandSystem>();
         var prefab = Resources.Load<GameObject>("WorldItems/ProtoKineticAccelerator");
         if (hands == null || prefab == null)
@@ -85,8 +86,15 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
         Check(hands.HeldItem(hands.CurrentHandSlot) == pka && !pka.gameObject.activeSelf,
             "starter PKA begins in the active left hand");
         Check(ranged != null && Approximately(ranged.Damage, 5f) && Approximately(ranged.FireCooldown, .65f)
-            && Approximately(ranged.Range, 8f) && Approximately(ranged.ProjectileSpeed, 12f),
-            "PKA exposes tuned 5 damage, 0.65 second cooldown, 8 range and 12 speed");
+            && Approximately(ranged.Range, 8f) && Approximately(ranged.ProjectileSpeed, 12f)
+            && ranged.SupportsTwoHandedUse && ranged.OneHandedSpreadDegrees > ranged.WieldedSpreadDegrees,
+            "PKA exposes ranged tuning and improved two-handed accuracy");
+        Check(ranged != null
+            && HasAllHeldSprites(ranged, false, HandSystem.HandSlot.Left)
+            && HasAllHeldSprites(ranged, false, HandSystem.HandSlot.Right)
+            && HasAllHeldSprites(ranged, true, HandSystem.HandSlot.Left)
+            && HasAllHeldSprites(ranged, true, HandSystem.HandSlot.Right),
+            "PKA provides one-handed and wielded directional art for both hands");
         Check(ranged != null && ranged.ProjectileSprite != null
             && ranged.ProjectileSprite.texture.name.IndexOf("chronobolt", StringComparison.OrdinalIgnoreCase) >= 0
             && ranged.ProjectileSprite.texture.width == 32 && ranged.ProjectileSprite.texture.height == 32
@@ -98,27 +106,112 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
             "starter placement preserves the existing bat and water bottle");
 
         Vector2 player = hands.transform.position;
-        yield return PointAt(player + Vector2.left * 4f);
+        Vector2[] facingOffsets = { Vector2.down, Vector2.up, Vector2.right, Vector2.left };
+        Key[] facingKeys = { Key.S, Key.W, Key.D, Key.A };
+        var facings = (RangedWeapon.HeldDirection[])Enum.GetValues(typeof(RangedWeapon.HeldDirection));
+        for (int i = 0; i < facings.Length; i++)
+        {
+            yield return PressKey(facingKeys[i]);
+            yield return PointAt(player - facingOffsets[i] * 4f);
+            Check(HeldVisualMatches(ranged, false, HandSystem.HandSlot.Left, facings[i]),
+                "out-of-combat PKA follows player-facing " + facings[i] + " instead of the cursor");
+        }
+        player = hands.transform.position;
         Check(controller.HasActiveRangedWeapon && GameObject.Find("Held ranged weapon") != null,
-            "active PKA creates a cursor-facing held visual");
+            "active PKA creates a fixed directional held visual");
         yield return Capture("pka-starter.png", .05f);
+
+        // Z is the two-hand key: it toggles the wielded state by itself, out of combat, before combat mode is on.
+        yield return PressKey(Key.Z);
+        Check(hands.IsTwoHandWielded(pka) && hands.IsHandReserved(HandSystem.HandSlot.Right)
+            && HeldVisualMatches(ranged, true, HandSystem.HandSlot.Left, facings[3]),
+            "Z two-hands the PKA out of combat, reserving the offhand and switching to wielded art");
+        yield return PressKey(Key.Z);
+        Check(!hands.IsTwoHandWielded(pka) && !hands.IsHandReserved(HandSystem.HandSlot.Right)
+            && HeldVisualMatches(ranged, false, HandSystem.HandSlot.Left, facings[3]),
+            "Z again releases the PKA back to its one-handed art");
+
+        var randomState = UnityEngine.Random.state;
+        UnityEngine.Random.InitState(8128);
+        Vector2 oneHandedDirection = ranged.ApplySpread(Vector2.left, false);
+        UnityEngine.Random.InitState(8128);
+        Vector2 wieldedDirection = ranged.ApplySpread(Vector2.left, true);
+        UnityEngine.Random.state = randomState;
+        Check(Vector2.Angle(Vector2.left, oneHandedDirection) > Vector2.Angle(Vector2.left, wieldedDirection),
+            "wielded spread is deterministically tighter than one-handed spread");
 
         yield return PressKey(Key.Digit1);
         Check(movement.combatMode, "combat mode toggles through PlayerInput");
+        yield return TapSecondary();
+        Check(hands.IsTwoHandWielded(pka) && hands.IsHandReserved(HandSystem.HandSlot.Right),
+            "secondary attack wields the PKA and reserves the empty offhand");
+        for (int i = 0; i < facings.Length; i++)
+        {
+            yield return PointAt(player + facingOffsets[i] * 4f);
+            Check(HeldVisualMatches(ranged, true, HandSystem.HandSlot.Left, facings[i]),
+                "wielded PKA uses only the owning hand's fixed " + facings[i] + " wielded art");
+        }
+        Check(!hands.TryMoveActiveItemTo(HandSystem.HandSlot.Right)
+            && hands.HeldItem(HandSystem.HandSlot.Left) == pka
+            && hands.HeldItem(HandSystem.HandSlot.Right) == null,
+            "reserved offhand rejects item transfer without duplicating the PKA");
         // Fire into the open room; the HomeShip's east wall is close to the spawn point.
         var target = MakeTarget("PKA damage target", player + Vector2.left * 3.4f, 50);
+        Vector2 expectedDirection = ((Vector2)target.transform.position - (Vector2)hands.transform.position).normalized;
         yield return PointAt(target.transform.position);
         yield return TapPrimary();
         var bolt = GameObject.Find("Kinetic bolt");
         var boltRenderer = bolt != null ? bolt.GetComponent<SpriteRenderer>() : null;
-        Check(ranged.ShotsFired == 1 && ranged.LastShotDirection.x < -.99f
+        Check(ranged.ShotsFired == 1
+            && Vector2.Angle(expectedDirection, ranged.LastShotDirection) <= ranged.WieldedSpreadDegrees + .01f
             && boltRenderer != null && boltRenderer.sprite == ranged.ProjectileSprite
-            && Mathf.Abs(Mathf.DeltaAngle(bolt.transform.eulerAngles.z, -90f)) < .1f,
-            "primary fire launches one visible bolt accurately toward cursor");
+            && Mathf.Abs(Mathf.DeltaAngle(bolt.transform.eulerAngles.z,
+                Mathf.Atan2(ranged.LastShotDirection.y, ranged.LastShotDirection.x) * Mathf.Rad2Deg + 90f)) < .1f,
+            "wielded primary fire launches one visible bolt within its accurate spread");
+        var muzzle = (Vector2)hands.transform.position + ranged.LastShotDirection * .65f;
+        var flash = GameObject.Find(MuzzleFlashEffect.ObjectName);
+        var flashRenderer = flash != null ? flash.GetComponent<SpriteRenderer>() : null;
+        var gunshot = GameObject.Find(FiringSoundEffect.ObjectName);
+        var gunshotSource = gunshot != null ? gunshot.GetComponent<AudioSource>() : null;
+        var pcmProbe = gunshot != null ? gunshot.AddComponent<FiringSoundPcmProbe>() : null;
+        Check(ranged.MuzzleFlashSprite != null && ranged.MuzzleFlashSprite.texture != null
+            && ranged.MuzzleFlashSprite.texture.name.Contains("pka-muzzle-bullet")
+            && ranged.MuzzleFlashSprite.texture.width == 32 && ranged.MuzzleFlashSprite.texture.height == 32
+            && Approximately(ranged.MuzzleFlashSprite.pixelsPerUnit, 32f)
+            && ranged.MuzzleFlashSprite.texture.filterMode == FilterMode.Point
+            && ranged.MuzzleFlashSprite.texture.mipmapCount == 1,
+            "PKA uses Frontier's exact muzzle_bullet sprite (32 px, 32 PPU, point, no mipmaps)");
+        Check(flash != null && flashRenderer != null && flashRenderer.sprite == ranged.MuzzleFlashSprite
+            && flashRenderer.enabled && flashRenderer.sortingOrder == MuzzleFlashEffect.SortingOrder
+            && Vector2.Dot((Vector2)flash.transform.position - (Vector2)hands.transform.position,
+                ranged.LastShotDirection) > .5f
+            && Vector2.Distance(flash.transform.position, muzzle) < .05f
+            && Vector2.Dot(flash.transform.right, ranged.LastShotDirection.normalized) > .999f,
+            "firing spawns the muzzle flash at the muzzle, aimed along the fire direction, drawn below mobs");
+        Check(ranged.FireSound != null && ranged.FireSound.name == "pka-kinetic-accel"
+            && ranged.FireSound.channels == 1 && ranged.FireSound.frequency == 44100
+            && Mathf.Abs(ranged.FireSound.length - 1.548866f) < .01f,
+            "PKA wires Frontier's exact kinetic_accel gunshot clip (mono 44.1 kHz, 1.55 s)");
+        Check(gunshotSource != null && gunshotSource.clip == ranged.FireSound && gunshotSource.isPlaying
+            && gunshotSource.spatialBlend == 1f && gunshotSource.rolloffMode == AudioRolloffMode.Logarithmic
+            && Approximately(gunshotSource.minDistance, FiringSoundEffect.MinDistance)
+            && Approximately(gunshotSource.maxDistance, FiringSoundEffect.MaxDistance)
+            && Approximately(gunshotSource.dopplerLevel, 0f)
+            && Vector2.Distance(gunshot.transform.position, muzzle) < .05f,
+            "firing plays the gunshot as a positional 3D one-shot at the muzzle");
         yield return Capture("pka-firing.png", .07f);
         yield return TapPrimary();
         Check(ranged.ShotsFired == 1, "fire-rate cooldown blocks an immediate duplicate shot");
         yield return new WaitForSecondsRealtime(.35f);
+        Check(GameObject.Find(MuzzleFlashEffect.ObjectName) == null,
+            "muzzle flash despawns after its 0.4 s TimedDespawn-equivalent lifetime");
+        Check(pcmProbe != null && pcmProbe.callbackCount > 0 && pcmProbe.sampleCount > 0
+            && pcmProbe.peak > .01f,
+            "gunshot reaches the audio mixer as real PCM (callbacks=" + (pcmProbe != null ? pcmProbe.callbackCount : 0)
+            + ", samples=" + (pcmProbe != null ? pcmProbe.sampleCount : 0)
+            + ", peak=" + (pcmProbe != null ? pcmProbe.peak.ToString("F4") : "n/a")
+            + ", rms=" + (pcmProbe != null ? pcmProbe.rms.ToString("F4") : "n/a")
+            + ", deviceRate=" + (pcmProbe != null ? pcmProbe.sampleRate : 0) + ")");
         Check(Approximately(target.GetComponent<Health>().CurrentHP, 45f),
             "one real Health target takes exactly 5 low damage");
 
@@ -133,8 +226,9 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
 
         yield return PressKey(Key.X);
         Check(hands.HeldItem(hands.CurrentHandSlot) == null && !controller.HasActiveRangedWeapon
-            && GameObject.Find("Held ranged weapon") == null,
-            "switching to the empty hand hides and deactivates the PKA");
+            && GameObject.Find("Held ranged weapon") == null && !hands.IsTwoHandWielded(pka)
+            && !hands.IsHandReserved(HandSystem.HandSlot.Right),
+            "switching hands unwields the PKA, clears reservation and hides its visual");
         var unarmedTarget = MakeTarget("unarmed regression target", player + Vector2.up * .75f, 100);
         yield return PointAt(unarmedTarget.transform.position);
         yield return TapPrimary();
@@ -156,9 +250,56 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
         yield return PressKey(Key.X);
         Check(hands.HeldItem(hands.CurrentHandSlot) == pka && controller.HasActiveRangedWeapon,
             "switching back restores the same starter PKA without duplication");
+        yield return TapSecondary();
+        Check(!hands.IsTwoHandWielded(pka) && hands.HeldItem(HandSystem.HandSlot.Right) == bat,
+            "PKA cannot wield while the offhand contains another item");
+
+        yield return PressKey(Key.X);
+        yield return PressKey(Key.Digit1);
+        Check(hands.ReleaseActiveItem(false, mouse.position.ReadValue()) && bat.gameObject.activeSelf,
+            "releasing the offhand item makes it available for wielding");
+        yield return PressKey(Key.X);
+        yield return PressKey(Key.Digit1);
+        Check(hands.TryMoveActiveItemTo(HandSystem.HandSlot.Right)
+            && hands.HeldItem(HandSystem.HandSlot.Right) == pka
+            && hands.HeldItem(HandSystem.HandSlot.Left) == null,
+            "PKA transfers to the right hand without duplicate ownership");
+        for (int i = 0; i < facings.Length; i++)
+        {
+            yield return PointAt(player + facingOffsets[i] * 4f);
+            Check(HeldVisualMatches(ranged, false, HandSystem.HandSlot.Right, facings[i]),
+                "one-handed right PKA uses fixed " + facings[i] + " in-hand art");
+        }
+        yield return TapSecondary();
+        Check(hands.IsTwoHandWielded(pka) && hands.IsHandReserved(HandSystem.HandSlot.Left),
+            "right-hand PKA wield reserves the opposite offhand");
+        Check(hands.ReleaseActiveItem(false, mouse.position.ReadValue())
+            && !hands.IsTwoHandWielded(pka) && !hands.IsHandReserved(HandSystem.HandSlot.Left)
+            && hands.HeldItem(HandSystem.HandSlot.Right) == null && pka.gameObject.activeSelf,
+            "releasing a wielded PKA clears reservation and item ownership");
 
         Debug.Log(ok ? "PKA_COMBAT_PASS" : "PKA_COMBAT_FAIL");
         Application.Quit(ok ? 0 : 1);
+    }
+
+    bool HasAllHeldSprites(RangedWeapon ranged, bool wielded, HandSystem.HandSlot hand)
+    {
+        foreach (RangedWeapon.HeldDirection direction in Enum.GetValues(typeof(RangedWeapon.HeldDirection)))
+            if (ranged.HeldSprite(wielded, hand, direction) == null) return false;
+        return true;
+    }
+
+    bool HeldVisualMatches(RangedWeapon ranged, bool wielded, HandSystem.HandSlot owner,
+        RangedWeapon.HeldDirection direction)
+    {
+        var visual = GameObject.Find("Held ranged weapon");
+        if (visual == null || visual.transform.localPosition.sqrMagnitude > .0001f
+            || Quaternion.Angle(visual.transform.localRotation, Quaternion.identity) > .01f) return false;
+        var primary = visual.GetComponent<SpriteRenderer>();
+        int order = direction == RangedWeapon.HeldDirection.South ? 20 : 7;
+        return primary != null && primary.sortingOrder == order
+            && primary.sprite == ranged.HeldSprite(wielded, owner, direction)
+            && visual.transform.Find("Offhand layer") == null;
     }
 
     ItemComponent FindWorldItem(string itemName)
@@ -210,6 +351,15 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
     {
         Vector2 position = mouse.position.ReadValue();
         InputSystem.QueueStateEvent(mouse, new MouseState { position = position }.WithButton(MouseButton.Left));
+        yield return null;
+        InputSystem.QueueStateEvent(mouse, new MouseState { position = position });
+        yield return null;
+    }
+
+    IEnumerator TapSecondary()
+    {
+        Vector2 position = mouse.position.ReadValue();
+        InputSystem.QueueStateEvent(mouse, new MouseState { position = position }.WithButton(MouseButton.Right));
         yield return null;
         InputSystem.QueueStateEvent(mouse, new MouseState { position = position });
         yield return null;
