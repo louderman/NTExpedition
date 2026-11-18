@@ -628,7 +628,7 @@ public static class ProximityAirlockVerify
         {
             if (_body != null)
             {
-                _body.velocity = Vector2.zero;
+                _body.linearVelocity = Vector2.zero;
                 _body.angularVelocity = 0f;
             }
 
@@ -672,7 +672,7 @@ public static class ProximityAirlockVerify
                 t += Time.deltaTime;
                 if (_body != null)
                 {
-                    _body.velocity = Vector2.zero;
+                    _body.linearVelocity = Vector2.zero;
                 }
 
                 yield return null;

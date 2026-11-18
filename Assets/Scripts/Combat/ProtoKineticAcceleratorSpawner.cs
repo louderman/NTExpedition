@@ -155,8 +155,11 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
             && hands.HeldItem(HandSystem.HandSlot.Left) == pka
             && hands.HeldItem(HandSystem.HandSlot.Right) == null,
             "reserved offhand rejects item transfer without duplicating the PKA");
-        // Fire into the open room; the HomeShip's east wall is close to the spawn point.
-        var target = MakeTarget("PKA damage target", player + Vector2.left * 3.4f, 50);
+        // HomeShip's corridor west of the muzzle is clear only down to x = 1.0, where a 1x1
+        // non-trigger tile block (LockerSalvageSpecialist / WallReinforced) starts. Keep the
+        // probe well inside the open run between the muzzle (x 3.49) and that wall: offset 1.5
+        // puts the 0.45-wide target at x 2.64, 0.625 u in front of the bolt's spawn point.
+        var target = MakeTarget("PKA damage target", player + Vector2.left * 1.5f, 50);
         Vector2 expectedDirection = ((Vector2)target.transform.position - (Vector2)hands.transform.position).normalized;
         yield return PointAt(target.transform.position);
         yield return TapPrimary();
@@ -221,7 +224,8 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
             yield return TapPrimary();
             yield return new WaitForSecondsRealtime(.35f);
         }
-        Check(ranged.ShotsFired == 5 && Approximately(target.GetComponent<Health>().CurrentHP, 25f),
+        Check(ranged.ShotsFired == 5 && Approximately(target.GetComponent<Health>().CurrentHP, 25f)
+            && GameObject.Find("Kinetic bolt") == null,
             "five repeated shots fire without ammo, magazine or reload state");
 
         yield return PressKey(Key.X);
