@@ -6,6 +6,7 @@ public class InventorySandbox : MonoBehaviour
 {
     public InventoryContainer bag;
     [SerializeField] ItemDefinition[] startingItems;
+    [SerializeField] private bool centerOnScreen;
     ItemComponent dragging;
     int dragRotation;
     Vector2Int dragAnchor;
@@ -91,14 +92,28 @@ public class InventorySandbox : MonoBehaviour
     {
         Color previous = GUI.color; GUI.color = color; GUI.DrawTexture(r, Texture2D.whiteTexture); GUI.color = previous;
     }
+
     public static bool PointerOverStorage(Vector2 screenPosition)
     {
-        var panel = Object.FindFirstObjectByType<InventorySandbox>();
-        if (panel == null || !panel.isActiveAndEnabled || panel.bag == null) return false;
-        var dims = panel.bag.ContainerDimensions;
-        return new Rect(24, 70, dims.x * Cell + 32, dims.y * Cell + 24)
-            .Contains(new Vector2(screenPosition.x, Screen.height - screenPosition.y));
+        var panels = Object.FindObjectsByType<InventorySandbox>(FindObjectsSortMode.None);
+
+        Vector2 guiPosition = new Vector2(
+            screenPosition.x,
+            Screen.height - screenPosition.y
+        );
+
+        foreach (var panel in panels)
+        {
+            if (panel == null || !panel.isActiveAndEnabled || panel.bag == null)
+                continue;
+
+            if (panel.GetPanelRect().Contains(guiPosition))
+                return true;
+        }
+
+        return false;
     }
+
     void OnGUI()
     {
         if (bag == null) return;
@@ -107,7 +122,8 @@ public class InventorySandbox : MonoBehaviour
         float width = dimensions.x * Cell, height = dimensions.y * Cell;
 
         // A compact SS14-inspired floating storage, no per-cell buttons.
-        Rect panel = new Rect(24, 70, width + 32, height + 24);
+        //Rect panel = new Rect(24, 70, width + 32, height + 24);
+        Rect panel = GetPanelRect();
         Rect grid = new Rect(panel.x + 32, panel.y + 24, width, height);
         Event e = Event.current;
         if (e.type == EventType.MouseDown && e.button == 0 && panel.Contains(e.mousePosition)
@@ -207,5 +223,24 @@ public class InventorySandbox : MonoBehaviour
             var style = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 12, normal = { textColor = Color.white } };
             GUI.Label(r, item.Definition.ItemName, style);
         }
+    }
+
+    Rect GetPanelRect()
+    {
+        Vector2Int dimensions = bag.ContainerDimensions;
+        float width = dimensions.x * Cell + 32;
+        float height = dimensions.y * Cell + 24;
+
+        if (centerOnScreen)
+        {
+            return new Rect(
+                (Screen.width - width) / 2f,
+                (Screen.height - height) / 2f,
+                width,
+                height
+            );
+        }
+
+        return new Rect(24, 70, width, height);
     }
 }

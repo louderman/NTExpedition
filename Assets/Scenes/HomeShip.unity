@@ -565,6 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySandbox
   bag: {fileID: 140264501}
   startingItems: []
+  centerOnScreen: 1
 --- !u!114 &140264501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5885,6 +5886,7 @@ MonoBehaviour:
   bag: {fileID: 1716537366}
   startingItems:
   - {fileID: 11400000, guid: d143a12d34150e651b63a765dfe1a733, type: 2}
+  centerOnScreen: 0
 --- !u!114 &1716537366
 MonoBehaviour:
   m_ObjectHideFlags: 0
