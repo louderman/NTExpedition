@@ -50,7 +50,7 @@ public class MobDeath : MonoBehaviour
         mobMovement.enabled = false;
         mobBody.linearVelocity = new Vector2(0f, 0f);
         mobBody.simulated = false;
-        mobAnimator.enabled = false;
+        if (mobAnimator != null) mobAnimator.enabled = false;
         mobSprite.sprite = mobDeadSprite;
         if (huggerSpawner != null) huggerSpawner.RespawnHugger();
         Destroy(gameObject, 3f);

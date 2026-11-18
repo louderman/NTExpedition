@@ -25,6 +25,10 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private Tilemap navigationFloor;
     public bool IsAggroed { get; private set; }
     public bool IsLethal => lethal && !isStunned;
+    public bool CanAct => isActiveAndEnabled && !isStunned && !isRecoiling;
+    public Transform Target => protagObject != null ? protagObject.transform : null;
+    public bool HoldPosition { get; set; }
+    public event Action Interrupted;
     private GridPathfinder pathfinder;
     private Collider2D bodyCollider;
     private readonly List<Vector2> path = new();
@@ -57,6 +61,8 @@ public class MobMovement : MonoBehaviour
     }
     void Start()
     {
+        if (protagObject == null)
+            SetTarget(FindAnyObjectByType<ExpeditionerStateController>()?.gameObject);
         recoveryCoroutine = null;
         uprightRotation = mobRenderer.transform.localRotation;
     }
@@ -65,8 +71,14 @@ public class MobMovement : MonoBehaviour
     {
         protagObject = target;
         IsAggroed = false;
+        HoldPosition = false;
         path.Clear();
         nextPathTime = 0f;
+    }
+
+    public void FaceTarget()
+    {
+        if (Target != null) ProcessFacing(Target.position - transform.position);
     }
 
     void ProcessFacing(Vector3 toTarget)
@@ -140,6 +152,12 @@ public class MobMovement : MonoBehaviour
             mobBody.linearVelocity = Vector2.zero;
             return;
         }
+        if (HoldPosition)
+        {
+            mobBody.linearVelocity = Vector2.zero;
+            FaceTarget();
+            return;
+        }
 
         Vector2 position = bodyCollider.bounds.center;
         Vector2 size = bodyCollider.bounds.size;
@@ -184,6 +202,7 @@ public class MobMovement : MonoBehaviour
     public void OnKnockback(Vector2 impulse, float duration)
     {
         if (duration <= 0f) return;
+        Interrupted?.Invoke();
         if (recoilCoroutine != null) StopCoroutine(recoilCoroutine); // cancel the old expiry.
         isRecoiling = true; // prevent chase from erasing the impulse.
         mobBody.linearVelocity = Vector2.zero; // remove forward momentum before the small kick.
@@ -200,6 +219,7 @@ public class MobMovement : MonoBehaviour
 
     public void OnShove(Vector2 impulseVector, float shoveDuration)
     {
+        Interrupted?.Invoke();
         // probably will be expanded to include other things.
         // for now, only shove matters.
         mobBody.AddForce(impulseVector, ForceMode2D.Impulse);
