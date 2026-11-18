@@ -1,0 +1,22 @@
+/home/dan/.hermes/profiles/coder/cache/scratch/f3_compose.py:62: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  op = sum(1 for p in img.getdata() if p[3] > 8)
+/home/dan/.hermes/profiles/coder/cache/scratch/f3_compose.py:66: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  print("full opaque:", sum(1 for p in full.getdata() if p[3] > 8))
+/home/dan/.hermes/profiles/coder/cache/scratch/f3_compose.py:69: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  print(f"  reinf_over7 cell{d} opaque:", sum(1 for p in c.getdata() if p[3] > 8))
+/home/dan/.hermes/profiles/coder/cache/scratch/f3_compose.py:74: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  tot += sum(1 for p in cell_img(st, n, d).getdata() if p[3] > 8)
+A all-zero                   rots=(0, 0, 0, 0)           opaque= 1024 alphaMismatch=    0 meanRGBdiff=8.6
+B port -offset (CCW+)        rots=(0, -90, -180, -270)   opaque=  256 alphaMismatch=  768 meanRGBdiff=8.6
+C port sign-flipped (CW+)    rots=(0, 90, 180, 270)      opaque=  512 alphaMismatch=  512 meanRGBdiff=8.6
+full opaque: 1024
+  reinf_over7 cell0 opaque: 256
+  reinf_over7 cell1 opaque: 256
+  reinf_over7 cell2 opaque: 256
+  reinf_over7 cell3 opaque: 256
+  reinf_over0 4 cells total opaque: 1024
+  reinf_over3 4 cells total opaque: 1024
+  reinf_over7 4 cells total opaque: 1024
+  solid0 4 cells total opaque: 1056
+  solid3 4 cells total opaque: 1024
+  solid7 4 cells total opaque: 1024

@@ -180,7 +180,17 @@ public static class SalvageShuttleBake
     {
         EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
         Directory.CreateDirectory(RenderDir);
-        var assetPath = $"{RenderDir}/salvage_{tag}.png";
+        RenderCamera($"{RenderDir}/salvage_{tag}.png", center, orthoSize, w, h);
+    }
+
+    /// <summary>
+    /// Camera + RenderTexture capture to a png path. Assumes the scene to capture is already open -
+    /// it does NOT reload it, so callers can hide/show renderers in memory first.
+    /// </summary>
+    static void RenderCamera(string assetPath, Vector2 center, float orthoSize, int w, int h)
+    {
+        var dir = Path.GetDirectoryName(assetPath);
+        if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
 
         var camGo = new GameObject("__salvage_tmp_cam");
         var cam = camGo.AddComponent<Camera>();
@@ -217,5 +227,34 @@ public static class SalvageShuttleBake
         cam.targetTexture = null;
         UnityEngine.Object.DestroyImmediate(camGo);
         Debug.Log("[Salvage] wrote " + assetPath);
+    }
+
+    /// <summary>
+    /// Verification probe for the airlock floor: in the baked scene both interior airlock doors are
+    /// drawn closed, so an ordinary render hides the tiles behind them. This hides the door art,
+    /// captures the tiles underneath (where a missing floor shows up as background black), then
+    /// restores every renderer and never saves the scene.
+    /// </summary>
+    public static void RenderAirlockFloorProbe()
+    {
+        EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+        var doors = new[] { "AirlockEngineering#61", "AirlockSalvage#128" };
+        var found = new List<string>();
+        var hidden = new List<SpriteRenderer>();
+        foreach (var label in doors)
+        {
+            var go = GameObject.Find(label);
+            if (go == null) { Debug.LogWarning("[Salvage] floor probe: no GameObject '" + label + "'"); continue; }
+            found.Add(label);
+            foreach (var sr in go.GetComponentsInChildren<SpriteRenderer>(true))
+                if (sr.enabled) { sr.enabled = false; hidden.Add(sr); }
+        }
+
+        RenderCamera($"{RenderDir}/airlock/airlock_08_engineering_floor_probe.png", new Vector2(2.5f, -8.5f), 3f, 640, 640);
+        RenderCamera($"{RenderDir}/airlock/airlock_09_salvage_floor_probe.png", new Vector2(2.5f, 1.5f), 3f, 640, 640);
+
+        foreach (var sr in hidden) if (sr != null) sr.enabled = true;
+        Debug.Log($"[Salvage] airlock floor probe: door art hidden on [{string.Join(", ", found)}]; " +
+                  $"{hidden.Count} renderer(s) restored; 2 probe renders written");
     }
 }

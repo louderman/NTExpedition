@@ -1,5 +1,5 @@
 {
- "createdBy": "SalvageShuttle recreation (kanban t_282d2507); airlock open/opening/closing states added by proximity-airlock work (kanban t_daf91a57)",
+ "createdBy": "SalvageShuttle recreation (kanban t_282d2507)",
  "sourceRevision": "fc74013522ef2ee1c5049c986748c9f0866fb4c3",
  "settings": {
   "pixelsPerUnit": 32,
@@ -261,30 +261,6 @@
   {
    "dest": "Tiles/Concrete/oldconcrete.png",
    "source": "Tiles/Planet/Concrete/oldconcrete.png"
-  },
-  {
-   "dest": "Doors/Engineering/opening.png",
-   "source": "Structures/Doors/Airlocks/Standard/engineering.rsi/opening.png"
-  },
-  {
-   "dest": "Doors/Engineering/open.png",
-   "source": "Structures/Doors/Airlocks/Standard/engineering.rsi/open.png"
-  },
-  {
-   "dest": "Doors/Engineering/closing.png",
-   "source": "Structures/Doors/Airlocks/Standard/engineering.rsi/closing.png"
-  },
-  {
-   "dest": "Doors/Salvage/opening.png",
-   "source": "Structures/Doors/Airlocks/Standard/salvage.rsi/opening.png"
-  },
-  {
-   "dest": "Doors/Salvage/open.png",
-   "source": "Structures/Doors/Airlocks/Standard/salvage.rsi/open.png"
-  },
-  {
-   "dest": "Doors/Salvage/closing.png",
-   "source": "Structures/Doors/Airlocks/Standard/salvage.rsi/closing.png"
   }
  ]
 }

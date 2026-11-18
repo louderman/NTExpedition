@@ -95,6 +95,19 @@ public class WeaponController : MonoBehaviour
             UpdateFallbackRangedVisual(direction);
     }
 
+    // SS14 parity: two-handing the active ranged weapon is a hand state, not an attack, so it works
+    // outside combat mode too (LateUpdate picks the wielded art either way). Returns true when this
+    // input belonged to the wield system, so callers know not to fall through to another action.
+    public bool TryToggleTwoHandWield()
+    {
+        var item = ActiveItem;
+        var ranged = ActiveRangedWeapon;
+        if (handSystem == null || item == null || ranged == null || !ranged.SupportsTwoHandedUse) return false;
+        if (handSystem.IsTwoHandWielded(item)) handSystem.TryUnwield(item);
+        else handSystem.TryWieldActiveItem(item);
+        return true;
+    }
+
     public void Attack(AttackType attackType, AttackPower attackContext)
     {
         if (attackContext == AttackPower.CancelCharge)
@@ -110,12 +123,7 @@ public class WeaponController : MonoBehaviour
         {
             if (attackType == AttackType.SecondaryAttack)
             {
-                var item = ActiveItem;
-                bool changedWield = ranged.SupportsTwoHandedUse
-                    && (handSystem.IsTwoHandWielded(item)
-                        ? handSystem.TryUnwield(item)
-                        : handSystem.TryWieldActiveItem(item));
-                if (!changedWield) unarmedFallback?.ApplyInput(attackType, attackContext);
+                if (!TryToggleTwoHandWield()) unarmedFallback?.ApplyInput(attackType, attackContext);
                 return;
             }
             if (attackContext == AttackPower.BeginCharge) return;

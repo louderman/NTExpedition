@@ -19,7 +19,8 @@ public class ProtoKineticAcceleratorSpawner : MonoBehaviour
 
     static void Spawn(Scene scene)
     {
-        if (scene.name != "HomeShip" || GameObject.Find("ProtoKineticAccelerator") != null) return;
+        // A loadout arriving through a portal hop already carries the accelerator: never hand out a second one.
+        if (scene.name != "HomeShip" || GameObject.Find("ProtoKineticAccelerator") != null || PlayerLoadoutCarry.PendingCarry) return;
         var hands = UnityEngine.Object.FindFirstObjectByType<HandSystem>();
         var prefab = Resources.Load<GameObject>("WorldItems/ProtoKineticAccelerator");
         if (hands == null || prefab == null)
@@ -119,6 +120,16 @@ public class ProtoKineticAcceleratorTest : MonoBehaviour
         Check(controller.HasActiveRangedWeapon && GameObject.Find("Held ranged weapon") != null,
             "active PKA creates a fixed directional held visual");
         yield return Capture("pka-starter.png", .05f);
+
+        // Z is the two-hand key: it toggles the wielded state by itself, out of combat, before combat mode is on.
+        yield return PressKey(Key.Z);
+        Check(hands.IsTwoHandWielded(pka) && hands.IsHandReserved(HandSystem.HandSlot.Right)
+            && HeldVisualMatches(ranged, true, HandSystem.HandSlot.Left, facings[3]),
+            "Z two-hands the PKA out of combat, reserving the offhand and switching to wielded art");
+        yield return PressKey(Key.Z);
+        Check(!hands.IsTwoHandWielded(pka) && !hands.IsHandReserved(HandSystem.HandSlot.Right)
+            && HeldVisualMatches(ranged, false, HandSystem.HandSlot.Left, facings[3]),
+            "Z again releases the PKA back to its one-handed art");
 
         var randomState = UnityEngine.Random.state;
         UnityEngine.Random.InitState(8128);

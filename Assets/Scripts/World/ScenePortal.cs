@@ -47,6 +47,9 @@ public class ScenePortal : MonoBehaviour
         }
         travelling = true;
         Time.timeScale = 1f;
+        // Dan's rule: held + stowed items travel with the player; snapshot the loadout while this scene is alive.
+        PlayerLoadoutCarry.Capture(player != null ? player.GetComponent<HandSystem>() : null,
+            FindFirstObjectByType<InventoryContainer>());
         SceneManager.LoadSceneAsync(destinationScene, LoadSceneMode.Single);
     }
 }
