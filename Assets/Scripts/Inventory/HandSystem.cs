@@ -17,6 +17,8 @@ public class HandSystem : MonoBehaviour
     HandSlot reservedHand;
     bool hasWieldReservation;
     PlayerMovement movement;
+    // Resolved lazily: the drag system may be added after this component's Awake (see ActionManager.Awake).
+    ItemDragSystem dragSystem;
     GameObject outlineRoot;
     SpriteRenderer[] outlineSprites;
     Material outlineMaterial;
@@ -170,6 +172,7 @@ public class HandSystem : MonoBehaviour
     void Update()
     {
         if (hasWieldReservation && wieldedItem == null) ClearWieldReservation();
+        if (dragSystem == null) dragSystem = GetComponent<ItemDragSystem>();
         var mouse = Mouse.current;
         if (Time.timeScale == 0 || mouse == null || Camera.main == null) { ClearHover(); return; }
         Vector2 screen = mouse.position.ReadValue();
@@ -186,7 +189,11 @@ public class HandSystem : MonoBehaviour
             if (target == null || order > bestOrder) { target = item; bestOrder = order; }
         }
         SetHover(target);
-        if (mouse.leftButton.wasPressedThisFrame && target != null) TryPickup(target);
+        // Ctrl+left-click belongs to the drag system (SS14-style pulling), so a modifier click must not also
+        // stow the item in a hand; an item already being dragged is off-limits to the hands until it is let go.
+        bool dragging = dragSystem != null && dragSystem.IsDragging;
+        bool modifierHeld = Keyboard.current != null && (Keyboard.current.leftCtrlKey.isPressed || Keyboard.current.rightCtrlKey.isPressed);
+        if (mouse.leftButton.wasPressedThisFrame && target != null && !dragging && !modifierHeld) TryPickup(target);
     }
     void SetHover(ItemComponent item)
     {
