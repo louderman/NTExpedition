@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 // Dan's rule: whatever the player is holding - or has stowed in the ship's inventory panel - comes with them
 // through a portal hop. ScenePortal loads the destination with LoadSceneMode.Single, which destroys the
 // outgoing scene and every item in it, so the loadout is snapshotted (definition + prefab + which hand +
-// wielded state) before the load and rebuilt in the arriving scene.
+// wielded state) before the load and rebuilt in the arriving scene. The same applies to an item the player is
+// dragging (ItemDragSystem): it is in no hand and no container, so it is captured by CaptureDragged and
+// re-attached to the arriving scene's drag system.
 //
 // Design choice: the carry is general (driven by the item's own ItemDefinition/prefab, not hard-coded to the
 // accelerator). Held items are re-issued to the arriving player's hands; stowed items are re-placed in the
@@ -23,6 +25,7 @@ public static class PlayerLoadoutCarry
         public bool FromLeftHand;
         public bool Wielded;
         public bool FromStorage;
+        public bool FromDrag;
     }
 
     static readonly List<Record> inTransit = new List<Record>();
@@ -45,6 +48,21 @@ public static class PlayerLoadoutCarry
         }
         if (storage != null) added += CaptureStorage(storage);
         Debug.Log($"{LogPrefix} captured {added} item(s); {inTransit.Count} in transit");
+    }
+
+    // Dan's rule extended to dragging: a dragged item is in no hand and no container, so Capture above cannot
+    // see it. ScenePortal calls this right after Capture, while the item still belongs to the outgoing scene.
+    public static void CaptureDragged(ItemDragSystem dragger)
+    {
+        var item = dragger != null ? dragger.DraggedItem : null;
+        if (item == null || item.Definition == null) return;
+        inTransit.Add(new Record
+        {
+            DefinitionName = item.Definition.name,
+            PrefabPath = PrefabPathFor(item.Definition),
+            FromDrag = true,
+        });
+        Debug.Log($"{LogPrefix} captured dragged {item.name}; {inTransit.Count} in transit");
     }
 
     static int CaptureHeldItem(HandSystem hands, HandSystem.HandSlot slot)
@@ -119,6 +137,19 @@ public static class PlayerLoadoutCarry
         {
             var item = Instantiate(record, hands.transform.position);
             if (item == null) { remaining.Add(record); continue; }
+            if (record.FromDrag)
+            {
+                // Nothing holds a dragged item in the arriving scene, so it goes straight back to that
+                // scene's drag system; a scene without one simply keeps the item at the player's feet.
+                item.transform.position = hands.transform.position;
+                Physics2D.SyncTransforms();
+                var dragger = hands.GetComponent<ItemDragSystem>();
+                if (dragger == null) dragger = Object.FindFirstObjectByType<ItemDragSystem>();
+                if (dragger == null || !dragger.BeginDrag(item))
+                    Debug.LogWarning($"{LogPrefix} {item.name} could not be re-attached to a drag; left at the player's feet");
+                restored++;
+                continue;
+            }
             if (record.FromStorage)
             {
                 if (storage != null && storage.TryAutoPlace(item)) { restored++; continue; }

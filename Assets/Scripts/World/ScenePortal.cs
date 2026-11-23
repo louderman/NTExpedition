@@ -67,8 +67,10 @@ public class ScenePortal : MonoBehaviour
         travelling = true;
         Time.timeScale = 1f;
         // Dan's rule: held + stowed items travel with the player; snapshot the loadout while this scene is alive.
-        PlayerLoadoutCarry.Capture(player != null ? player.GetComponent<HandSystem>() : null,
-            FindFirstObjectByType<InventoryContainer>());
+        var hands = player != null ? player.GetComponent<HandSystem>() : null;
+        PlayerLoadoutCarry.Capture(hands, FindFirstObjectByType<InventoryContainer>());
+        // An item being dragged is neither held nor stowed, so it needs its own snapshot before the swap.
+        PlayerLoadoutCarry.CaptureDragged(player != null ? player.GetComponent<ItemDragSystem>() : null);
         SceneManager.LoadSceneAsync(destination, LoadSceneMode.Single);
     }
 }

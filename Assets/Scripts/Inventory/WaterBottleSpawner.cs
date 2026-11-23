@@ -28,6 +28,10 @@ public class WaterBottleSpawner : MonoBehaviour
             player.gameObject.AddComponent<WaterBottleReleaseTest>().Configure(player, component);
         if (Array.IndexOf(Environment.GetCommandLineArgs(), "--inventory-transfer-self-test") >= 0)
             player.gameObject.AddComponent<InventoryTransferTest>().Configure(player, component);
+        if (Array.IndexOf(Environment.GetCommandLineArgs(), "--drag-self-test") >= 0)
+            player.gameObject.AddComponent<ItemDragTest>().Configure(player, component);
+        if (Array.IndexOf(Environment.GetCommandLineArgs(), "--crate-loop-playtest") >= 0)
+            player.gameObject.AddComponent<CrateLoopPlaytest>().Configure(player, component);
     }
 }
 
