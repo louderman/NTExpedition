@@ -14,6 +14,16 @@ public class InventorySandbox : MonoBehaviour
     const float Gap = 0f;
     Texture2D tileTexture, pieceTexture, sidebarTop, sidebarMid, sidebarBottom, exitIcon;
     HandSystem handSystem;
+
+    // A crate storage window and the always-on sample panel both default to the same panel rect
+    // (24, 70), so while a crate window is open the sample panel used to draw on top of it and
+    // swallow the clicks that belonged to the crate grid. The crate window is modal: this panel
+    // neither draws nor handles pointer input while another storage window is open.
+    bool storageWindow;
+    static int openStorageWindows;
+    void Awake() { storageWindow = GetComponent<StorageCrate>() != null; }
+    void OnEnable() { if (storageWindow) openStorageWindows++; }
+    void OnDisable() { if (storageWindow) openStorageWindows--; }
     Texture2D LoadTexture(string name)
     {
         var texture = Resources.Load<Texture2D>("FrontierInventory/" + name);
@@ -117,6 +127,8 @@ public class InventorySandbox : MonoBehaviour
     void OnGUI()
     {
         if (bag == null) return;
+        // While an open crate storage window exists it owns the pointer and the screen space.
+        if (!storageWindow && openStorageWindows > 0) return;
 
         var dimensions = bag.ContainerDimensions;
         float width = dimensions.x * Cell, height = dimensions.y * Cell;

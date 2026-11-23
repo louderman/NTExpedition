@@ -1,0 +1,76 @@
+StorageCrate lid fix — evidence log (2026-11-19)
+Project: /home/dan/Documents/gamedesignlab/NTExpedition   Unity 6000.6.0f1
+Task: kanban t_8cc66f1e — "fix the crate sprite, its missing its lid"
+All changes LOCAL and UNCOMMITTED. No Unity editor launched, no build packaged.
+
+Changed paths
+  1. Assets/Scenes/HomeShip.unity                     (+3 serialized fields on the
+     StorageCrate MonoBehaviour &224699927; +1 child GameObject `CrateLid`
+     = GameObject &919100001 + Transform &919100002 + SpriteRenderer &919100003;
+     crate transform &224699932 m_Children now lists - {fileID: 919100002})
+  2. Assets/Scripts/Inventory/StorageCrate.cs         (+3 serialized lid fields, +SetLidOpen,
+     SetOpen now swaps the lid state, Awake normalises the lid to closed)
+  3. tools/crate-lid-fix-diagnosis.md                 (cause + evidence)
+  4. tools/crate-lid-fix-evidence.txt                 (this file)
+  5. tools/crate-lid-fix-scene_check.py               (re-runnable scene integrity check)
+  6. tools/crate-lid-fix-compose_check.py             (re-runnable before/after render check)
+  7. tools/crate-lid-fix-preview.png                  (asset preview: before / after closed /
+                                                       after open / reference icon)
+
+Untouched (verified)
+  * every .png and every .png.meta under Assets/Sprites/SS14/ShipKit/Crates/ (GUIDs,
+    import scale/PPU, pivot, filter mode untouched)
+  * the Plastic kit — never referenced by any scene or prefab, left alone
+  * colliders, gameplay/input, scene layout, other GameObjects, other scripts
+  * Assets/_Recovery/*.unity — Unity's own recovery copies, not touched
+
+Cause
+  The crate's world SpriteRenderer referenced only the SS14 `base` state (generic.rsi layer 0,
+  Crates/Steel/base.png — the lidless body). Upstream draws a crate as base + a `Door` lid layer
+  that is `closed` when shut and `open` when open
+  (frontier-station-14/.../Crates/base_structurecrates.yml, EntityStorageVisuals
+  stateDoorClosed: closed / stateDoorOpen: open). The port never carried the Door layer and
+  StorageCrate.cs never touched any sprite, so the crate was lidless in every state.
+
+Checks actually run (commands + observed results)
+  A. dotnet build Assembly-CSharp.csproj -v m -nologo            [Unity assemblies from Library/]
+     -> 128 Warning(s), 0 Error(s)   (all warnings pre-existing CS0649/CS0414 style)
+     StorageCrate.cs compiles; SetLidOpen and the new fields typecheck.
+
+  B. python3 tools/crate-lid-fix-scene_check.py
+     -> documents: 2907  unique anchors: 2907; RESULT: PASS; exit=0
+        23/23 checks PASS, including:
+          PASS transform m_Father -> StorageCrate transform
+          PASS StorageCrate transform lists lid child
+          PASS renderer sorting order 1 (above base)
+          PASS renderer sprite = Steel closed.png / fileID closed_0 / m_WasSpriteAssigned: 1
+          PASS StorageCrate.lidRenderer -> CrateLid renderer
+          PASS StorageCrate.closedLidSprite / openLidSprite = Steel closed / open
+          PASS crate-cluster local fileID refs all resolve to scene anchors
+               [224699926..224699932, 1718987722, 919100001, 919100002, 919100003]
+          PASS no duplicate anchors anywhere in the scene (no serialization collision)
+
+  C. python3 tools/crate-lid-fix-compose_check.py      (writes the asset preview PNG)
+     before  (base only)     opaque=448  bbox=(2,13,30,29)   <- lid band y=9..12 EMPTY
+     after   (base+closed)   opaque=554  bbox=(2,9,30,29)
+     after   (base+open)     opaque=778  bbox=(2,1,30,29)
+     reference icon          opaque=554  bbox=(2,9,30,29)
+     lid-only pixels (closed) = 106, in rows y=9..12 -> exactly the rows that were missing
+     pixels differing closed vs open = 224
+     base+closed == icon ?  True   (pixel-for-pixel identical to the shipped icon)
+     RESULT: PASS
+
+  D. Visual: tools/crate-lid-fix-preview.png shows the before panel with a flat/open top and the
+     after panels with a lid seated on the body; closed and open panels differ in the lid rows.
+     This is an ASSET PREVIEW composed from the SS14 PNGs, not a runtime screenshot.
+
+Behaviour after the fix
+  * crate at rest  -> base + `closed` lid (matches the inventory icon exactly)
+  * crate opened   -> SetOpen(true) swaps the lid to `open` (SS14 stateDoorOpen), base still visible
+  * Crates with no lid refs assigned stay safe: SetLidOpen() no-ops when the refs are null.
+
+Still pending
+  * Unity playtest: open HomeShip.unity, press Play, walk to the crate at (1.5, 0.5) and click it
+    to confirm the lid swaps closed -> open on screen. Not run: no editor launched, no build made,
+    per task constraints. Nothing in the change depends on editor-only state, but the visual
+    confirmation is outstanding.

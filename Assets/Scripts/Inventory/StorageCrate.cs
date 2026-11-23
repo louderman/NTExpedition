@@ -8,6 +8,15 @@ public class StorageCrate : MonoBehaviour
     [SerializeField] private PlayerMovement player;
     [SerializeField] private float interactionDistance = 2f;
 
+    // Frontier/SS14 draws a crate as two layers on one entity: the fixed `base` body (on this
+    // GameObject) plus the `Door` layer, which is the lid. That lid swaps state between `closed`
+    // and `open` (EntityStorageVisuals: stateDoorClosed/stateDoorOpen). Only `base` was ported, so
+    // the crate rendered without its lid; the lid layer now lives on the CrateLid child.
+    [Header("Lid layer (SS14 crate door)")]
+    [SerializeField] private SpriteRenderer lidRenderer;
+    [SerializeField] private Sprite closedLidSprite;
+    [SerializeField] private Sprite openLidSprite;
+
     private Collider2D crateCollider;
     private bool isOpen;
 
@@ -21,6 +30,8 @@ public class StorageCrate : MonoBehaviour
         // Only show inventory UI when the crate is open.
         if (inventoryUI != null)
             inventoryUI.enabled = false;
+
+        SetLidOpen(false);
     }
 
     void Update()
@@ -57,5 +68,16 @@ public class StorageCrate : MonoBehaviour
     {
         isOpen = open;
         inventoryUI.enabled = open;
+        SetLidOpen(open);
+    }
+
+    // SS14 `EntityStorageVisuals`: the door layer shows `closed` while shut and `open` while open.
+    void SetLidOpen(bool open)
+    {
+        if (lidRenderer == null || closedLidSprite == null || openLidSprite == null)
+            return;
+
+        lidRenderer.sprite = open ? openLidSprite : closedLidSprite;
+        lidRenderer.enabled = true;
     }
 }
