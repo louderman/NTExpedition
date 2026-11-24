@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class HandSystem : MonoBehaviour
@@ -176,7 +175,7 @@ public class HandSystem : MonoBehaviour
         var mouse = Mouse.current;
         if (Time.timeScale == 0 || mouse == null || Camera.main == null) { ClearHover(); return; }
         Vector2 screen = mouse.position.ReadValue();
-        if ((EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) || InventorySandbox.PointerOverStorage(screen)) { ClearHover(); return; }
+        if (ExpeditionMenu.PointerOverInterface() || InventorySandbox.PointerOverStorage(screen)) { ClearHover(); return; }
         var world = Camera.main.ScreenToWorldPoint(new Vector3(screen.x, screen.y, -Camera.main.transform.position.z));
         ItemComponent target = null;
         int bestOrder = int.MinValue;

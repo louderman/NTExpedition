@@ -54,6 +54,7 @@ public class StorageCrate : MonoBehaviour
         if (Mouse.current == null || Camera.main == null ||
             !Mouse.current.leftButton.wasPressedThisFrame)
             return;
+        if (ExpeditionMenu.PointerOverInterface()) return;
 
         Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(
             Mouse.current.position.ReadValue()

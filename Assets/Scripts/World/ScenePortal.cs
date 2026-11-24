@@ -26,8 +26,9 @@ public class ScenePortal : MonoBehaviour
 
     void Update()
     {
-        if (enterToTravel || travelling || player == null || player.combatMode) return;
+        if (enterToTravel || travelling || player == null || player.combatMode || Time.timeScale == 0f) return;
         if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
+        if (ExpeditionMenu.PointerOverInterface()) return;
         if (Camera.main == null) return;
         // Pointer pixels must be converted before testing against a world collider.
         Vector2 point = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -69,8 +70,10 @@ public class ScenePortal : MonoBehaviour
         // Dan's rule: held + stowed items travel with the player; snapshot the loadout while this scene is alive.
         var hands = player != null ? player.GetComponent<HandSystem>() : null;
         PlayerLoadoutCarry.Capture(hands, FindFirstObjectByType<InventoryContainer>());
-        // An item being dragged is neither held nor stowed, so it needs its own snapshot before the swap.
+        // An item being dragged is neither held nor stowed, so capture it before the scene changes.
         PlayerLoadoutCarry.CaptureDragged(player != null ? player.GetComponent<ItemDragSystem>() : null);
-        SceneManager.LoadSceneAsync(destination, LoadSceneMode.Single);
+        var flow = FindAnyObjectByType<ExpeditionFlow>();
+        if (flow != null) flow.Navigate(destination);
+        else SceneManager.LoadSceneAsync(destination, LoadSceneMode.Single);
     }
 }

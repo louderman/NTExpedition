@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,10 +14,7 @@ public class ExpeditionFlow : MonoBehaviour
     public ExpeditionConfig config;
     public AudioSource musicSource;
     public AudioSource effectsSource;
-    public TMP_Text statusText;
-    public GameObject pausePanel;
-    public GameObject gameOverPanel;
-    public TMP_Text gameOverText;
+    [SerializeField] private ExpeditionMenu menu;
     public PlayerMovement player;
 
     [Header("Lab 5 ScriptableObject runtime data")]
@@ -30,6 +26,7 @@ public class ExpeditionFlow : MonoBehaviour
     public bool IsGameOver { get; private set; }
 
     private bool navigating;
+    private bool modalOpen;
     private PlayerInput playerInput;
     private BuffStateController buffs;
 
@@ -43,11 +40,10 @@ public class ExpeditionFlow : MonoBehaviour
             playerInput = player.GetComponent<PlayerInput>();
             buffs = player.GetComponent<BuffStateController>();
         }
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (musicSource != null && config != null && config.music != null) musicSource.Play();
         if (bestScore != null) bestScore.SetValue(PlayerPrefs.GetInt(SaveKey, 0));
         if (runScore != null) runScore.ValueChanged += OnRunScoreChanged;
+        if (menu != null) menu.Initialize(this);
     }
 
     void OnDestroy()
@@ -57,10 +53,13 @@ public class ExpeditionFlow : MonoBehaviour
 
     void Update()
     {
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (menu != null && menu.HandleEscape()) return;
+            if (!IsGameOver) TogglePause();
+        }
         if (screen != Screen.World) return;
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && !IsGameOver)
-            TogglePause();
-        if (statusText != null && player != null)
+        if (menu != null && player != null)
         {
             string buffLine = "Suit ready";
             if (buffs != null)
@@ -68,8 +67,7 @@ public class ExpeditionFlow : MonoBehaviour
                 if (buffs.IsInvincible) buffLine = $"Shield: {buffs.RemainingSeconds:0.0}s";
                 else if (buffs.IsOvercharged) buffLine = $"Suit overcharge: {buffs.RemainingSeconds:0.0}s";
             }
-            statusText.text = SceneManager.GetActiveScene().name + "  |  " + buffLine +
-                "\nWASD move  ·  1 combat  ·  Left click punch  ·  Right click shove  ·  Z powerup attack  ·  E supply station  ·  Esc pause";
+            menu.SetStatus(buffLine);
         }
     }
 
@@ -125,12 +123,28 @@ public class ExpeditionFlow : MonoBehaviour
 
     public void TogglePause()
     {
-        if (screen != Screen.World || IsGameOver || navigating) return;
+        if (screen != Screen.World || IsGameOver || navigating || modalOpen) return;
         IsPaused = !IsPaused;
-        Time.timeScale = IsPaused ? 0f : 1f;
-        if (pausePanel != null) pausePanel.SetActive(IsPaused);
-        if (musicSource != null) { if (IsPaused) musicSource.Pause(); else musicSource.UnPause(); }
-        SetPlayerInput(!IsPaused);
+        ApplyInputState();
+        if (menu != null) menu.ShowPause(IsPaused);
+    }
+
+    public void SetModalOpen(bool open)
+    {
+        modalOpen = open;
+        ApplyInputState();
+    }
+
+    void ApplyInputState()
+    {
+        bool blocked = IsPaused || IsGameOver || modalOpen || navigating;
+        Time.timeScale = screen == Screen.World && blocked ? 0f : 1f;
+        if (musicSource != null && !IsGameOver)
+        {
+            if (screen == Screen.World && blocked) musicSource.Pause();
+            else musicSource.UnPause();
+        }
+        SetPlayerInput(!blocked);
     }
 
     public void EndRun()
@@ -138,13 +152,11 @@ public class ExpeditionFlow : MonoBehaviour
         if (IsGameOver) return;
         IsGameOver = true;
         IsPaused = false;
-        if (pausePanel != null) pausePanel.SetActive(false);
         if (musicSource != null) musicSource.Stop();
         PlayEffect(config != null ? config.gameOverSound : null);
         int score = runScore != null ? runScore.Value : 0;
         int best = bestScore != null ? bestScore.Value : 0;
-        if (gameOverText != null) gameOverText.text = $"Expedition ended\nScore: {score}  ·  Best: {best}";
-        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        if (menu != null) menu.ShowGameOver(score, best);
         SetPlayerInput(false);
         Time.timeScale = 0f;
     }
@@ -162,12 +174,13 @@ public class ExpeditionFlow : MonoBehaviour
         if (effectsSource != null && clip != null) effectsSource.PlayOneShot(clip);
     }
 
-    void Navigate(string scene)
+    public void Navigate(string scene)
     {
         if (navigating) return;
         if (!Application.CanStreamedLevelBeLoaded(scene)) { Debug.LogError("Missing build scene: " + scene); return; }
         navigating = true;
-        Time.timeScale = 1f;
+        ApplyInputState();
+        if (menu != null) menu.ShowLoading();
         StartCoroutine(Load(scene));
     }
 

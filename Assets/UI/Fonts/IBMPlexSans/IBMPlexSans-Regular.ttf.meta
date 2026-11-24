@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 00fdd0029e6a45f09884518f6074ff0b
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  includeFontData: 1
+  fontName: IBM Plex Sans
+  fontNames:
+  - IBM Plex Sans
+  fallbackFontReferences: []
+  fontRenderingMode: 0
+  ascentCalculationMode: 1

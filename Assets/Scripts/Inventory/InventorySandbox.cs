@@ -126,6 +126,8 @@ public class InventorySandbox : MonoBehaviour
 
     void OnGUI()
     {
+        // IMGUI draws after uGUI; hide it and cancel any drag while an overlay owns input.
+        if (Time.timeScale == 0f) { dragging = null; return; }
         if (bag == null) return;
         // While an open crate storage window exists it owns the pointer and the screen space.
         if (!storageWindow && openStorageWindows > 0) return;

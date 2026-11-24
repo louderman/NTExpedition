@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: a68b2ebda0fb42a3bc583926244525d5
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  includeFontData: 1
+  fontName: Barlow Condensed
+  fontNames:
+  - Barlow Condensed
+  fallbackFontReferences: []
+  fontRenderingMode: 0
+  ascentCalculationMode: 1

@@ -118,6 +118,7 @@ public class ActionManager : MonoBehaviour
 
     public void OnToggleCombat(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0f) return;
         if(context.performed)
         {
             if(playerMovement.combatMode)
@@ -132,6 +133,11 @@ public class ActionManager : MonoBehaviour
     }
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0f || ExpeditionMenu.PointerOverInterface())
+        {
+            weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.CancelCharge);
+            return;
+        }
         if(context.interaction is TapInteraction && context.performed)
         {
             weaponController.Attack(WeaponController.AttackType.PrimaryAttack, WeaponController.AttackPower.Quick);
@@ -151,6 +157,7 @@ public class ActionManager : MonoBehaviour
     }
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0f || ExpeditionMenu.PointerOverInterface()) return;
         if(context.performed)
         {
             // While dragging, the right button reels the item in instead of firing a secondary attack.
@@ -160,6 +167,7 @@ public class ActionManager : MonoBehaviour
     }
     public void OnSwapHands(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0f) return;
         // if there is a player stun state this shouldnt happen
         // pretty far out in terms of features to implement, though.
         if(context.performed)

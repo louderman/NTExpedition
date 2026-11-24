@@ -16,7 +16,7 @@ public class SupplyStation : MonoBehaviour
         if (Vector2.Distance(player.transform.position, transform.position) > 1.8f) return;
         bool useKey = Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame;
         bool clicked = Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame &&
-            !player.combatMode && Camera.main != null && GetComponent<Collider2D>().OverlapPoint(
+            !player.combatMode && !ExpeditionMenu.PointerOverInterface() && Camera.main != null && GetComponent<Collider2D>().OverlapPoint(
                 Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
         if (useKey || clicked) Dispense();
     }
