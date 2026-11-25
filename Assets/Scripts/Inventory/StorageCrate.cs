@@ -39,10 +39,6 @@ public class StorageCrate : MonoBehaviour, IDragTarget
     // screen in the world and can never drift from it. No new asset, no scene reference, no scene edit.
     public Sprite DragIcon => bodyRenderer != null ? bodyRenderer.sprite : null;
 
-    // Human-readable name for the hand status hotbar: "Dragging crate". Deliberately not the GameObject
-    // name (StorageCrate), which would read like an internal identifier in the HUD.
-    public string DragDisplayName => "crate";
-
     void OnEnable() { ItemDragSystem.RegisterFixture(this); }
 
     void OnDisable() { ItemDragSystem.UnregisterFixture(this); }
