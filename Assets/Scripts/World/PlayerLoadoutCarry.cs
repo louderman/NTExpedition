@@ -54,8 +54,20 @@ public static class PlayerLoadoutCarry
     // see it. ScenePortal calls this right after Capture, while the item still belongs to the outgoing scene.
     public static void CaptureDragged(ItemDragSystem dragger)
     {
-        var item = dragger != null ? dragger.DraggedItem : null;
-        if (item == null || item.Definition == null) return;
+        if (dragger == null) return;
+        var item = dragger.DraggedItem;
+        if (item == null)
+        {
+            // A world FIXTURE (the storage crate) is part of the ship, not part of the loadout: it is released
+            // here on purpose, so no hop, hand or container can ever carry it into another scene.
+            if (dragger.IsDragging)
+            {
+                Debug.Log($"{LogPrefix} released dragged fixture {dragger.DraggedLabel}; world fixtures stay behind");
+                dragger.Drop();
+            }
+            return;
+        }
+        if (item.Definition == null) return;
         inTransit.Add(new Record
         {
             DefinitionName = item.Definition.name,
@@ -152,7 +164,16 @@ public static class PlayerLoadoutCarry
             }
             if (record.FromStorage)
             {
-                if (storage != null && storage.TryAutoPlace(item)) { restored++; continue; }
+                // A container's item must also be PARENTED to that container, exactly as HandSystem.TryStoreActiveItem
+                // does. An item left rooted in the incoming scene is destroyed by the next scene load, while the
+                // container's grid keeps a dead slot: that is how the ship's travelling StorageCrate silently lost
+                // contents (grid 3 -> 2) on every hop.
+                if (storage != null && storage.TryAutoPlace(item))
+                {
+                    item.transform.SetParent(storage.transform, true);
+                    restored++;
+                    continue;
+                }
                 Object.Destroy(item.gameObject);
                 remaining.Add(record);
                 continue;
