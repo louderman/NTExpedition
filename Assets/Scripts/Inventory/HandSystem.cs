@@ -9,6 +9,8 @@ public class HandSystem : MonoBehaviour
     public event System.Action<HandSlot> HandChanged;
     public event System.Action<HandSlot, ItemComponent> HeldItemChanged;
     public event System.Action<ItemComponent, bool> WieldChanged;
+    /// <summary>Raised when a hand becomes occupied by - or is freed from - an in-progress fixture drag.</summary>
+    public event System.Action<HandSlot, bool> DragHandReservedChanged;
     [SerializeField] float pickupRange = 1.5f;
     [SerializeField] float throwSpeed = 8f;
     [SerializeField] float throwDistance = 4f;
@@ -16,6 +18,14 @@ public class HandSystem : MonoBehaviour
     ItemComponent wieldedItem;
     HandSlot reservedHand;
     bool hasWieldReservation;
+    // Transient DRAG reservation (separate from the wield reservation above). While the player Ctrl+drags a
+    // world fixture - the authored storage crate - the hand that STARTED the drag is occupied for the whole
+    // drag: it cannot take an item, it cannot be wielded into, wielding into it is refused, and the crate's
+    // steering key is gated on it staying the selected hand. Nothing is added to the hand and no item is
+    // touched: it is a hand-level booking that the drag system raises and lowers.
+    HandSlot dragReservedHand;
+    bool hasDragReservation;
+    Sprite dragReservedIcon;
     PlayerMovement movement;
     // Resolved lazily: the drag system may be added after this component's Awake (see ActionManager.Awake).
     ItemDragSystem dragSystem;
@@ -32,12 +42,62 @@ public class HandSystem : MonoBehaviour
     public bool IsTwoHandWielded(ItemComponent item) => hasWieldReservation && item != null && wieldedItem == item;
     public HandSlot OtherHand(HandSlot hand) => hand == HandSlot.Left ? HandSlot.Right : HandSlot.Left;
 
+    // ------------------------------------------------- drag reservation (world-fixture drags only)
+    public bool HasDragReservation => hasDragReservation;
+    public HandSlot DragReservedHand => dragReservedHand;
+    public bool IsDragHandReserved(HandSlot hand) => hasDragReservation && dragReservedHand == hand;
+
+    /// <summary>
+    /// Indicator sprite the HUD shows on the booked hand: the fixture's own authored art. Null when nothing
+    /// is booked, or when the booked fixture supplied no art.
+    /// </summary>
+    public Sprite DragReservedIcon => hasDragReservation ? dragReservedIcon : null;
+
+    /// <summary>Indicator sprite for a specific hand - null unless that hand is the booked one.</summary>
+    public Sprite DragIconFor(HandSlot hand) => IsDragHandReserved(hand) ? dragReservedIcon : null;
+
+    /// <summary>
+    /// Books <paramref name="hand"/> as occupied by an in-progress fixture drag. Idempotent for the same
+    /// hand; returns false only when a different hand already holds the booking. It deliberately does not
+    /// care whether the hand is empty - an already-held item keeps its own reservations untouched.
+    /// </summary>
+    public bool ReserveDragHand(HandSlot hand) => ReserveDragHand(hand, null);
+
+    /// <summary>
+    /// The same booking, carrying the indicator sprite the HUD should show on that hand (the fixture's own
+    /// authored art). The icon is stored BEFORE the event is raised, so a listener that reads
+    /// <see cref="DragReservedIcon"/> inside the callback already sees the new value.
+    /// </summary>
+    public bool ReserveDragHand(HandSlot hand, Sprite icon)
+    {
+        if (hasDragReservation) return dragReservedHand == hand;
+        hasDragReservation = true;
+        dragReservedHand = hand;
+        dragReservedIcon = icon;
+        DragHandReservedChanged?.Invoke(hand, true);
+        Debug.Log($"Hand reserved for dragging: {hand}" +
+                  (icon != null ? $" (indicator: {icon.name})" : " (no indicator art)"));
+        return true;
+    }
+
+    /// <summary>Frees the drag booking. Safe (and cheap) to call when nothing is booked.</summary>
+    public bool ClearDragReservation()
+    {
+        if (!hasDragReservation) return false;
+        var hand = dragReservedHand;
+        hasDragReservation = false;
+        dragReservedIcon = null;
+        DragHandReservedChanged?.Invoke(hand, false);
+        Debug.Log($"Drag reservation cleared: {hand}");
+        return true;
+    }
+
     public bool TryWieldActiveItem(ItemComponent item)
     {
         if (item == null || item != HeldItem(CurrentHandSlot)) return false;
         if (IsTwoHandWielded(item)) return true;
         var offhand = OtherHand(CurrentHandSlot);
-        if (hasWieldReservation || HeldItem(offhand) != null) return false;
+        if (hasWieldReservation || HeldItem(offhand) != null || IsDragHandReserved(offhand)) return false;
         wieldedItem = item;
         reservedHand = offhand;
         hasWieldReservation = true;
@@ -67,7 +127,7 @@ public class HandSystem : MonoBehaviour
     }
     public bool TryPickup(ItemComponent item)
     {
-        if (Time.timeScale == 0 || (movement != null && movement.combatMode) || item == null || item.Definition == null || !item.gameObject.activeInHierarchy || item.Container != null || HeldItem(CurrentHandSlot) != null || IsHandReserved(CurrentHandSlot) || !IsInRange(item)) return false;
+        if (Time.timeScale == 0 || (movement != null && movement.combatMode) || item == null || item.Definition == null || !item.gameObject.activeInHierarchy || item.Container != null || HeldItem(CurrentHandSlot) != null || IsHandReserved(CurrentHandSlot) || IsDragHandReserved(CurrentHandSlot) || !IsInRange(item)) return false;
         var flight = item.GetComponent<ItemThrow>();
         if (flight != null && flight.IsMoving) return false;
         if (CurrentHandSlot == HandSlot.Left) leftItem = item; else rightItem = item;
@@ -106,7 +166,8 @@ public class HandSystem : MonoBehaviour
     {
         if (destination == CurrentHandSlot) return true;
         var source = CurrentHandSlot;
-        if (IsHandReserved(source) || IsHandReserved(destination)) return false;
+        if (IsHandReserved(source) || IsHandReserved(destination) ||
+            IsDragHandReserved(source) || IsDragHandReserved(destination)) return false;
         var sourceItem = HeldItem(source);
         if (IsTwoHandWielded(sourceItem)) TryUnwield(sourceItem);
         var destinationItem = HeldItem(destination);
@@ -129,7 +190,7 @@ public class HandSystem : MonoBehaviour
     {
         HandSlot hand = CurrentHandSlot;
 
-        if (container == null || item == null || HeldItem(hand) != null)
+        if (container == null || item == null || HeldItem(hand) != null || IsDragHandReserved(hand))
             return false;
 
         if (!container.Remove(item))
@@ -233,6 +294,6 @@ public class HandSystem : MonoBehaviour
         if (outlineRoot != null) Destroy(outlineRoot);
         outlineRoot = null; outlineSprites = null; hovered = null; HoverInRange = false;
     }
-    void OnDisable() { ClearHover(); ClearWieldReservation(); }
+    void OnDisable() { ClearHover(); ClearWieldReservation(); ClearDragReservation(); }
     void OnDestroy() { if (outlineMaterial != null) Destroy(outlineMaterial); }
 }
